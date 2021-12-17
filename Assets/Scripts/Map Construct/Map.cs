@@ -78,6 +78,15 @@ public class Map
         baseMap = new int[mapSize, mapSize];
     }
 
+    public void CreateBlank(){
+        Initialize(false);
+    }
+
+    public void CreateBaseMap(){
+        Initialize(true);
+        GeneratePath(new Coordinate(0,0));
+    }
+
     public void Random(){
         Initialize(true);
         GeneratePath(new Coordinate(0,0));

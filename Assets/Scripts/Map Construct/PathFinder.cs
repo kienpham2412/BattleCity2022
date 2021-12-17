@@ -69,8 +69,9 @@ public class PathFinder : MonoBehaviour
         GetPath();
     }
 
-    private void GetPath()
+    public void GetPath()
     {
+        path.Clear(); // error found
         for (int x = 0; x < map.mapSize; x++)
         {
             for (int y = 0; y < map.mapSize; y++)

@@ -10,6 +10,15 @@ public class GameMenu : MonoBehaviour
     private int currentMenu = 0;
 
     /// <summary>
+    /// Get a menu by index
+    /// </summary>
+    /// <param name="index">The index of menu</param>
+    /// <returns></returns>
+    public GameObject GetMenu(int index){
+        return menus[index];
+    }
+
+    /// <summary>
     /// Hide all menus
     /// </summary>
     public void HideAllMenus(){
