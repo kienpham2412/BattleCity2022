@@ -274,6 +274,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "PlaceObstacle",
+                    "type": "Button",
+                    "id": "7d771419-8abf-4c59-8474-9203252dba60",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -518,6 +526,28 @@
                     "action": "SelectObstacle",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "3db3d9f3-a843-4038-9732-302c8ea8add0",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlaceObstacle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77303249-fe20-490f-b14a-7234f4a563b9",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlaceObstacle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

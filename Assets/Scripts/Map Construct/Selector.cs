@@ -9,20 +9,28 @@ public class Selector : MonoBehaviour
     public static Selector singleton;
     public Vector2 direction;
     private Vector3 position;
+    private MapBuilder mapBuilder;
     private PlayerControl control;
     private InputAction movement;
     private InputAction selectObstacle;
+    private InputAction placeObstacle;
+    private int obstacleIndex;
 
     private void Awake()
     {
+        obstacleIndex = 0;
+
         singleton = GetComponent<Selector>();
+        mapBuilder = GameObject.Find("MapConstructor").GetComponent<MapBuilder>();
 
         control = new PlayerControl();
         movement = control.MapBuilding.Movement;
         selectObstacle = control.MapBuilding.SelectObstacle;
+        placeObstacle = control.MapBuilding.PlaceObstacle;
 
         movement.performed += ctx => Move();
         selectObstacle.performed += ctx => Select();
+        placeObstacle.performed += ctx => PlaceObstacle();
 
         ActiveInput(true);
 
@@ -34,15 +42,16 @@ public class Selector : MonoBehaviour
         if (isActive)
         {
             control.Enable();
-            // movement.Enable();
-            // selectObstacle.Enable();
         }
         else
         {
             control.Disable();
-            // movement.Disable();
-            // selectObstacle.Disable();
         }
+    }
+
+    private void PlaceObstacle()
+    {
+        mapBuilder.Replace(new Coordinate((int)transform.position.x, (int)transform.position.y), obstacleIndex);
     }
 
     /// <summary>
@@ -79,7 +88,12 @@ public class Selector : MonoBehaviour
     private void Select()
     {
         float value = selectObstacle.ReadValue<float>();
-        Debug.Log(value);
+        int dir = (int)value;
+        obstacleIndex += dir;
+
+        if (obstacleIndex < 0) obstacleIndex = mapBuilder.obstacles.Count - 1;
+        else if (obstacleIndex >= mapBuilder.obstacles.Count) obstacleIndex = 0;
+        Debug.Log(obstacleIndex);
     }
 
     private void OnDisable()

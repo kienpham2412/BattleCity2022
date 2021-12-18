@@ -28,8 +28,8 @@ public class MapBuilder : MonoBehaviour
     public void CreateBlankMap()
     {
         map.CreateBlank();
-        // pathFinder.GetPath();
-        EraseObstacles();
+        pathFinder.GetPath(map);
+        DestroyObstacles();
         BuildBlocks();
     }
 
@@ -39,8 +39,8 @@ public class MapBuilder : MonoBehaviour
     public void GenerateRandomMap()
     {
         map.Random();
-        // pathFinder.GetPath();
-        EraseObstacles();
+        pathFinder.GetPath(map);
+        DestroyObstacles();
         BuildBlocks();
     }
 
@@ -50,8 +50,8 @@ public class MapBuilder : MonoBehaviour
     public void GenerateBaseMap()
     {
         map.CreateBaseMap();
-        // pathFinder.GetPath();
-        EraseObstacles();
+        pathFinder.GetPath(map);
+        DestroyObstacles();
         BuildBlocks();
     }
 
@@ -83,12 +83,33 @@ public class MapBuilder : MonoBehaviour
         }
     }
 
+    public void Replace(Coordinate position, int obstacleIndex)
+    {
+        map.baseMap[position.x, position.y] = obstacleIndex;
+        DestroyAnObstacle(position.ToVector3());
+        Instantiate(obstacles[obstacleIndex], position.ToVector3(), this.transform.rotation, mapObject.transform);
+    }
+
     /// <summary>
     /// Remove all obstacles
     /// </summary>
-    private void EraseObstacles(){
-        foreach (Transform child in mapObject.transform){
+    private void DestroyObstacles()
+    {
+        foreach (Transform child in mapObject.transform)
+        {
             Destroy(child.gameObject);
+        }
+    }
+
+    private void DestroyAnObstacle(Vector3 position)
+    {
+        foreach (Transform child in mapObject.transform)
+        {
+            if (child.transform.position == position)
+            {
+                Destroy(child.gameObject);
+                return;
+            }
         }
     }
 }

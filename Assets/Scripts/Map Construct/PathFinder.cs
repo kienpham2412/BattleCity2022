@@ -46,14 +46,13 @@ public class PathFinder : MonoBehaviour
     private Marker endMarker;
     private Marker currentMarker;
     private PlayerControl myControl;
-    private MapBuilder mapBuilder;
     private List<Coordinate> path = new List<Coordinate>();
     private List<Marker> open = new List<Marker>();
     private List<Coordinate> close = new List<Coordinate>();
     private List<Marker> checkedMarker = new List<Marker>();
     private Map map;
-
     private bool isFound = false;
+
     private void Awake()
     {
         myControl = new PlayerControl();
@@ -61,16 +60,10 @@ public class PathFinder : MonoBehaviour
         myControl.MapBuilding.GeneratePath.performed += ctx => FindPath();
         myControl.MapBuilding.ShowShortestPath.performed += ctx => ShowPath();
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        mapBuilder = GetComponent<MapBuilder>();
-        map = mapBuilder.map;
-        GetPath();
-    }
 
-    public void GetPath()
+    public void GetPath(Map map)
     {
+        this.map = map;
         path.Clear(); // error found
         for (int x = 0; x < map.mapSize; x++)
         {

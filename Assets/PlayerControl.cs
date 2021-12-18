@@ -287,6 +287,14 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""PlaceObstacle"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d771419-8abf-4c59-8474-9203252dba60"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -531,6 +539,28 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""SelectObstacle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3db3d9f3-a843-4038-9732-302c8ea8add0"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlaceObstacle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77303249-fe20-490f-b14a-7234f4a563b9"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlaceObstacle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -549,6 +579,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_MapBuilding_ShowShortestPath = m_MapBuilding.FindAction("ShowShortestPath", throwIfNotFound: true);
         m_MapBuilding_Movement = m_MapBuilding.FindAction("Movement", throwIfNotFound: true);
         m_MapBuilding_SelectObstacle = m_MapBuilding.FindAction("SelectObstacle", throwIfNotFound: true);
+        m_MapBuilding_PlaceObstacle = m_MapBuilding.FindAction("PlaceObstacle", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -652,6 +683,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputAction m_MapBuilding_ShowShortestPath;
     private readonly InputAction m_MapBuilding_Movement;
     private readonly InputAction m_MapBuilding_SelectObstacle;
+    private readonly InputAction m_MapBuilding_PlaceObstacle;
     public struct MapBuildingActions
     {
         private @PlayerControl m_Wrapper;
@@ -661,6 +693,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         public InputAction @ShowShortestPath => m_Wrapper.m_MapBuilding_ShowShortestPath;
         public InputAction @Movement => m_Wrapper.m_MapBuilding_Movement;
         public InputAction @SelectObstacle => m_Wrapper.m_MapBuilding_SelectObstacle;
+        public InputAction @PlaceObstacle => m_Wrapper.m_MapBuilding_PlaceObstacle;
         public InputActionMap Get() { return m_Wrapper.m_MapBuilding; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -685,6 +718,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @SelectObstacle.started -= m_Wrapper.m_MapBuildingActionsCallbackInterface.OnSelectObstacle;
                 @SelectObstacle.performed -= m_Wrapper.m_MapBuildingActionsCallbackInterface.OnSelectObstacle;
                 @SelectObstacle.canceled -= m_Wrapper.m_MapBuildingActionsCallbackInterface.OnSelectObstacle;
+                @PlaceObstacle.started -= m_Wrapper.m_MapBuildingActionsCallbackInterface.OnPlaceObstacle;
+                @PlaceObstacle.performed -= m_Wrapper.m_MapBuildingActionsCallbackInterface.OnPlaceObstacle;
+                @PlaceObstacle.canceled -= m_Wrapper.m_MapBuildingActionsCallbackInterface.OnPlaceObstacle;
             }
             m_Wrapper.m_MapBuildingActionsCallbackInterface = instance;
             if (instance != null)
@@ -704,6 +740,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @SelectObstacle.started += instance.OnSelectObstacle;
                 @SelectObstacle.performed += instance.OnSelectObstacle;
                 @SelectObstacle.canceled += instance.OnSelectObstacle;
+                @PlaceObstacle.started += instance.OnPlaceObstacle;
+                @PlaceObstacle.performed += instance.OnPlaceObstacle;
+                @PlaceObstacle.canceled += instance.OnPlaceObstacle;
             }
         }
     }
@@ -721,5 +760,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         void OnShowShortestPath(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnSelectObstacle(InputAction.CallbackContext context);
+        void OnPlaceObstacle(InputAction.CallbackContext context);
     }
 }
