@@ -8,6 +8,9 @@ public class Selector : MonoBehaviour
 {
     public static Selector singleton;
     public Vector2 direction;
+    private Transform child;
+    private SpriteRenderer mySprite;
+    public List<Sprite> sprites;
     private Vector3 position;
     private MapBuilder mapBuilder;
     private PlayerControl control;
@@ -22,6 +25,9 @@ public class Selector : MonoBehaviour
 
         singleton = GetComponent<Selector>();
         mapBuilder = GameObject.Find("MapConstructor").GetComponent<MapBuilder>();
+        child = gameObject.transform.GetChild(0);
+        mySprite = child.gameObject.GetComponent<SpriteRenderer>();
+        // mySprite.sprite = sprites[obstacleIndex];
 
         control = new PlayerControl();
         movement = control.MapBuilding.Movement;
@@ -94,6 +100,8 @@ public class Selector : MonoBehaviour
         if (obstacleIndex < 0) obstacleIndex = mapBuilder.obstacles.Count - 1;
         else if (obstacleIndex >= mapBuilder.obstacles.Count) obstacleIndex = 0;
         Debug.Log(obstacleIndex);
+
+        // mySprite.sprite = sprites[obstacleIndex];
     }
 
     private void OnDisable()
