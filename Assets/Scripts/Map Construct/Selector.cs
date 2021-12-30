@@ -27,7 +27,7 @@ public class Selector : MonoBehaviour
         mapBuilder = GameObject.Find("MapConstructor").GetComponent<MapBuilder>();
         child = gameObject.transform.GetChild(0);
         mySprite = child.gameObject.GetComponent<SpriteRenderer>();
-        // mySprite.sprite = sprites[obstacleIndex];
+        mySprite.sprite = sprites[obstacleIndex];
 
         control = new PlayerControl();
         movement = control.MapBuilding.Movement;
@@ -101,7 +101,7 @@ public class Selector : MonoBehaviour
         else if (obstacleIndex >= mapBuilder.obstacles.Count) obstacleIndex = 0;
         Debug.Log(obstacleIndex);
 
-        // mySprite.sprite = sprites[obstacleIndex];
+        mySprite.sprite = sprites[obstacleIndex];
     }
 
     private void OnDisable()
