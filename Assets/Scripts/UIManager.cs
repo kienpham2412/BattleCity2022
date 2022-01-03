@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class UIManager : MonoBehaviour
             menu.ShowMenu(0);
     }
 
+    /// <summary>
+    /// Show the construction menu
+    /// </summary>
     public void ShowBuildMenu()
     {
         if (!menu.GetMenu(0).activeSelf)
@@ -127,6 +131,26 @@ public class UIManager : MonoBehaviour
                 SceneManager.LoadScene("PlayGame");
                 break;
         }
+    }
+
+    /// <summary>
+    /// Show the save map menu
+    /// </summary>
+    public void ShowSaveMapMenu(){
+        menu.ShowMenu(2);
+    }
+
+    /// <summary>
+    /// Save the current map
+    /// </summary>
+    public void SaveMap(){
+        GameObject childMenu = menu.GetMenu(2);
+        Transform inputField = childMenu.transform.GetChild(3);
+        TMP_InputField input = inputField.gameObject.GetComponent<TMP_InputField>();
+        
+        if(input.text == "") return;
+        GameManager.singleton.SaveMap(input.text);
+        Debug.Log(input.text);
     }
 
     /// <summary>

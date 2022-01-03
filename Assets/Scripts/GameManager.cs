@@ -5,10 +5,21 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
+    private MapSaver mapSaver;
+    public MapBuilder mapBuilder;
     // Start is called before the first frame update
     void Start()
     {
         singleton = GetComponent<GameManager>();
+        mapSaver = new MapSaver();
+    }
+
+    /// <summary>
+    /// Save the map
+    /// </summary>
+    /// <param name="name">Map name</param>
+    public void SaveMap(string name){
+        mapSaver.Save(name, mapBuilder.map);
     }
 
     // // Update is called once per frame

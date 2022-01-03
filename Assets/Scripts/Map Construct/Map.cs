@@ -67,8 +67,10 @@ public class Coordinate
     }
 }
 
+[Serializable]
 public class Map
 {
+    public string mapName;
     public int[,] baseMap;
     public int mapSize = 13;
     public List<Coordinate> spaces;

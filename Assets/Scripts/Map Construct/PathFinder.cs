@@ -55,10 +55,10 @@ public class PathFinder : MonoBehaviour
 
     private void Awake()
     {
-        myControl = new PlayerControl();
-        myControl.MapBuilding.GenerateNode.performed += ctx => GenerateNodes();
-        myControl.MapBuilding.GeneratePath.performed += ctx => FindPath();
-        myControl.MapBuilding.ShowShortestPath.performed += ctx => ShowPath();
+        // myControl = new PlayerControl();
+        // myControl.MapBuilding.GenerateNode.performed += ctx => GenerateNodes();
+        // myControl.MapBuilding.GeneratePath.performed += ctx => FindPath();
+        // myControl.MapBuilding.ShowShortestPath.performed += ctx => ShowPath();
     }
 
     public void GetPath(Map map)
@@ -172,13 +172,13 @@ public class PathFinder : MonoBehaviour
         return false;
     }
 
-    private void OnEnable()
-    {
-        myControl.MapBuilding.Enable();
-    }
+    // private void OnEnable()
+    // {
+    //     myControl.MapBuilding.Enable();
+    // }
 
-    private void OnDisable()
-    {
-        myControl.MapBuilding.Disable();
-    }
+    // private void OnDisable()
+    // {
+    //     myControl.MapBuilding.Disable();
+    // }
 }
