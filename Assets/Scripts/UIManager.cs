@@ -1,4 +1,4 @@
-using System.Collections;
+using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +12,11 @@ public class UIManager : MonoBehaviour
     private GameMenu menu;
     public SceneName thisScene;
     private PlayerControl myControl;
+    public GameObject nameDropdown;
+    public GameObject nameInput;
+    private TMP_Dropdown dropdown;
+    private TMP_InputField input;
+
 
     private void Awake()
     {
@@ -26,6 +31,24 @@ public class UIManager : MonoBehaviour
         menu.HideAllMenus();
         if (thisScene == SceneName.TitleScreen)
             menu.ShowMenu(0);
+        if (thisScene == SceneName.Construct)
+            LoadFileName();
+    }
+
+    /// <summary>
+    /// Load saved filenames
+    /// </summary>
+    private void LoadFileName()
+    {
+        List<string> filenames = new List<string>();
+
+        string[] files = Directory.GetFiles(Application.dataPath + "/Maps", "*.map", SearchOption.AllDirectories);
+        foreach (string aFile in files)
+        {
+            filenames.Add(Path.GetFileNameWithoutExtension(aFile));
+        }
+
+        dropdown = nameDropdown.GetComponent<TMP_Dropdown>();
     }
 
     /// <summary>
@@ -136,21 +159,30 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Show the save map menu
     /// </summary>
-    public void ShowSaveMapMenu(){
+    public void ShowSaveMapMenu()
+    {
         menu.ShowMenu(2);
     }
 
     /// <summary>
     /// Save the current map
     /// </summary>
-    public void SaveMap(){
-        GameObject childMenu = menu.GetMenu(2);
-        Transform inputField = childMenu.transform.GetChild(3);
-        TMP_InputField input = inputField.gameObject.GetComponent<TMP_InputField>();
-        
-        if(input.text == "") return;
+    public void SaveMap()
+    {
+        TMP_InputField input = nameInput.gameObject.GetComponent<TMP_InputField>();
+
+        if (input.text == "") return;
         GameManager.singleton.SaveMap(input.text);
         Debug.Log(input.text);
+    }
+
+    /// <summary>
+    /// Load a saved map
+    /// </summary>
+    public void LoadMap()
+    {
+        string name = dropdown.options[dropdown.value].text;
+        GameManager.singleton.LoadMap(name);
     }
 
     /// <summary>

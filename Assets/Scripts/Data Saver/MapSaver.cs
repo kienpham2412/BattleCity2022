@@ -38,7 +38,8 @@ public class MapSaver
     public Map Load(string name)
     {
         file = File.Open(CreatePath(name), FileMode.Open);
-        Map map = (Map)bf.Deserialize(file);
+        Map map = new Map();
+        map = (Map)bf.Deserialize(file);
         file.Close();
         Debug.Log("map loaded !!!");
         return map;

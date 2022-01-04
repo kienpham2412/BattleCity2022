@@ -58,7 +58,7 @@ public class MapBuilder : MonoBehaviour
     /// <summary>
     /// Place obstacles according to basemap
     /// </summary>
-    private void BuildBlocks()
+    public void BuildBlocks()
     {
         wallOffset = 0.5f + 0.125f;
         int baseVal;
@@ -88,6 +88,12 @@ public class MapBuilder : MonoBehaviour
         map.baseMap[position.x, position.y] = obstacleIndex;
         DestroyAnObstacle(position.ToVector3());
         Instantiate(obstacles[obstacleIndex], position.ToVector3(), this.transform.rotation, mapObject.transform);
+    }
+
+    public void BuildSavedMap(Map map){
+        this.map = map;
+        DestroyObstacles();
+        BuildBlocks();
     }
 
     /// <summary>
