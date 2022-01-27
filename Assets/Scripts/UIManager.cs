@@ -49,6 +49,7 @@ public class UIManager : MonoBehaviour
         }
 
         dropdown = nameDropdown.GetComponent<TMP_Dropdown>();
+        dropdown.AddOptions(filenames);
     }
 
     /// <summary>

@@ -28,7 +28,7 @@ public class MapBuilder : MonoBehaviour
     public void CreateBlankMap()
     {
         map.CreateBlank();
-        pathFinder.GetPath(map);
+        // pathFinder.GetPath(map);
         DestroyObstacles();
         BuildBlocks();
     }
