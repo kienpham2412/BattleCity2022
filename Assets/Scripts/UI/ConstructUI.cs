@@ -1,25 +1,19 @@
+using System.Collections;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using TMPro;
 
-public class UIManager : MonoBehaviour
+public class ConstructUI : UIManager
 {
-    [SerializeField]
-    public enum SceneName { TitleScreen = 0, Construct = 1, PlayGame = 2 };
-    private GameMenu menu;
-    public SceneName thisScene;
-    private PlayerControl myControl;
     public GameObject nameDropdown;
     public GameObject nameInput;
     private TMP_Dropdown dropdown;
     private TMP_InputField input;
+    protected PlayerControl myControl;
 
-
-    private void Awake()
-    {
+    private void Awake() {
         myControl = new PlayerControl();
         myControl.UI.Cancel.performed += context => ShowBuildMenu();
     }
@@ -29,16 +23,13 @@ public class UIManager : MonoBehaviour
     {
         menu = GetComponent<GameMenu>();
         menu.HideAllMenus();
-        if (thisScene == SceneName.TitleScreen)
-            menu.ShowMenu(0);
-        if (thisScene == SceneName.Construct)
-            LoadFileName();
+        LoadFileName();
     }
 
     /// <summary>
     /// Load saved filenames
     /// </summary>
-    private void LoadFileName()
+    public void LoadFileName()
     {
         List<string> filenames = new List<string>();
 
@@ -72,89 +63,27 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Display a question to make sure player wants to exit
     /// </summary>
-    public void AskExitBuilding()
+    public override void ShowExitQuestion()
     {
-        if (thisScene != SceneName.TitleScreen)
-        {
-            menu.ShowMenu(1);
-        }
+        base.ShowExitQuestion();
     }
 
     /// <summary>
     /// Hide a menu
     /// </summary>
     /// <param name="index">Index value of the menu</param>
-    public void HideMenu(int index)
+    public override void HideMenu(int index)
     {
-        menu.HideMenu(index);
-    }
-
-    /// <summary>
-    /// Show title menu
-    /// </summary>
-    public void ReturnToTitle()
-    {
-        menu.ShowMenu(0);
-    }
-
-    /// <summary>
-    /// Emit exit event
-    /// </summary>
-    public void ShowExitQuestion()
-    {
-        menu.ShowMenu(1);
-    }
-
-    /// <summary>
-    /// Show setting menu
-    /// </summary>
-    public void ShowSettingMenu()
-    {
-        menu.ShowMenu(2);
-    }
-
-    /// <summary>
-    /// Show control setting menu
-    /// </summary>
-    public void ShowControlSetting()
-    {
-        menu.ShowMenu(3);
-    }
-
-    /// <summary>
-    /// Show video setting menu
-    /// </summary>
-    public void ShowVideoSetting()
-    {
-        menu.ShowMenu(4);
-    }
-
-    /// <summary>
-    /// Show music setting menu
-    /// </summary>
-    public void ShowMusicSetting()
-    {
-        menu.ShowMenu(5);
+        base.HideMenu(index);
     }
 
     /// <summary>
     /// Load scene by name
     /// </summary>
     /// <param name="scene">Index value of the scene</param>
-    public void LoadScene(int index)
+    public override void LoadScene(int index)
     {
-        switch ((SceneName)index)
-        {
-            case SceneName.TitleScreen:
-                SceneManager.LoadScene("TitleScreen");
-                break;
-            case SceneName.Construct:
-                SceneManager.LoadScene("Construct");
-                break;
-            case SceneName.PlayGame:
-                SceneManager.LoadScene("PlayGame");
-                break;
-        }
+        base.LoadScene(index);
     }
 
     /// <summary>
@@ -184,15 +113,6 @@ public class UIManager : MonoBehaviour
     {
         string name = dropdown.options[dropdown.value].text;
         GameManager.singleton.LoadMap(name);
-    }
-
-    /// <summary>
-    /// Exit Game
-    /// </summary>
-    public void ExitGame()
-    {
-        UnityEditor.EditorApplication.isPlaying = false;
-        Application.Quit();
     }
 
     private void OnEnable()

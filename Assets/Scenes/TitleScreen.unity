@@ -1328,8 +1328,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: ShowSettingMenu
         m_Mode: 1
         m_Arguments:
@@ -2463,8 +2463,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: ShowSettingMenu
         m_Mode: 1
         m_Arguments:
@@ -2864,8 +2864,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: ReturnToTitle
         m_Mode: 1
         m_Arguments:
@@ -2997,8 +2997,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: ShowExitQuestion
         m_Mode: 1
         m_Arguments:
@@ -3339,8 +3339,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: ShowControlSetting
         m_Mode: 1
         m_Arguments:
@@ -5312,8 +5312,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 3
         m_Arguments:
@@ -5619,8 +5619,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: ShowSettingMenu
         m_Mode: 1
         m_Arguments:
@@ -5886,8 +5886,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: ShowVideoSetting
         m_Mode: 1
         m_Arguments:
@@ -6362,8 +6362,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 3
         m_Arguments:
@@ -7189,8 +7189,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: ReturnToTitle
         m_Mode: 1
         m_Arguments:
@@ -8255,7 +8255,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
+      - m_Target: {fileID: 2013545848}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ExitGame
         m_Mode: 1
@@ -9394,8 +9394,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: ShowSettingMenu
         m_Mode: 1
         m_Arguments:
@@ -10886,7 +10886,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2013545846}
   - component: {fileID: 2013545845}
-  - component: {fileID: 2013545847}
+  - component: {fileID: 2013545848}
   m_Layer: 0
   m_Name: UIMaster
   m_TagString: Untagged
@@ -10934,7 +10934,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2013545847
+--- !u!114 &2013545848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10943,7 +10943,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2013545844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb8dace197d305b44a32b9db9591875f, type: 3}
+  m_Script: {fileID: 11500000, guid: 88f6683fd4d21754e972fe4610c395bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thisScene: 0
@@ -11695,8 +11695,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013545847}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 2013545848}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
         m_MethodName: ShowMusicSetting
         m_Mode: 1
         m_Arguments:

@@ -206,8 +206,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 301059057}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 301059059}
+        m_TargetAssemblyTypeName: ConstructUI, Assembly-CSharp
         m_MethodName: SaveMap
         m_Mode: 1
         m_Arguments:
@@ -377,8 +377,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 301059057}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 301059059}
+        m_TargetAssemblyTypeName: ConstructUI, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 3
         m_Arguments:
@@ -840,8 +840,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 301059058}
-  - component: {fileID: 301059057}
   - component: {fileID: 301059056}
+  - component: {fileID: 301059059}
   m_Layer: 0
   m_Name: UIMaster
   m_TagString: Untagged
@@ -867,21 +867,6 @@ MonoBehaviour:
   firstInteracables:
   - {fileID: 1903951012}
   - {fileID: 124198914}
---- !u!114 &301059057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 301059055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb8dace197d305b44a32b9db9591875f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisScene: 1
-  nameDropdown: {fileID: 923035026}
-  nameInput: {fileID: 1367809864}
 --- !u!4 &301059058
 Transform:
   m_ObjectHideFlags: 0
@@ -896,6 +881,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &301059059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301059055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04f1bcebc36a49440864c6c9ce43006b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameDropdown: {fileID: 923035026}
+  nameInput: {fileID: 1367809864}
 --- !u!1 &354132350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1998,8 +1997,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 301059057}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 301059059}
+        m_TargetAssemblyTypeName: ConstructUI, Assembly-CSharp
         m_MethodName: LoadMap
         m_Mode: 1
         m_Arguments:
@@ -2681,9 +2680,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 301059057}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: AskExitBuilding
+      - m_Target: {fileID: 301059059}
+        m_TargetAssemblyTypeName: ConstructUI, Assembly-CSharp
+        m_MethodName: ShowExitQuestion
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2858,8 +2857,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 301059057}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 301059059}
+        m_TargetAssemblyTypeName: ConstructUI, Assembly-CSharp
         m_MethodName: ShowBuildMenu
         m_Mode: 1
         m_Arguments:
