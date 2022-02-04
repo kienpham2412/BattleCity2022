@@ -10,6 +10,16 @@ public abstract class UIManager : MonoBehaviour
     protected GameMenu menu;
     private SceneName thisScene;
 
+    public virtual void Awake() {
+        // myControl = new PlayerControl();
+    }
+
+    // // Start is called before the first frame update
+    public virtual void Start() {
+        menu = GetComponent<GameMenu>();
+        menu.HideAllMenus();
+    }
+
     /// <summary>
     /// Hide a menu
     /// </summary>
@@ -46,4 +56,5 @@ public abstract class UIManager : MonoBehaviour
     {
         menu.ShowMenu(1);
     }
+
 }

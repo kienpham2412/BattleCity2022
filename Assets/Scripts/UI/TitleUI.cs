@@ -6,18 +6,11 @@ using UnityEngine;
 public class TitleUI : UIManager
 {
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        menu = GetComponent<GameMenu>();
-        menu.HideAllMenus();
+        base.Start();
         menu.ShowMenu(0);
     }
-
-    // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
 
     /// <summary>
     /// Show setting menu

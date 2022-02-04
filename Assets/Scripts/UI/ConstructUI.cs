@@ -13,16 +13,17 @@ public class ConstructUI : UIManager
     private TMP_InputField input;
     protected PlayerControl myControl;
 
-    private void Awake() {
+    public override void Awake()
+    {
+        // base.Awake();
         myControl = new PlayerControl();
         myControl.UI.Cancel.performed += context => ShowBuildMenu();
     }
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        menu = GetComponent<GameMenu>();
-        menu.HideAllMenus();
+        base.Start();
         LoadFileName();
     }
 
@@ -115,12 +116,12 @@ public class ConstructUI : UIManager
         GameManager.singleton.LoadMap(name);
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         myControl.UI.Enable();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         myControl.UI.Disable();
     }
