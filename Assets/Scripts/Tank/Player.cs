@@ -10,7 +10,6 @@ public class Player : Tank
     private InputAction movement;
     private InputAction shoot;
     private Vector2 direction;
-
     private float xDirection, yDirection;
 
     void Awake() {

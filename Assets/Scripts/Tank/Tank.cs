@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Tank : MonoBehaviour
 {
     public GameObject shootingPos;
+    public Animator tankAnimator;
     private static Vector3 moveForward;
     private static Quaternion lookUp, lookDown, lookLeft, lookRight;
     private Rigidbody2D rb;
@@ -73,6 +74,7 @@ public abstract class Tank : MonoBehaviour
     protected void MoveForward()
     {
         rb.velocity = moveForward;
+        SetAnimation(true);
         // Debug.Log("Move forward");
     }
 
@@ -82,6 +84,7 @@ public abstract class Tank : MonoBehaviour
     protected void Stop()
     {
         rb.velocity = new Vector3(0, 0, 0);
+        SetAnimation(false);
     }
 
     /// <summary>
@@ -89,7 +92,15 @@ public abstract class Tank : MonoBehaviour
     /// </summary>
     protected void Shoot()
     {
+        GameObject aBullet = null;
+        while(aBullet == null){
+            aBullet = BulletPooler.singleton.getABullet(shootingPos.transform.position, transform.rotation);
+        }
         Debug.Log("Shoot");
+    }
+
+    private void SetAnimation(bool isRunning){
+        tankAnimator.SetBool("isRunning", isRunning);
     }
 
 }
