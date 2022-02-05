@@ -27,12 +27,12 @@ public class PlayGameUI : UIManager
         if (!menu.GetMenu(1).activeSelf)
         {
             menu.ShowMenu(1);
-            // Selector.singleton.ActiveInput(false);
+            Player.singleton.ActiveInput(false);
         }
         else
         {
             menu.HideMenu(1);
-            // Selector.singleton.ActiveInput(true);
+            Player.singleton.ActiveInput(true);
         }
     }
 

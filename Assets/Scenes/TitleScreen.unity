@@ -9040,7 +9040,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1689678295}
   - component: {fileID: 1689678294}
-  - component: {fileID: 1689678296}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -9075,18 +9074,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1689678296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689678293}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 617b5d33eb5693f4f977312a84dd2954, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1720134635
 GameObject:
   m_ObjectHideFlags: 0
@@ -10946,9 +10933,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f6683fd4d21754e972fe4610c395bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisScene: 0
-  nameDropdown: {fileID: 0}
-  nameInput: {fileID: 0}
 --- !u!1 &2021368998
 GameObject:
   m_ObjectHideFlags: 0

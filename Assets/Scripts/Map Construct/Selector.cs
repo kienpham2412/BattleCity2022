@@ -38,6 +38,8 @@ public class Selector : MonoBehaviour
         selectObstacle.performed += ctx => Select();
         placeObstacle.performed += ctx => PlaceObstacle();
 
+        Debug.Log("selector awake");
+
         ActiveInput(true);
 
         // Debug.Log("selector size: " + gameObject.GetComponent<SpriteRenderer>().bounds.size.x);
