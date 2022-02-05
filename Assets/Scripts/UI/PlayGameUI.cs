@@ -42,6 +42,7 @@ public class PlayGameUI : UIManager
     /// <param name="index">Index value of the menu</param>
     public override void HideMenu(int index)
     {
+        Player.singleton.ActiveInput(true);
         base.HideMenu(index);
     }
 

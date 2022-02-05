@@ -2,48 +2,93 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tank : MonoBehaviour
+public abstract class Tank : MonoBehaviour
 {
-    public static float speed = 0.5f;
-    private static float movementSpeed;
-    private static Vector3 moveUp, moveDown, moveLeft, moveRight;
+    public GameObject shootingPos;
+    private static Vector3 moveForward;
+    private static Quaternion lookUp, lookDown, lookLeft, lookRight;
+    private Rigidbody2D rb;
+    public float speed = 500f;
+
     // // Start is called before the first frame update
     void Start()
     {
-        movementSpeed = speed * Time.deltaTime;
-        moveUp = Vector3.up * movementSpeed;
-        moveDown = Vector3.down * movementSpeed;
-        moveLeft = Vector3.left * movementSpeed;
-        moveRight = Vector3.right * movementSpeed;
+        rb = GetComponent<Rigidbody2D>();
+
+        lookUp = Quaternion.Euler(0, 0, 0);
+        lookDown = Quaternion.Euler(0, 0, 180);
+        lookLeft = Quaternion.Euler(0, 0, 90);
+        lookRight = Quaternion.Euler(0, 0, -90);
     }
 
     // // Update is called once per frame
     // void Update()
     // {
-        
+
     // }
 
-    protected void MoveUp(){
-        gameObject.transform.Translate(moveUp, Space.World);
-        transform.rotation = Quaternion.LookRotation(Vector2.up);
-        Debug.Log("Move up");
+    /// <summary>
+    /// Turn the tank up
+    /// </summary>
+    protected void TurnUp()
+    {
+        gameObject.transform.rotation = lookUp;
+        moveForward = gameObject.transform.up * speed;
+        Debug.Log("Turn up");
     }
-    protected void MoveDown(){
-        gameObject.transform.Translate(moveDown, Space.World);
-        transform.rotation = Quaternion.LookRotation(Vector2.down);
-        Debug.Log("Move down");
+
+    /// <summary>
+    /// Turn the tank down
+    /// </summary>
+    protected void TurnDown()
+    {
+        gameObject.transform.rotation = lookDown;
+        moveForward = gameObject.transform.up * speed;
+        Debug.Log("Turn down");
     }
-    protected void MoveLeft(){
-        gameObject.transform.Translate(moveLeft, Space.World);
-        transform.rotation = Quaternion.LookRotation(Vector2.left);
-        Debug.Log("Move left");
+
+    /// <summary>
+    /// Turn the tank left
+    /// </summary>
+    protected void TurnLeft()
+    {
+        gameObject.transform.rotation = lookLeft;
+        moveForward = gameObject.transform.up * speed;
+        Debug.Log("Turn left");
     }
-    protected void MoveRight(){
-        gameObject.transform.Translate(moveRight, Space.World);
-        transform.rotation = Quaternion.LookRotation(Vector2.right);
-        Debug.Log("Move right");
+
+    /// <summary>
+    /// Turn the tank right
+    /// </summary>
+    protected void TurnRight()
+    {
+        gameObject.transform.rotation = lookRight;
+        moveForward = gameObject.transform.up * speed;
+        Debug.Log("Turn right");
     }
-    protected void Shoot(){
+
+    /// <summary>
+    /// Move the tank forward
+    /// </summary>
+    protected void MoveForward()
+    {
+        rb.velocity = moveForward;
+        // Debug.Log("Move forward");
+    }
+
+    /// <summary>
+    /// Stop the tank
+    /// </summary>
+    protected void Stop()
+    {
+        rb.velocity = new Vector3(0, 0, 0);
+    }
+
+    /// <summary>
+    /// Shoot the bullets
+    /// </summary>
+    protected void Shoot()
+    {
         Debug.Log("Shoot");
     }
 

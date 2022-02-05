@@ -21,6 +21,7 @@ public class Player : Tank
         shoot = playerControl.Gameplay.Shoot;
 
         movement.performed += ctx => Move();
+        movement.canceled += ctx => {xDirection = yDirection = 0;};
         shoot.performed += ctx => Shoot();
 
         Debug.Log("tank player awake");
@@ -33,12 +34,17 @@ public class Player : Tank
     // }
 
     void Update() {
-        if(yDirection == 1) MoveUp();
-        if(yDirection == -1) MoveDown();
-        if(xDirection == -1) MoveLeft();
-        if(xDirection == 1) MoveRight();
+        if(xDirection != 0 || yDirection != 0){
+            MoveForward();
+        } else {
+            Stop();
+        }
     }
 
+    /// <summary>
+    /// Enable and disable the input of the tank control
+    /// </summary>
+    /// <param name="isActive"></param>
     public void ActiveInput(bool isActive)
     {
         if (isActive)
@@ -51,16 +57,22 @@ public class Player : Tank
         }
     }
 
+    /// <summary>
+    /// Move the tank by control direction
+    /// </summary>
     void Move(){
         direction = movement.ReadValue<Vector2>();
         xDirection = direction.x;
         yDirection = direction.y;
+        if(yDirection == 1) TurnUp();
+        if(yDirection == -1) TurnDown();
+        if(xDirection == -1) TurnLeft();
+        if(xDirection == 1) TurnRight();
     }
 
-    // private void OnEnable() {
-    //     playerControl.Gameplay.Enable();
-    // }
-
+    /// <summary>
+    /// This function is called when the behaviour becomes disabled.
+    /// </summary>
     private void OnDisable() {
         ActiveInput(false);
     }
