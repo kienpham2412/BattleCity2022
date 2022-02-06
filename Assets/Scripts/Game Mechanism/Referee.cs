@@ -7,7 +7,7 @@ public class Referee : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // GameManager.singleton.LoadMap("battlecity");
+        GameManager.singleton.LoadMap("battlecity");
     }
 
     // Update is called once per frame

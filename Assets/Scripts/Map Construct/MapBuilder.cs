@@ -18,7 +18,7 @@ public class MapBuilder : MonoBehaviour
         pathFinder = GetComponent<PathFinder>();
         map = new Map();
         mapSize = map.mapSize;
-        CreateBlankMap();
+        // CreateBlankMap();
         // Debug.Log("obstacle size: " + obstacles[1].GetComponent<SpriteRenderer>().bounds.size.x);
     }
 

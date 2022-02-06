@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    public int x;
-    public int y;
-
-    public void SetCoordinate(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
+    // private void OnCollisionEnter2D(Collision2D other)
+    // {
+    //     if (other.gameObject.tag == "RegularBullet")
+    //     {
+    //         gameObject.SetActive(false);
+    //     }
+    // }
 }
