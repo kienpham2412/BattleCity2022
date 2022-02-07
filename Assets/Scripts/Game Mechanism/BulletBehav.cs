@@ -58,7 +58,7 @@ public class BulletBehav : MonoBehaviour
             {
                 gameObject.SetActive(false);
             }
-            if (hit.collider.tag != "Border")
+            if (hit.collider.tag != "Border" && hit.collider.tag != "RegularBullet")
             {
                 // hit.collider.gameObject.SetActive(false);
                 hit.transform.SendMessage("TakeDamage", message);

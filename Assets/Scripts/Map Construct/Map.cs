@@ -7,10 +7,10 @@ public class Coordinate
 {
     public int x;
     public int y;
-    public static Coordinate up = new Coordinate(0, 1);
-    public static Coordinate down = new Coordinate(0, -1);
-    public static Coordinate left = new Coordinate(-1, 0);
-    public static Coordinate right = new Coordinate(1, 0);
+    public static Coordinate right = new Coordinate(0, 1);
+    public static Coordinate left = new Coordinate(0, -1);
+    public static Coordinate down = new Coordinate(-1, 0);
+    public static Coordinate up = new Coordinate(1, 0);
 
     public static List<Coordinate> directions = new List<Coordinate>(){
         new Coordinate(0, 1),
@@ -105,11 +105,6 @@ public class Map
     {
         Initialize(true);
         GeneratePath(new Coordinate(6, 0));
-        // StraightPath(new Coordinate(0, 12), "down");
-        // StraightPath(new Coordinate(6, 12), "down");
-        // StraightPath(new Coordinate(12, 12), "down");
-        // StraightPath(new Coordinate(0, 4), "up");
-        // StraightPath(new Coordinate(0, 8), "up");
         Debug.Log("finish generate");
     }
 

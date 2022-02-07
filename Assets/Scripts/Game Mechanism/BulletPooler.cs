@@ -72,7 +72,7 @@ public class BulletPooler : MonoBehaviour
                 {
                     bullet.transform.position = position;
                     bullet.transform.rotation = rotation;
-                    bullet.GetComponent<PowerUpBullet>().setPlayerOrigin(playerOrigin);
+                    bullet.GetComponent<RegularBullet>().setPlayerOrigin(playerOrigin);
                     bullet.SetActive(true);
                     return bullet;
                 }

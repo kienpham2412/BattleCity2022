@@ -9,6 +9,7 @@ public abstract class Tank : MonoBehaviour
     private static Vector3 moveForward;
     private static Quaternion lookUp, lookDown, lookLeft, lookRight;
     private Rigidbody2D rb;
+    protected bool playerOrigin, powerUp;
     private float speed = 1f;
 
     // // Start is called before the first frame update
@@ -95,7 +96,7 @@ public abstract class Tank : MonoBehaviour
     {
         GameObject aBullet = null;
         while(aBullet == null){
-            aBullet = BulletPooler.singleton.getABullet(shootingPos.transform.position, transform.rotation, true, playerOrigin);
+            aBullet = BulletPooler.singleton.getABullet(shootingPos.transform.position, transform.rotation, powerUp, playerOrigin);
         }
         Debug.Log("Shoot");
     }

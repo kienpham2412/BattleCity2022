@@ -116,6 +116,18 @@ public class ConstructUI : UIManager
         GameManager.singleton.LoadMap(name);
     }
 
+    public void GenerateMap(){
+        GameManager.singleton.mapBuilder.GenerateRandomMap();
+    }
+
+    public void GenerateBaseMap(){
+        GameManager.singleton.mapBuilder.GenerateBaseMap();
+    }
+
+    public void CreateBlankMap(){
+        GameManager.singleton.mapBuilder.CreateBlankMap();
+    }
+
     public void OnEnable()
     {
         myControl.UI.Enable();

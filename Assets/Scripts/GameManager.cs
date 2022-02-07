@@ -29,10 +29,4 @@ public class GameManager : MonoBehaviour
     public void LoadMap(string name){
         mapBuilder.BuildSavedMap(mapSaver.Load(name));
     }
-
-    // // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
 }

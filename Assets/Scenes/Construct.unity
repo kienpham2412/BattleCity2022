@@ -2264,8 +2264,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1545930289}
-        m_TargetAssemblyTypeName: MapBuilder, Assembly-CSharp
+      - m_Target: {fileID: 301059059}
+        m_TargetAssemblyTypeName: ConstructUI, Assembly-CSharp
         m_MethodName: CreateBlankMap
         m_Mode: 1
         m_Arguments:
@@ -3903,8 +3903,6 @@ MonoBehaviour:
   map:
     mapName: 
     mapSize: 13
-  mapSize: 11
-  wallOffset: 0.125
 --- !u!114 &1545930290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4469,9 +4467,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1545930289}
-        m_TargetAssemblyTypeName: MapBuilder, Assembly-CSharp
-        m_MethodName: GenerateRandomMap
+      - m_Target: {fileID: 301059059}
+        m_TargetAssemblyTypeName: ConstructUI, Assembly-CSharp
+        m_MethodName: GenerateMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4788,8 +4786,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1545930289}
-        m_TargetAssemblyTypeName: MapBuilder, Assembly-CSharp
+      - m_Target: {fileID: 301059059}
+        m_TargetAssemblyTypeName: ConstructUI, Assembly-CSharp
         m_MethodName: GenerateBaseMap
         m_Mode: 1
         m_Arguments:
