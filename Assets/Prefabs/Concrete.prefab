@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6269044799780666891}
   - component: {fileID: 6269044799780666890}
   - component: {fileID: -3681416608861664539}
-  - component: {fileID: -7961740210193951413}
   - component: {fileID: -8824536592228323689}
+  - component: {fileID: 2707645805907943842}
   m_Layer: 0
   m_Name: Concrete
   m_TagString: Untagged
@@ -112,18 +112,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-7961740210193951413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6269044799780666901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4acba1d9cfde454dacb8a2276a09871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &-8824536592228323689
 Rigidbody2D:
   serializedVersion: 4
@@ -145,3 +133,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2707645805907943842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6269044799780666901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da4b6ed269737043a987518f5c06860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

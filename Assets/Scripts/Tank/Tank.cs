@@ -9,7 +9,7 @@ public abstract class Tank : MonoBehaviour
     private static Vector3 moveForward;
     private static Quaternion lookUp, lookDown, lookLeft, lookRight;
     private Rigidbody2D rb;
-    public float speed = 500f;
+    private float speed = 1f;
 
     // // Start is called before the first frame update
     void Start()
@@ -94,11 +94,15 @@ public abstract class Tank : MonoBehaviour
     {
         GameObject aBullet = null;
         while(aBullet == null){
-            aBullet = BulletPooler.singleton.getABullet(shootingPos.transform.position, transform.rotation);
+            aBullet = BulletPooler.singleton.getABullet(shootingPos.transform.position, transform.rotation, true);
         }
         Debug.Log("Shoot");
     }
 
+    /// <summary>
+    /// Set the animation when the tank is moving
+    /// </summary>
+    /// <param name="isRunning"></param>
     private void SetAnimation(bool isRunning){
         tankAnimator.SetBool("isRunning", isRunning);
     }

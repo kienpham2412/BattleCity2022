@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class BulletBehav : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private Collider2D cl;
+    protected Rigidbody2D rb;
+    protected Collider2D cl;
     private static float raycastLength;
-    public float speed = 200f;
+    private static float speed = 20f;
     private int mask;
+    protected int damage;
+    protected bool powerUp;
+    private object[] message;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         cl = GetComponent<Collider2D>();
-        raycastLength = 0.2f;
         mask = LayerMask.GetMask("MyWater");
+        raycastLength = 0.2f;
+        
+        message = new object[2];
+        message[0] = damage;
+        message[1] = powerUp;
     }
 
     // Update is called once per frame
@@ -51,7 +58,8 @@ public class BulletBehav : MonoBehaviour
             }
             if (hit.collider.tag != "Border")
             {
-                hit.collider.gameObject.SetActive(false);
+                // hit.collider.gameObject.SetActive(false);
+                hit.transform.SendMessage("TakeDamage", message);
             }
         }
 

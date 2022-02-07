@@ -5,14 +5,15 @@ using UnityEngine;
 public class BulletPooler : MonoBehaviour
 {
     public static BulletPooler singleton;
-    public GameObject bulletSample;
+    public GameObject regularBullet, powerBullet;
     public GameObject bulletPool;
-    private List<GameObject> bullets;
+    private List<GameObject> regularList, powerList;
 
     // Start is called before the first frame update
     void Start()
     {
-        bullets = new List<GameObject>();
+        regularList = new List<GameObject>();
+        powerList = new List<GameObject>();
         singleton = GetComponent<BulletPooler>();
 
         CreatePool();
@@ -28,24 +29,54 @@ public class BulletPooler : MonoBehaviour
     {
         for (int i = 0; i < 10; i++)
         {
-            GameObject bullet = Instantiate(bulletSample, transform.position, Quaternion.identity, bulletPool.transform);
-            bullet.SetActive(false);
-            bullets.Add(bullet);
+            CreateBullet(regularBullet, false);
+            CreateBullet(powerBullet, true);
         }
     }
 
-    public GameObject getABullet(Vector3 position, Quaternion rotation)
+    private void CreateBullet(GameObject sample, bool powerUp)
     {
-        foreach (GameObject bullet in bullets)
+        GameObject bullet = Instantiate(sample, transform.position, Quaternion.identity, bulletPool.transform);
+        bullet.SetActive(false);
+        if (powerUp)
         {
-            if (!bullet.activeSelf)
+            powerList.Add(bullet);
+        }
+        else
+        {
+            regularList.Add(bullet);
+        }
+    }
+
+    public GameObject getABullet(Vector3 position, Quaternion rotation, bool powerUp)
+    {
+        if (powerUp)
+        {
+            foreach (GameObject bullet in powerList)
             {
-                bullet.transform.position = position;
-                bullet.transform.rotation = rotation;
-                bullet.SetActive(true);
-                return bullet;
+                if (!bullet.activeSelf)
+                {
+                    bullet.transform.position = position;
+                    bullet.transform.rotation = rotation;
+                    bullet.SetActive(true);
+                    return bullet;
+                }
             }
         }
+        else
+        {
+            foreach (GameObject bullet in regularList)
+            {
+                if (!bullet.activeSelf)
+                {
+                    bullet.transform.position = position;
+                    bullet.transform.rotation = rotation;
+                    bullet.SetActive(true);
+                    return bullet;
+                }
+            }
+        }
+
         return null;
     }
 }

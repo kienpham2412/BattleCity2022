@@ -1163,7 +1163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e07d912559d084ebad4611487637da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSample: {fileID: 2103816817847467463, guid: 7ba47bec57725554ca6d02e2fb26970c, type: 3}
+  regularBullet: {fileID: 2103816817847467463, guid: 7ba47bec57725554ca6d02e2fb26970c, type: 3}
+  powerBullet: {fileID: 8499492520855965078, guid: 831c901c38f6bce4098834b692ff8e25, type: 3}
   bulletPool: {fileID: 53928570}
 --- !u!114 &2011169247
 MonoBehaviour:
