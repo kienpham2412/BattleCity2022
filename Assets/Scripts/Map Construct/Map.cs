@@ -7,7 +7,11 @@ public class Coordinate
 {
     public int x;
     public int y;
-    
+    public static Coordinate up = new Coordinate(0, 1);
+    public static Coordinate down = new Coordinate(0, -1);
+    public static Coordinate left = new Coordinate(-1, 0);
+    public static Coordinate right = new Coordinate(1, 0);
+
     public static List<Coordinate> directions = new List<Coordinate>(){
         new Coordinate(0, 1),
         new Coordinate(0,-1),
@@ -75,30 +79,64 @@ public class Map
     public int mapSize = 13;
     public List<Coordinate> spaces;
     public List<Coordinate> blocks;
+    public static Coordinate tower = new Coordinate(0,6);
+    public static Coordinate enemySpawnPos1 = new Coordinate(0,12);
+    public static Coordinate enemySpawnPos2 = new Coordinate(6,12);
+    public static Coordinate enemySpawnPos3 = new Coordinate(12,12);
+    public static Coordinate playerSpawnPos1 = new Coordinate(4,0);
+    public static Coordinate playerSpawnPos2 = new Coordinate(8,0);
+    public static Coordinate towerWall1 = new Coordinate(5,0);
+    public static Coordinate towerWall2 = new Coordinate(7,0);
+    public static Coordinate towerWall3 = new Coordinate(5,1);
+    public static Coordinate towerWall4 = new Coordinate(6,1);
+    public static Coordinate towerWall5 = new Coordinate(7,1);
+
     public Map()
     {
         baseMap = new int[mapSize, mapSize];
     }
 
-    public void CreateBlank(){
+    public void CreateBlank()
+    {
         Initialize(false);
     }
 
-    public void CreateBaseMap(){
+    public void CreateBaseMap()
+    {
         Initialize(true);
-        GeneratePath(new Coordinate(0,0));
+        GeneratePath(new Coordinate(6, 0));
+        // StraightPath(new Coordinate(0, 12), "down");
+        // StraightPath(new Coordinate(6, 12), "down");
+        // StraightPath(new Coordinate(12, 12), "down");
+        // StraightPath(new Coordinate(0, 4), "up");
+        // StraightPath(new Coordinate(0, 8), "up");
+        Debug.Log("finish generate");
     }
 
-    public void Random(){
-        Initialize(true);
-        GeneratePath(new Coordinate(0,0));
+    public void Random()
+    {
+        CreateBaseMap();
         RegenerageMap();
         PlaceTower();
+        PlaceSpawnPoint();
     }
 
-    private void PlaceTower()
+    public void PlaceTower()
     {
         SetMap(6, 0, 5);
+        SetMap(5, 0, 2);
+        SetMap(7, 0, 2);
+        SetMap(5, 1, 2);
+        SetMap(6, 1, 2);
+        SetMap(7, 1, 2);
+    }
+
+    public void PlaceSpawnPoint(){
+        SetMap(0,12,0);
+        SetMap(6,12,0);
+        SetMap(12,12,0);
+        SetMap(4,0,0);
+        SetMap(8,0,0);
     }
 
     public void SetMap(int x, int y, int value)
@@ -106,6 +144,10 @@ public class Map
         baseMap[x, y] = value;
     }
 
+    /// <summary>
+    /// Create a basic map
+    /// </summary>
+    /// <param name="fill">true of the map is full concrete and false if the map is empty</param>
     public void Initialize(bool fill)
     {
         for (int x = 0; x < mapSize; x++)
@@ -125,7 +167,7 @@ public class Map
             {
                 if (baseMap[x, y] == 0)
                     Change(true, x, y);
-                    
+
                 if (baseMap[x, y] == 1)
                     Change(false, x, y);
             }
@@ -168,7 +210,7 @@ public class Map
         return spaceCount;
     }
 
-    // <summary>
+    /// <summary>
     /// Generate a path from begin coordinate
     /// </summary>
     /// <param name="begin">The start coordinate</param>
@@ -183,5 +225,29 @@ public class Map
         GeneratePath(begin + Coordinate.directions[1]);
         GeneratePath(begin + Coordinate.directions[2]);
         GeneratePath(begin + Coordinate.directions[3]);
+    }
+
+    private void StraightPath(Coordinate begin, string direction)
+    {
+        if (NeighbourSpace(begin) >= 2 || !begin.IsInsideMap(mapSize)) return;
+
+        baseMap[begin.x, begin.y] = 0;
+        switch (direction)
+        {
+            case "up":
+                GeneratePath(begin + Coordinate.up);
+                break;
+            case "down":
+                GeneratePath(begin + Coordinate.down);
+                break;
+            case "left":
+                GeneratePath(begin + Coordinate.left);
+                break;
+            case "right":
+                GeneratePath(begin + Coordinate.right);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -12,6 +12,7 @@ public class BulletBehav : MonoBehaviour
     protected int damage;
     protected bool powerUp;
     private object[] message;
+    public bool playerOrigin;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -20,10 +21,11 @@ public class BulletBehav : MonoBehaviour
         cl = GetComponent<Collider2D>();
         mask = LayerMask.GetMask("MyWater");
         raycastLength = 0.2f;
-        
-        message = new object[2];
+
+        message = new object[3];
         message[0] = damage;
         message[1] = powerUp;
+        message[2] = playerOrigin;
     }
 
     // Update is called once per frame
@@ -64,5 +66,9 @@ public class BulletBehav : MonoBehaviour
         }
 
         // Debug.DrawRay(raycastStartPos, gameObject.transform.up * raycastLength, Color.red);
+    }
+
+    public void setPlayerOrigin(bool isPlayer){
+        playerOrigin = isPlayer;
     }
 }

@@ -24,6 +24,9 @@ public class MapSaver
         CreateDir();
 
         map.mapName = name;
+        // map.PlaceTower();
+        // map.PlaceSpawnPoint();
+
         file = File.Create(CreatePath(name));
         bf.Serialize(file, map);
         file.Close();

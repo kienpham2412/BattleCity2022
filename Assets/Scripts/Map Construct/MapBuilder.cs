@@ -9,8 +9,8 @@ public class MapBuilder : MonoBehaviour
     public GameObject mapObject;
     private PathFinder pathFinder;
     public Map map;
-    public int mapSize;
-    public float wallOffset;
+    private int mapSize;
+    private float wallOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -78,7 +78,7 @@ public class MapBuilder : MonoBehaviour
                     Instantiate(wall, new Vector3((float)x, (float)y + wallOffset, 0), Quaternion.identity, mapObject.transform);
 
                 baseVal = map.baseMap[x, y];
-                Instantiate(obstacles[baseVal], new Vector3((float)x, (float)y, 0), this.transform.rotation, mapObject.transform);
+                GameObject block = Instantiate(obstacles[baseVal], new Vector3((float)x, (float)y, 0), this.transform.rotation, mapObject.transform);
             }
         }
     }

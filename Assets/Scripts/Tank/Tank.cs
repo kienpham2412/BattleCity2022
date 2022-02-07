@@ -90,11 +90,12 @@ public abstract class Tank : MonoBehaviour
     /// <summary>
     /// Shoot the bullets
     /// </summary>
-    protected void Shoot()
+    /// <param name="playerOrigin">Is the bullet shoot by the player</param>
+    protected void Shoot(bool playerOrigin)
     {
         GameObject aBullet = null;
         while(aBullet == null){
-            aBullet = BulletPooler.singleton.getABullet(shootingPos.transform.position, transform.rotation, true);
+            aBullet = BulletPooler.singleton.getABullet(shootingPos.transform.position, transform.rotation, true, playerOrigin);
         }
         Debug.Log("Shoot");
     }

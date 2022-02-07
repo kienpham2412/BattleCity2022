@@ -11,6 +11,7 @@ public class Player : Tank
     private InputAction shoot;
     private Vector2 direction;
     private float xDirection, yDirection;
+    private bool playerOrigin = true;
 
     void Awake() {
         singleton = GetComponent<Player>();
@@ -21,7 +22,7 @@ public class Player : Tank
 
         movement.performed += ctx => Move();
         movement.canceled += ctx => {xDirection = yDirection = 0;};
-        shoot.performed += ctx => Shoot();
+        shoot.performed += ctx => Shoot(playerOrigin);
 
         Debug.Log("tank player awake");
 

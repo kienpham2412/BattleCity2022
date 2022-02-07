@@ -97,10 +97,11 @@ public class Selector : MonoBehaviour
     {
         float value = selectObstacle.ReadValue<float>();
         int dir = (int)value;
+        int selectRange = sprites.Count;
         obstacleIndex += dir;
 
-        if (obstacleIndex < 0) obstacleIndex = mapBuilder.obstacles.Count - 1;
-        else if (obstacleIndex >= mapBuilder.obstacles.Count) obstacleIndex = 0;
+        if (obstacleIndex < 0) obstacleIndex = selectRange - 1;
+        else if (obstacleIndex >= selectRange) obstacleIndex = 0;
         Debug.Log(obstacleIndex);
 
         mySprite.sprite = sprites[obstacleIndex];

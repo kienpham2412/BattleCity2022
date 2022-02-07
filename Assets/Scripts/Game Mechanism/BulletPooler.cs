@@ -48,7 +48,7 @@ public class BulletPooler : MonoBehaviour
         }
     }
 
-    public GameObject getABullet(Vector3 position, Quaternion rotation, bool powerUp)
+    public GameObject getABullet(Vector3 position, Quaternion rotation, bool powerUp, bool playerOrigin = true)
     {
         if (powerUp)
         {
@@ -58,6 +58,7 @@ public class BulletPooler : MonoBehaviour
                 {
                     bullet.transform.position = position;
                     bullet.transform.rotation = rotation;
+                    bullet.GetComponent<PowerUpBullet>().setPlayerOrigin(playerOrigin);
                     bullet.SetActive(true);
                     return bullet;
                 }
@@ -71,6 +72,7 @@ public class BulletPooler : MonoBehaviour
                 {
                     bullet.transform.position = position;
                     bullet.transform.rotation = rotation;
+                    bullet.GetComponent<PowerUpBullet>().setPlayerOrigin(playerOrigin);
                     bullet.SetActive(true);
                     return bullet;
                 }
