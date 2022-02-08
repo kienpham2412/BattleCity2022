@@ -79,12 +79,12 @@ public class Map
     public int mapSize = 13;
     public List<Coordinate> spaces;
     public List<Coordinate> blocks;
-    public static Coordinate tower = new Coordinate(0,6);
-    public static Coordinate enemySpawnPos1 = new Coordinate(0,12);
-    public static Coordinate enemySpawnPos2 = new Coordinate(6,12);
-    public static Coordinate enemySpawnPos3 = new Coordinate(12,12);
-    public static Coordinate playerSpawnPos1 = new Coordinate(4,0);
-    public static Coordinate playerSpawnPos2 = new Coordinate(8,0);
+    public static Coordinate tower = new Coordinate(6,0);
+    public static Coordinate enemySpawnLeft = new Coordinate(0,12);
+    public static Coordinate enemySpawnMid = new Coordinate(6,12);
+    public static Coordinate enemySpawnRight = new Coordinate(12,12);
+    public static Coordinate playerSpawnLeft = new Coordinate(4,0);
+    public static Coordinate playerSpawnRignt = new Coordinate(8,0);
     public static Coordinate towerWall1 = new Coordinate(5,0);
     public static Coordinate towerWall2 = new Coordinate(7,0);
     public static Coordinate towerWall3 = new Coordinate(5,1);
@@ -142,7 +142,7 @@ public class Map
     /// <summary>
     /// Create a basic map
     /// </summary>
-    /// <param name="fill">true of the map is full concrete and false if the map is empty</param>
+    /// <param name="fill">true if the map is full of concretes and false if the map is empty</param>
     public void Initialize(bool fill)
     {
         for (int x = 0; x < mapSize; x++)

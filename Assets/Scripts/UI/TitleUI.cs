@@ -66,7 +66,9 @@ public class TitleUI : UIManager
     /// </summary>
     public void ExitGame()
     {
+#if UNITY_EDITOR    // preprocessor directive 
         UnityEditor.EditorApplication.isPlaying = false;
+#endif
         Application.Quit();
     }
 

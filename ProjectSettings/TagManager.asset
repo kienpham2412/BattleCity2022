@@ -8,6 +8,11 @@ TagManager:
   - RegularBullet
   - MyWater
   - Border
+  - Brick
+  - Concrete
+  - Tower
+  - PlayerTank
+  - EnemyTank
   layers:
   - Default
   - TransparentFX

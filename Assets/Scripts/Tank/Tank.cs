@@ -36,7 +36,7 @@ public abstract class Tank : MonoBehaviour
     {
         gameObject.transform.rotation = lookUp;
         moveForward = gameObject.transform.up * speed;
-        Debug.Log("Turn up");
+        // Debug.Log("Turn up");
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public abstract class Tank : MonoBehaviour
     {
         gameObject.transform.rotation = lookDown;
         moveForward = gameObject.transform.up * speed;
-        Debug.Log("Turn down");
+        // Debug.Log("Turn down");
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public abstract class Tank : MonoBehaviour
     {
         gameObject.transform.rotation = lookLeft;
         moveForward = gameObject.transform.up * speed;
-        Debug.Log("Turn left");
+        // Debug.Log("Turn left");
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public abstract class Tank : MonoBehaviour
     {
         gameObject.transform.rotation = lookRight;
         moveForward = gameObject.transform.up * speed;
-        Debug.Log("Turn right");
+        // Debug.Log("Turn right");
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public abstract class Tank : MonoBehaviour
         while(aBullet == null){
             aBullet = BulletPooler.singleton.getABullet(shootingPos.transform.position, transform.rotation, powerUp, playerOrigin);
         }
-        Debug.Log("Shoot");
+        // Debug.Log("Shoot");
     }
 
     /// <summary>
