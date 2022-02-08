@@ -36,19 +36,20 @@ public class BulletBehav : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "MyWater")
+        if (other.gameObject.tag != "RegularBullet" && other.gameObject.tag != "MyWater" && other.gameObject.tag != "PlayerTank")
         {
-            Physics2D.IgnoreCollision(other.gameObject.GetComponent<Collider2D>(), cl);
-            return;
-        }
-
-        if (other.gameObject.tag != "Border" && other.gameObject.tag != "RegularBullet"){
             other.transform.SendMessage("TakeDamage", message);
+            gameObject.SetActive(false);
         }
 
-        gameObject.SetActive(false);
-        Debug.Log($"collide with: {other.gameObject.tag}");
+        if(other.gameObject.tag == "Border"){
+            gameObject.SetActive(false);
+        }
     }
+
+    // private void OnCollisionExit2D(Collision2D other) {
+    //     rb.simulated = true;
+    // }
 
     // void FixedUpdate()
     // {
@@ -65,7 +66,7 @@ public class BulletBehav : MonoBehaviour
     //         gameObject.SetActive(false);
     //         // Referee.singleton.SpawnClExplosion(hit.point);
     //     }
-        
+
     //     if (hit.collider.tag != "Border" && hit.collider.tag != "RegularBullet")
     //     {
     //         // hit.collider.gameObject.SetActive(false);
