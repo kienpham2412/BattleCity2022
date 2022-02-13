@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 1470149007737201016}
   - component: {fileID: 9019677759601484914}
   - component: {fileID: 552876444}
-  - component: {fileID: 8542872134224595077}
+  - component: {fileID: 5671249442156028312}
   m_Layer: 0
   m_Name: Tank
   m_TagString: PlayerTank
@@ -252,7 +252,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8542872134224595077
+--- !u!114 &5671249442156028312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,6 +261,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 9019677759601484815}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1090ced868ea3ea44804305ebf079198, type: 3}
+  m_Script: {fileID: 11500000, guid: 8df40aa90ccc6ea469752734cf4527ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

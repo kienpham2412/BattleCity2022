@@ -25,7 +25,7 @@ public class Player : Tank
         shoot.performed += ctx => Shoot(playerOrigin);
 
         playerOrigin = true;
-        powerUp = true;
+        powerUp = false;
 
         Debug.Log("tank player awake");
 

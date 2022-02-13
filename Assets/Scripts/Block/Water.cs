@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Water : MonoBehaviour
+public class Water : Block
 {
-    private Collider2D cl;
+    private Collider2D thisCollider;
     // // Start is called before the first frame update
     void Start()
     {
-        cl = GetComponent<Collider2D>();
+        health = 100;
+        thisCollider = GetComponent<Collider2D>();
         // health = 4;
     }
 
@@ -22,8 +23,8 @@ public class Water : MonoBehaviour
     {
         if (other.gameObject.tag == "RegularBullet")
         {
-            Physics2D.IgnoreCollision(other.gameObject.GetComponent<Collider2D>(), cl, true);
-            Debug.Log($"collide with: {other.gameObject.tag}");
+            Physics2D.IgnoreCollision(other.gameObject.GetComponent<Collider2D>(), thisCollider, true);
+            // Debug.Log($"collide with: {other.gameObject.tag}");
         }
     }
 }

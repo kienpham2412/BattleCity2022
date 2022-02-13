@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class Block : MonoBehaviour
 {
-    public Coordinate position;
     protected int health;
 
     /// <summary>
@@ -14,7 +13,8 @@ public abstract class Block : MonoBehaviour
     protected virtual void TakeDamage(object[] message)
     {
         health -= (int)message[0];
-        if(health <=0){
+        if (health <= 0)
+        {
             gameObject.SetActive(false);
         }
         // Debug.Log($"Hit by bullet at {gameObject.transform.position} with {damage} damage");

@@ -36,15 +36,23 @@ public class BulletBehav : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag != "RegularBullet" && other.gameObject.tag != "MyWater" && other.gameObject.tag != "PlayerTank")
+        string otherTag = other.gameObject.tag;
+
+        if (otherTag == "Border")
+        {
+            gameObject.SetActive(false);
+        }
+        else if (otherTag == "PlayerTank" && playerOrigin)
+        {
+            gameObject.SetActive(true);
+        }
+        else if (otherTag != "RegularBullet" && otherTag != "MyWater")// && otherTag != "PlayerTank")
         {
             other.transform.SendMessage("TakeDamage", message);
             gameObject.SetActive(false);
         }
 
-        if(other.gameObject.tag == "Border"){
-            gameObject.SetActive(false);
-        }
+        Debug.Log($"collide with: {otherTag}");
     }
 
     // private void OnCollisionExit2D(Collision2D other) {

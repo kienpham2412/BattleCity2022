@@ -8,7 +8,7 @@ public class Enemy : Tank
     void Start()
     {
         playerOrigin = false;
-        powerUp = false;
+        powerUp = true;
         InvokeRepeating("AutoShoot", 1, 1);
     }
 
