@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPooler : MonoBehaviour
+public abstract class ObjectPooler : MonoBehaviour
 {
     public GameObject poolObj;
-    public List<GameObject> samples;
+    public GameObject[] samples;
     protected List<GameObject> pool;
     // Start is called before the first frame update
     protected virtual void Start()
@@ -29,7 +29,7 @@ public class ObjectPooler : MonoBehaviour
         gameObj.SetActive(false);
     }
 
-    public virtual GameObject GetClone(Vector3 position, Quaternion rotation)
+    public virtual GameObject GetClone(Vector2 position, Quaternion rotation)
     {
         foreach (GameObject gameObj in pool)
         {

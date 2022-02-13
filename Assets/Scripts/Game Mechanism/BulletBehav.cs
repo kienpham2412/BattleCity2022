@@ -5,22 +5,17 @@ using UnityEngine;
 public class BulletBehav : MonoBehaviour
 {
     protected Rigidbody2D rb;
-    protected Collider2D cl;
-    // private static float raycastLength;
     private static float speed = 20f;
-    private int mask;
     protected int damage;
     protected bool powerUp;
     private object[] message;
     public bool playerOrigin;
+    public int tankID;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        cl = GetComponent<Collider2D>();
-        mask = LayerMask.GetMask("MyWater");
-        // raycastLength = 0.2f;
 
         message = new object[3];
         message[0] = damage;
@@ -37,56 +32,50 @@ public class BulletBehav : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         string otherTag = other.gameObject.tag;
+        int otherID = other.gameObject.GetInstanceID();
 
-        if (otherTag == "Border")
+        if (otherTag == "MyWater")
         {
-            gameObject.SetActive(false);
-        }
-        else if (otherTag == "PlayerTank" && playerOrigin)
-        {
-            gameObject.SetActive(true);
-        }
-        else if (otherTag != "RegularBullet" && otherTag != "MyWater")// && otherTag != "PlayerTank")
-        {
-            other.transform.SendMessage("TakeDamage", message);
-            gameObject.SetActive(false);
+            return;
         }
 
-        Debug.Log($"collide with: {otherTag}");
+        if (otherTag == "RegularBullet")
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        if (otherID == tankID)
+        {
+            return;
+        }
+
+        if (otherTag == "EnemyTank" && otherID != tankID)
+        {
+            if (playerOrigin)
+            {
+                CreatDamage(other);
+            }
+
+            gameObject.SetActive(false);
+            return;
+        }
+
+        CreatDamage(other);
+        gameObject.SetActive(false);
+
+        // Debug.Log($"collide with: {otherTag}");
     }
 
-    // private void OnCollisionExit2D(Collision2D other) {
-    //     rb.simulated = true;
-    // }
+    private void CreatDamage(Collision2D other)
+    {
+        other.transform.SendMessage("TakeDamage", message);
+        Referee.singleton.SpawnClExplosion(other.contacts[0].point);
+    }
 
-    // void FixedUpdate()
-    // {
-    //     Vector3 raycastStartPos = gameObject.transform.position + gameObject.transform.up * 0.5f;
-    //     RaycastHit2D hit = Physics2D.Raycast(raycastStartPos, gameObject.transform.up, raycastLength);
-
-    //     if (hit.collider == null)
-    //     {
-    //         return;
-    //     }
-
-    //     if (hit.collider.tag != "MyWater")
-    //     {
-    //         gameObject.SetActive(false);
-    //         // Referee.singleton.SpawnClExplosion(hit.point);
-    //     }
-
-    //     if (hit.collider.tag != "Border" && hit.collider.tag != "RegularBullet")
-    //     {
-    //         // hit.collider.gameObject.SetActive(false);
-    //         hit.transform.SendMessage("TakeDamage", message);
-    //     }
-
-
-    //     // Debug.DrawRay(raycastStartPos, gameObject.transform.up * raycastLength, Color.red);
-    // }
-
-    public void setPlayerOrigin(bool isPlayer)
+    public void setOrigin(bool isPlayer, int tankID)
     {
         playerOrigin = isPlayer;
+        this.tankID = tankID;
     }
 }

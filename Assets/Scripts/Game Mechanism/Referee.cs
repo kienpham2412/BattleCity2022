@@ -6,7 +6,10 @@ public class Referee : MonoBehaviour
 {
     public static Referee singleton;
     private MapBuilder mapBuilder;
+
+    [SerializeField]
     private ParticalController particalCtrl;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -25,10 +28,11 @@ public class Referee : MonoBehaviour
     // Update is called once per frame
     // void Update()
     // {
-        
+
     // }
 
-    public void SpawnClExplosion(Vector3 position){
+    public void SpawnClExplosion(Vector2 position)
+    {
         particalCtrl.GetClone(position, Quaternion.identity);
     }
 }

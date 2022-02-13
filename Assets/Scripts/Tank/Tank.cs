@@ -10,9 +10,9 @@ public abstract class Tank : MonoBehaviour
     private static Quaternion lookUp, lookDown, lookLeft, lookRight;
     private Rigidbody2D rb;
     protected bool playerOrigin, powerUp;
-    private float speed = 1f;
+    protected float speed = 1f;
 
-    // // Start is called before the first frame update
+    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -22,12 +22,6 @@ public abstract class Tank : MonoBehaviour
         lookLeft = Quaternion.Euler(0, 0, 90);
         lookRight = Quaternion.Euler(0, 0, -90);
     }
-
-    // // Update is called once per frame
-    // void Update()
-    // {
-
-    // }
 
     /// <summary>
     /// Turn the tank up
@@ -94,10 +88,7 @@ public abstract class Tank : MonoBehaviour
     /// <param name="playerOrigin">Is the bullet shoot by the player</param>
     protected void Shoot(bool playerOrigin)
     {
-        GameObject aBullet = null;
-        while(aBullet == null){
-            aBullet = BulletPooler.singleton.getABullet(shootingPos.transform.position, transform.rotation, powerUp, playerOrigin);
-        }
+        BulletPooler.singleton.GetClone(shootingPos.transform.position, transform.rotation, powerUp, gameObject.GetInstanceID(), playerOrigin);
         // Debug.Log("Shoot");
     }
 
@@ -105,7 +96,8 @@ public abstract class Tank : MonoBehaviour
     /// Set the animation when the tank is moving
     /// </summary>
     /// <param name="isRunning"></param>
-    private void SetAnimation(bool isRunning){
+    private void SetAnimation(bool isRunning)
+    {
         tankAnimator.SetBool("isRunning", isRunning);
     }
 

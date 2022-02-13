@@ -8,7 +8,7 @@ public class Enemy : Tank
     void Start()
     {
         playerOrigin = false;
-        powerUp = true;
+        powerUp = false;
         InvokeRepeating("AutoShoot", 1, 1);
     }
 
@@ -16,10 +16,8 @@ public class Enemy : Tank
         base.Shoot(playerOrigin);
     }
 
-    // // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
+    private void OnDisable() {
+        CancelInvoke();
+    }
 
 }

@@ -25,16 +25,12 @@ public class Player : Tank
         shoot.performed += ctx => Shoot(playerOrigin);
 
         playerOrigin = true;
-        powerUp = false;
+        powerUp = true;
 
         Debug.Log("tank player awake");
 
         ActiveInput(true);
     }
-
-    // private void Start() {
-        
-    // }
 
     void Update() {
         if(xDirection != 0 || yDirection != 0){

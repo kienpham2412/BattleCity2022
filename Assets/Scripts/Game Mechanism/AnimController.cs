@@ -5,17 +5,22 @@ using UnityEngine;
 public class AnimController : MonoBehaviour
 {
     public Animator animator;
-    // Start is called before the first frame update
-    // void Start()
-    // {
-    //     if(animator.GetCurrentAnimatorStateInfo(0).IsName("Explosion1_explose")){
-    //         Debug.Log("Animator");
-    //     }
-    // }
+    protected float length;
 
-    // // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
+    // Start is called before the first frame update
+    void Awake()
+    {
+        length = animator.GetCurrentAnimatorStateInfo(0).length;
+    }
+
+    IEnumerator Deactive()
+    {
+        yield return new WaitForSeconds(length);
+        gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(Deactive());
+    }
 }

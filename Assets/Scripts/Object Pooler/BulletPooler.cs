@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletPooler : MonoBehaviour
+public class BulletPooler : ObjectPooler
 {
     public static BulletPooler singleton;
-    public GameObject regularBullet, powerBullet;
-    public GameObject bulletPool;
     private List<GameObject> regularList, powerList;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         regularList = new List<GameObject>();
         powerList = new List<GameObject>();
@@ -19,24 +17,18 @@ public class BulletPooler : MonoBehaviour
         CreatePool();
     }
 
-    // // Update is called once per frame
-    // void Update()
-    // {
-
-    // }
-
     private void CreatePool()
     {
         for (int i = 0; i < 10; i++)
         {
-            CreateBullet(regularBullet, false);
-            CreateBullet(powerBullet, true);
+            Clone(samples[0], false);
+            Clone(samples[1], true);
         }
     }
 
-    private void CreateBullet(GameObject sample, bool powerUp)
+    private void Clone(GameObject sample, bool powerUp)
     {
-        GameObject bullet = Instantiate(sample, transform.position, Quaternion.identity, bulletPool.transform);
+        GameObject bullet = Instantiate(sample, transform.position, Quaternion.identity, poolObj.transform);
         bullet.SetActive(false);
         if (powerUp)
         {
@@ -48,7 +40,7 @@ public class BulletPooler : MonoBehaviour
         }
     }
 
-    public GameObject getABullet(Vector3 position, Quaternion rotation, bool powerUp, bool playerOrigin = true)
+    public GameObject GetClone(Vector3 position, Quaternion rotation, bool powerUp, int tankID, bool playerOrigin = true)
     {
         if (powerUp)
         {
@@ -58,7 +50,7 @@ public class BulletPooler : MonoBehaviour
                 {
                     bullet.transform.position = position;
                     bullet.transform.rotation = rotation;
-                    bullet.GetComponent<PowerUpBullet>().setPlayerOrigin(playerOrigin);
+                    bullet.GetComponent<PowerUpBullet>().setOrigin(playerOrigin, tankID);
                     bullet.SetActive(true);
                     return bullet;
                 }
@@ -72,7 +64,7 @@ public class BulletPooler : MonoBehaviour
                 {
                     bullet.transform.position = position;
                     bullet.transform.rotation = rotation;
-                    bullet.GetComponent<RegularBullet>().setPlayerOrigin(playerOrigin);
+                    bullet.GetComponent<RegularBullet>().setOrigin(playerOrigin, tankID);
                     bullet.SetActive(true);
                     return bullet;
                 }
