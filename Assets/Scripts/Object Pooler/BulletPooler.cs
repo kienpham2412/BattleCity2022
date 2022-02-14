@@ -21,26 +21,12 @@ public class BulletPooler : ObjectPooler
     {
         for (int i = 0; i < 10; i++)
         {
-            Clone(samples[0], false);
-            Clone(samples[1], true);
+            Clone(samples[0], regularList);
+            Clone(samples[1], powerList);
         }
     }
 
-    private void Clone(GameObject sample, bool powerUp)
-    {
-        GameObject bullet = Instantiate(sample, transform.position, Quaternion.identity, poolObj.transform);
-        bullet.SetActive(false);
-        if (powerUp)
-        {
-            powerList.Add(bullet);
-        }
-        else
-        {
-            regularList.Add(bullet);
-        }
-    }
-
-    public GameObject GetClone(Vector3 position, Quaternion rotation, bool powerUp, int tankID, bool playerOrigin = true)
+    public GameObject GetClone(Vector2 position, Quaternion rotation, bool powerUp, int tankID, bool playerOrigin = true)
     {
         if (powerUp)
         {

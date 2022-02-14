@@ -72,7 +72,8 @@ public class Player : Tank
     /// <summary>
     /// This function is called when the behaviour becomes disabled.
     /// </summary>
-    private void OnDisable() {
+    protected override void OnDisable() {
         ActiveInput(false);
+        base.OnDisable();
     }
 }

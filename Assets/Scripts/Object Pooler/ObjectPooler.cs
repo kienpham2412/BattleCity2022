@@ -6,7 +6,7 @@ public abstract class ObjectPooler : MonoBehaviour
 {
     public GameObject poolObj;
     public GameObject[] samples;
-    protected List<GameObject> pool;
+    private List<GameObject> pool;
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -18,14 +18,14 @@ public abstract class ObjectPooler : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            Clone(gameObj);
+            Clone(gameObj, pool);
         }
     }
 
-    protected virtual void Clone(GameObject sample)
+    protected virtual void Clone(GameObject sample, List<GameObject> samplePool)
     {
         GameObject gameObj = Instantiate(sample, poolObj.transform.position, Quaternion.identity, poolObj.transform);
-        pool.Add(gameObj);
+        samplePool.Add(gameObj);
         gameObj.SetActive(false);
     }
 

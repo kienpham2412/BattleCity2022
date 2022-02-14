@@ -9,15 +9,22 @@ public class Enemy : Tank
     {
         playerOrigin = false;
         powerUp = false;
-        InvokeRepeating("AutoShoot", 1, 1);
     }
 
-    private void AutoShoot(){
+    private void AutoShoot()
+    {
         base.Shoot(playerOrigin);
     }
 
-    private void OnDisable() {
+    private void OnEnable()
+    {
+        InvokeRepeating("AutoShoot", 1, 1);
+    }
+
+    protected override void OnDisable()
+    {
         CancelInvoke();
+        base.OnDisable();
     }
 
 }

@@ -23,6 +23,10 @@ public class Referee : MonoBehaviour
         mapBuilder.Replace(Map.enemySpawnRight, 0);
         mapBuilder.Replace(Map.playerSpawnLeft, 0);
         mapBuilder.Replace(Map.playerSpawnRignt, 0);
+
+        EnemySpawner.singleton.GetClone(Map.enemySpawnLeft.ToVector2(), Quaternion.identity);
+        EnemySpawner.singleton.GetClone(Map.enemySpawnMid.ToVector2(), Quaternion.identity);
+        EnemySpawner.singleton.GetClone(Map.enemySpawnRight.ToVector2(), Quaternion.identity);
     }
 
     // Update is called once per frame
@@ -33,6 +37,11 @@ public class Referee : MonoBehaviour
 
     public void SpawnClExplosion(Vector2 position)
     {
-        particalCtrl.GetClone(position, Quaternion.identity);
+        particalCtrl.GetClone(position, Quaternion.identity, ParticalController.Partical.Collision);
+    }
+
+    public void SpawnDestroyExplosion(Vector2 position)
+    {
+        particalCtrl.GetClone(position, Quaternion.identity, ParticalController.Partical.Destroy);
     }
 }

@@ -8,7 +8,7 @@ public class AnimController : MonoBehaviour
     protected float length;
 
     // Start is called before the first frame update
-    void Awake()
+    protected virtual void Awake()
     {
         length = animator.GetCurrentAnimatorStateInfo(0).length;
     }
@@ -19,7 +19,7 @@ public class AnimController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         StartCoroutine(Deactive());
     }
