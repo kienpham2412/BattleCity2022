@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class SpawnFX : AnimController
 {
-    private bool firstTime = true;
+    protected bool firstTime = true;
     // Start is called before the first frame update
     protected override void Awake()
     {
         length = 1f;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         if (firstTime)
         {
@@ -19,6 +19,6 @@ public class SpawnFX : AnimController
             return;
         }
 
-        EnemySpawner.singleton.GetEnemyClone(gameObject.transform.position);
+        TankSpawner.singleton.GetEnemyClone(gameObject.transform.position);
     }
 }

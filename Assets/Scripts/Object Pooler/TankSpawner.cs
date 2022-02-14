@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : ObjectPooler
+public class TankSpawner : ObjectPooler
 {
-    public static EnemySpawner singleton;
+    public static TankSpawner singleton;
     private List<GameObject> enemyList, spawnFXList;
+    private GameObject playerSpawnFX, playerTank;
     private int enemyIndex = 0;
+    
     // Start is called before the first frame update
     protected override void Start()
     {
-        singleton = GetComponent<EnemySpawner>();
+        singleton = GetComponent<TankSpawner>();
         enemyList = new List<GameObject>();
         spawnFXList = new List<GameObject>();
 
+        CreatePlayer();
         CreatePool();
     }
 
@@ -21,13 +24,31 @@ public class EnemySpawner : ObjectPooler
     {
         for (int i = 0; i < 20; i++)
         {
-            if (i <= 2)
+            if (i <= 4)
             {
-                Clone(samples[0], spawnFXList);
+                Clone(samples[2], spawnFXList);
             }
 
-            Clone(samples[1], enemyList);
+            Clone(samples[3], enemyList);
         }
+    }
+
+    private void CreatePlayer(){
+        playerSpawnFX = Instantiate(samples[0], new Vector2(0,0), Quaternion.identity);
+        playerSpawnFX.SetActive(false);
+
+        playerTank = Instantiate(samples[1], new Vector2(0,0), Quaternion.identity);
+        playerTank.SetActive(false);
+    }
+
+    public void GetPlayerFX(Vector2 position){
+        playerSpawnFX.transform.position = position;
+        playerSpawnFX.SetActive(true);
+    }
+
+    public void SpawnPlayer(Vector2 position){
+        playerTank.transform.position = position;
+        playerTank.SetActive(true);
     }
 
     public override GameObject GetClone(Vector2 position, Quaternion rotation)

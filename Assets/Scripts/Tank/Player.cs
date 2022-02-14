@@ -28,8 +28,6 @@ public class Player : Tank
         powerUp = true;
 
         Debug.Log("tank player awake");
-
-        ActiveInput(true);
     }
 
     void Update() {
@@ -67,6 +65,10 @@ public class Player : Tank
         if(yDirection == -1) TurnDown();
         if(xDirection == -1) TurnLeft();
         if(xDirection == 1) TurnRight();
+    }
+
+    private void OnEnable() {
+        ActiveInput(true);
     }
 
     /// <summary>
