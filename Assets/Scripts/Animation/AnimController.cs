@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class AnimController : MonoBehaviour
 {
-    public Animator animator;
+    [SerializeField]
+    protected Animator animator;
+    // protected Coroutine countDown;
     protected float length;
 
     // Start is called before the first frame update
@@ -13,7 +15,7 @@ public class AnimController : MonoBehaviour
         length = animator.GetCurrentAnimatorStateInfo(0).length;
     }
 
-    IEnumerator Deactive()
+    protected virtual IEnumerator Deactive()
     {
         yield return new WaitForSeconds(length);
         gameObject.SetActive(false);

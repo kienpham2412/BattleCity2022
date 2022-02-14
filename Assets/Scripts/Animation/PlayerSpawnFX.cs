@@ -12,6 +12,6 @@ public class PlayerSpawnFX : SpawnFX
             return;
         }
 
-        TankSpawner.singleton.SpawnPlayer(gameObject.transform.position);
+        Referee.singleton.GetPlayerClone(gameObject.transform.position);
     }
 }

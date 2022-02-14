@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Coordinate
 {
     public int x;
@@ -78,22 +79,22 @@ public class Map
     public int[,] baseMap;
     public int mapSize = 13;
     public List<Coordinate> spaces;
-    public List<Coordinate> blocks;
-    public static Coordinate tower = new Coordinate(6,0);
-    public static Coordinate enemySpawnLeft = new Coordinate(0,12);
-    public static Coordinate enemySpawnMid = new Coordinate(6,12);
-    public static Coordinate enemySpawnRight = new Coordinate(12,12);
-    public static Coordinate playerSpawnLeft = new Coordinate(4,0);
-    public static Coordinate playerSpawnRignt = new Coordinate(8,0);
-    public static Coordinate towerWall1 = new Coordinate(5,0);
-    public static Coordinate towerWall2 = new Coordinate(7,0);
-    public static Coordinate towerWall3 = new Coordinate(5,1);
-    public static Coordinate towerWall4 = new Coordinate(6,1);
-    public static Coordinate towerWall5 = new Coordinate(7,1);
+    public static Coordinate tower = new Coordinate(6, 0);
+    public static Coordinate enemySpawnLeft = new Coordinate(0, 12);
+    public static Coordinate enemySpawnMid = new Coordinate(6, 12);
+    public static Coordinate enemySpawnRight = new Coordinate(12, 12);
+    public static Coordinate playerSpawnLeft = new Coordinate(4, 0);
+    public static Coordinate playerSpawnRight = new Coordinate(8, 0);
+    public static Coordinate towerWall1 = new Coordinate(5, 0);
+    public static Coordinate towerWall2 = new Coordinate(7, 0);
+    public static Coordinate towerWall3 = new Coordinate(5, 1);
+    public static Coordinate towerWall4 = new Coordinate(6, 1);
+    public static Coordinate towerWall5 = new Coordinate(7, 1);
 
     public Map()
     {
         baseMap = new int[mapSize, mapSize];
+        spaces = new List<Coordinate>();
     }
 
     public void CreateBlank()
@@ -113,30 +114,36 @@ public class Map
         CreateBaseMap();
         RegenerageMap();
         PlaceTower();
+        PlaceTowerWall();
         PlaceSpawnPoint();
     }
 
     public void PlaceTower()
     {
-        SetMap(6, 0, 5);
-        SetMap(5, 0, 2);
-        SetMap(7, 0, 2);
-        SetMap(5, 1, 2);
-        SetMap(6, 1, 2);
-        SetMap(7, 1, 2);
+        SetMap(Map.tower, (int)MapBuilder.Block.Tower);
     }
 
-    public void PlaceSpawnPoint(){
-        SetMap(0,12,0);
-        SetMap(6,12,0);
-        SetMap(12,12,0);
-        SetMap(4,0,0);
-        SetMap(8,0,0);
-    }
-
-    public void SetMap(int x, int y, int value)
+    private void PlaceTowerWall()
     {
-        baseMap[x, y] = value;
+        SetMap(Map.towerWall1, (int)MapBuilder.Block.Brick);
+        SetMap(Map.towerWall2, (int)MapBuilder.Block.Brick);
+        SetMap(Map.towerWall3, (int)MapBuilder.Block.Brick);
+        SetMap(Map.towerWall4, (int)MapBuilder.Block.Brick);
+        SetMap(Map.towerWall5, (int)MapBuilder.Block.Brick);
+    }
+
+    public void PlaceSpawnPoint()
+    {
+        SetMap(Map.enemySpawnLeft, (int)MapBuilder.Block.Space);
+        SetMap(Map.enemySpawnMid, (int)MapBuilder.Block.Space);
+        SetMap(Map.enemySpawnRight, (int)MapBuilder.Block.Space);
+        SetMap(Map.playerSpawnLeft, (int)MapBuilder.Block.Space);
+        SetMap(Map.playerSpawnRight, (int)MapBuilder.Block.Space);
+    }
+
+    public void SetMap(Coordinate coordinate, int value)
+    {
+        baseMap[coordinate.x, coordinate.y] = value;
     }
 
     /// <summary>
@@ -156,20 +163,52 @@ public class Map
 
     private void RegenerageMap()
     {
+        Coordinate coordinate;
+        spaces.Clear();
+
         for (int x = 0; x < mapSize; x++)
         {
             for (int y = 0; y < mapSize; y++)
             {
+                coordinate = new Coordinate(x, y);
                 if (baseMap[x, y] == 0)
-                    Change(true, x, y);
+                {
+                    Change(coordinate, true);
+                }
 
                 if (baseMap[x, y] == 1)
-                    Change(false, x, y);
+                {
+                    Change(coordinate, false);
+                }
             }
         }
     }
 
-    private void Change(bool drillable, int x, int y)
+    public void SaveSpaceCoor()
+    {
+        for (int x = 0; x < mapSize; x++)
+        {
+            for (int y = 0; y < mapSize; y++)
+            {
+                if (baseMap[x, y] == (int)MapBuilder.Block.Concrete)
+                {
+                    continue;
+                }
+                if (baseMap[x, y] == (int)MapBuilder.Block.Water)
+                {
+                    continue;
+                }
+                if (baseMap[x, y] == (int)MapBuilder.Block.Tower)
+                {
+                    continue;
+                }
+
+                spaces.Add(new Coordinate(x, y));
+            }
+        }
+    }
+
+    private void Change(Coordinate coordinate, bool drillable)
     {
         int randowNumber;
         int[] evens = { 0, 2, 4 };
@@ -185,7 +224,7 @@ public class Map
             index = UnityEngine.Random.Range(0, 2);
             randowNumber = odds[index];
         }
-        SetMap(x, y, randowNumber);
+        SetMap(coordinate, randowNumber);
     }
 
     /// <summary>

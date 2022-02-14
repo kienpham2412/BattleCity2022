@@ -13,6 +13,7 @@ TagManager:
   - Tower
   - PlayerTank
   - EnemyTank
+  - Helmet
   layers:
   - Default
   - TransparentFX

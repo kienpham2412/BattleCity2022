@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TankSpawner : ObjectPooler
 {
-    public static TankSpawner singleton;
     private List<GameObject> enemyList, spawnFXList;
     private GameObject playerSpawnFX, playerTank;
     private int enemyIndex = 0;
@@ -12,7 +11,6 @@ public class TankSpawner : ObjectPooler
     // Start is called before the first frame update
     protected override void Start()
     {
-        singleton = GetComponent<TankSpawner>();
         enemyList = new List<GameObject>();
         spawnFXList = new List<GameObject>();
 

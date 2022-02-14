@@ -19,6 +19,6 @@ public class SpawnFX : AnimController
             return;
         }
 
-        TankSpawner.singleton.GetEnemyClone(gameObject.transform.position);
+        Referee.singleton.GetEnemyClone(gameObject.transform.position);
     }
 }

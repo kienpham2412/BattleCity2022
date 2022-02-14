@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MapBuilder : MonoBehaviour
 {
+    public enum Block{
+        Space = 0, Concrete = 1, Brick = 2, Water = 3, Tree = 4, Tower = 5
+    }
     public List<GameObject> obstacles = new List<GameObject>();
     public GameObject wall;
     public GameObject mapObject;
@@ -92,6 +95,8 @@ public class MapBuilder : MonoBehaviour
 
     public void BuildSavedMap(Map map){
         this.map = map;
+        this.map.PlaceTower();
+        this.map.PlaceSpawnPoint();
         DestroyObstacles();
         BuildBlocks();
     }

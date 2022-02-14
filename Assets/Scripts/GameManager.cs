@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="name">Map name</param>
     public void SaveMap(string name){
+        mapBuilder.map.SaveSpaceCoor();
         mapSaver.Save(name, mapBuilder.map);
     }
 

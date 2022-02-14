@@ -6,26 +6,31 @@ public class Referee : MonoBehaviour
 {
     public static Referee singleton;
     private MapBuilder mapBuilder;
+    private Map map;
 
     [SerializeField]
     private ParticalController particalCtrl;
+
+    [SerializeField]
+    private TankSpawner tankSpawner;
+
+    [SerializeField]
+    private ItemPooler itemPooler;
+
+    private int spaceIndex = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         singleton = GetComponent<Referee>();
 
-        GameManager.singleton.LoadMap("7222");
+        GameManager.singleton.LoadMap("Base");
         mapBuilder = GameManager.singleton.mapBuilder;
-        mapBuilder.Replace(Map.tower, 5);
-        mapBuilder.Replace(Map.enemySpawnLeft, 0);
-        mapBuilder.Replace(Map.enemySpawnMid, 0);
-        mapBuilder.Replace(Map.enemySpawnRight, 0);
-        mapBuilder.Replace(Map.playerSpawnLeft, 0);
-        mapBuilder.Replace(Map.playerSpawnRignt, 0);
+        map = mapBuilder.map;
+        map.spaces.Shuffle();
 
-        // CreatePlayer();
         StartCoroutine(SpawnEnemy());
+        SpawnItem();
     }
 
     // Update is called once per frame
@@ -44,12 +49,41 @@ public class Referee : MonoBehaviour
         particalCtrl.GetClone(position, Quaternion.identity, ParticalController.Partical.Destroy);
     }
 
+    public void GetEnemyClone(Vector2 position)
+    {
+        tankSpawner.GetEnemyClone(position);
+    }
+
+    public void GetPlayerClone(Vector2 position)
+    {
+        tankSpawner.SpawnPlayer(position);
+    }
+
+    public void SpawnItem()
+    {
+        StartCoroutine(ItemCoroutine());
+    }
+
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(2f);
-        TankSpawner.singleton.GetClone(Map.enemySpawnLeft.ToVector2(), Quaternion.identity);
-        TankSpawner.singleton.GetClone(Map.enemySpawnMid.ToVector2(), Quaternion.identity);
-        TankSpawner.singleton.GetClone(Map.enemySpawnRight.ToVector2(), Quaternion.identity);
-        TankSpawner.singleton.GetPlayerFX(Map.playerSpawnLeft.ToVector2());
+        tankSpawner.GetClone(Map.enemySpawnLeft.ToVector2(), Quaternion.identity);
+        tankSpawner.GetClone(Map.enemySpawnMid.ToVector2(), Quaternion.identity);
+        tankSpawner.GetClone(Map.enemySpawnRight.ToVector2(), Quaternion.identity);
+        tankSpawner.GetPlayerFX(Map.playerSpawnLeft.ToVector2());
+    }
+
+    IEnumerator ItemCoroutine()
+    {
+        Debug.Log("Start item coroutine");
+        yield return new WaitForSeconds(30f);
+
+        if (spaceIndex >= map.spaces.Count)
+        {
+            spaceIndex = 0;
+        }
+
+        itemPooler.GetClone(map.spaces[spaceIndex].ToVector2());
+        spaceIndex++;
     }
 }
