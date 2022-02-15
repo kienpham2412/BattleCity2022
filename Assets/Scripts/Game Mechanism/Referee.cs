@@ -24,7 +24,7 @@ public class Referee : MonoBehaviour
     {
         singleton = GetComponent<Referee>();
 
-        GameManager.singleton.LoadMap("Base");
+        GameManager.singleton.LoadMap("Blank");
         mapBuilder = GameManager.singleton.mapBuilder;
         map = mapBuilder.map;
         map.spaces.Shuffle();
@@ -62,6 +62,14 @@ public class Referee : MonoBehaviour
     public void SpawnItem()
     {
         StartCoroutine(ItemCoroutine());
+    }
+
+    public void DestroyEnemies(){
+        tankSpawner.DestroyActiveTank();
+    }
+
+    public void FreezeEnemies(){
+        tankSpawner.FreezeActiveTank();
     }
 
     IEnumerator SpawnEnemy()

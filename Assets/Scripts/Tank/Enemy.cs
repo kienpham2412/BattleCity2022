@@ -5,15 +5,35 @@ using UnityEngine;
 public class Enemy : Tank
 {
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         playerOrigin = false;
         powerUp = false;
+
+        base.Start();
+        TurnDown();
+    }
+
+    void Update()
+    {
+        MoveForward();
+    }
+
+    public void ActiveFreezing()
+    {
+        StartCoroutine(Freeze());
     }
 
     private void AutoShoot()
     {
         base.Shoot(playerOrigin);
+    }
+
+    IEnumerator Freeze()
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
+        yield return new WaitForSeconds(10f);
+        rb.constraints = RigidbodyConstraints2D.None;
     }
 
     private void OnEnable()
@@ -26,5 +46,4 @@ public class Enemy : Tank
         CancelInvoke();
         base.OnDisable();
     }
-
 }

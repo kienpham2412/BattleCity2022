@@ -6,15 +6,15 @@ public abstract class Tank : MonoBehaviour
 {
     public GameObject shootingPos;
     public Animator tankAnimator;
-    private static Vector3 moveForward;
+    private Vector3 moveForward;
     private static Quaternion lookUp, lookDown, lookLeft, lookRight;
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
     protected bool playerOrigin, powerUp;
     protected float speed = 1f;
     private bool firstTime = true;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 

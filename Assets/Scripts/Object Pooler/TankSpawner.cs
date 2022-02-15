@@ -69,9 +69,25 @@ public class TankSpawner : ObjectPooler
     {
         GameObject gameObj = enemyList[enemyIndex];
         gameObj.transform.position = position;
-        gameObj.transform.rotation = Quaternion.Euler(0, 0, 180);
+        // gameObj.transform.rotation = Quaternion.Euler(0, 0, 180);
         gameObj.SetActive(true);
 
         enemyIndex++;
+    }
+
+    public void DestroyActiveTank(){
+        foreach(GameObject gameObj in enemyList){
+            if(gameObj.activeSelf){
+                gameObj.SetActive(false);
+            }
+        }
+    }
+
+    public void FreezeActiveTank(){
+        foreach(GameObject gameObj in enemyList){
+            if(gameObj.activeSelf){
+                gameObj.GetComponent<Enemy>().ActiveFreezing();
+            }
+        }
     }
 }

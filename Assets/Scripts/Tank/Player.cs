@@ -10,10 +10,12 @@ public class Player : Tank
     private InputAction movement;
     private InputAction shoot;
     private Vector2 direction;
+    private const float POWERUP_LENGTH = 15f;
     private float xDirection, yDirection;
-    
 
-    void Awake() {
+
+    void Awake()
+    {
         singleton = GetComponent<Player>();
 
         playerControl = new PlayerControl();
@@ -21,19 +23,23 @@ public class Player : Tank
         shoot = playerControl.Gameplay.Shoot;
 
         movement.performed += ctx => Move();
-        movement.canceled += ctx => {xDirection = yDirection = 0;};
+        movement.canceled += ctx => { xDirection = yDirection = 0; };
         shoot.performed += ctx => Shoot(playerOrigin);
 
         playerOrigin = true;
-        powerUp = true;
+        powerUp = false;
 
         Debug.Log("tank player awake");
     }
 
-    void Update() {
-        if(xDirection != 0 || yDirection != 0){
+    void Update()
+    {
+        if (xDirection != 0 || yDirection != 0)
+        {
             MoveForward();
-        } else {
+        }
+        else
+        {
             Stop();
         }
     }
@@ -57,24 +63,42 @@ public class Player : Tank
     /// <summary>
     /// Move the tank by control direction
     /// </summary>
-    void Move(){
+    void Move()
+    {
         direction = movement.ReadValue<Vector2>();
         xDirection = direction.x;
         yDirection = direction.y;
-        if(yDirection == 1) TurnUp();
-        if(yDirection == -1) TurnDown();
-        if(xDirection == -1) TurnLeft();
-        if(xDirection == 1) TurnRight();
+        if (yDirection == 1) TurnUp();
+        if (yDirection == -1) TurnDown();
+        if (xDirection == -1) TurnLeft();
+        if (xDirection == 1) TurnRight();
     }
 
-    private void OnEnable() {
+    IEnumerator PowerUp()
+    {
+        powerUp = true;
+        yield return new WaitForSeconds(POWERUP_LENGTH);
+        powerUp = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Star"))
+        {
+            StartCoroutine(PowerUp());
+        }
+    }
+
+    private void OnEnable()
+    {
         ActiveInput(true);
     }
 
     /// <summary>
     /// This function is called when the behaviour becomes disabled.
     /// </summary>
-    protected override void OnDisable() {
+    protected override void OnDisable()
+    {
         ActiveInput(false);
         base.OnDisable();
     }

@@ -6,7 +6,7 @@ public class PlayerBlock : Block
 {
     [SerializeField]
     private GameObject shieldFX;
-    private float immotalTime = 5f;
+    private float immotalTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +26,18 @@ public class PlayerBlock : Block
         SetImmmotal(false);
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Helmet"))
+        {
+            immotalTime = 10f;
+            StartCoroutine(ImmotalActive());
+        }
+    }
+
     private void OnEnable()
     {
+        immotalTime = 5f;
         StartCoroutine(ImmotalActive());
     }
 }

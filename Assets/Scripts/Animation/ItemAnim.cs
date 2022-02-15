@@ -5,8 +5,8 @@ using UnityEngine;
 public class ItemAnim : AnimController
 {
     private IEnumerator countDown;
-    private const float LENGTH = 30f;
-    private const float FADE_MOMENT = 10f;
+    private const float LENGTH = 20f;
+    private const float FADE_MOMENT = 5f;
     private float currentTime;
     
     protected override IEnumerator Deactive()
