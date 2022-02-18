@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class Enemy : Tank
 {
-    private GameObject tracker;
-    private TrackerBehav trackerBehav;
-    private Vector3 dirToTracker;
-    private float distance;
-    private int dirNum;
-    // private bool firstTime = true;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -17,32 +11,13 @@ public class Enemy : Tank
         powerUp = false;
 
         base.Start();
-        // TurnDown();
-    }
-
-    void Update()
-    {
-        distance = Vector3.Distance(gameObject.transform.position, tracker.transform.position);
-        // Debug.Log(distance);
-        if (distance == 0)
-        {
-            trackerBehav.MoveNext();
-        }
-        else
-        {
-            // dirToTracker = gameObject.transform.position - tracker.transform.position;
-            // Quaternion look = Quaternion.LookRotation(dirToTracker, Vector3.right);
-            // gameObject.transform.rotation = look;
-            // MoveForward();
-        }
+        TurnDown();
     }
 
     public void ActiveFreezing()
     {
         StartCoroutine(Freeze());
     }
-
-
 
     private void AutoShoot()
     {
@@ -56,27 +31,14 @@ public class Enemy : Tank
         rb.constraints = RigidbodyConstraints2D.None;
     }
 
-    private void OnEnable()
-    {
-        // if (firstTime)
-        // {
-        //     firstTime = false;
-        //     return;
-        // }
-        // InvokeRepeating("AutoShoot", 1, 1);
-        tracker = Referee.singleton.GetTankTracker(gameObject.transform.position);
-        trackerBehav = tracker.GetComponent<TrackerBehav>();
-    }
+    // private void OnEnable()
+    // {
+    //     InvokeRepeating("AutoShoot", 1, 1);
+    // }
 
     protected override void OnDisable()
     {
         // CancelInvoke();
         base.OnDisable();
-        if (tracker != null)
-        {
-            tracker.SetActive(false);
-            tracker = null;
-            trackerBehav = null;
-        }
     }
 }

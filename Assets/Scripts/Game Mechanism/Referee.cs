@@ -72,10 +72,6 @@ public class Referee : MonoBehaviour
         tankSpawner.FreezeActiveTank();
     }
 
-    public GameObject GetTankTracker(Vector2 position){
-        return tankSpawner.GetTracker(position);
-    }
-
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(2f);

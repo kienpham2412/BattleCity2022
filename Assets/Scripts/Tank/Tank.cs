@@ -30,7 +30,7 @@ public abstract class Tank : MonoBehaviour
     protected void TurnUp()
     {
         gameObject.transform.rotation = lookUp;
-        moveForward = gameObject.transform.up * speed;
+        // moveForward = gameObject.transform.up * speed;
         // Debug.Log("Turn up");
     }
 
@@ -40,7 +40,7 @@ public abstract class Tank : MonoBehaviour
     protected void TurnDown()
     {
         gameObject.transform.rotation = lookDown;
-        moveForward = gameObject.transform.up * speed;
+        // moveForward = gameObject.transform.up * speed;
         // Debug.Log("Turn down");
     }
 
@@ -50,7 +50,7 @@ public abstract class Tank : MonoBehaviour
     protected void TurnLeft()
     {
         gameObject.transform.rotation = lookLeft;
-        moveForward = gameObject.transform.up * speed;
+        // moveForward = gameObject.transform.up * speed;
         // Debug.Log("Turn left");
     }
 
@@ -60,7 +60,7 @@ public abstract class Tank : MonoBehaviour
     protected void TurnRight()
     {
         gameObject.transform.rotation = lookRight;
-        moveForward = gameObject.transform.up * speed;
+        // moveForward = gameObject.transform.up * speed;
         // Debug.Log("Turn right");
     }
 
@@ -69,6 +69,7 @@ public abstract class Tank : MonoBehaviour
     /// </summary>
     protected void MoveForward()
     {
+        moveForward = gameObject.transform.up * speed;
         rb.velocity = moveForward;
         SetAnimation(true);
         // Debug.Log("Move forward");

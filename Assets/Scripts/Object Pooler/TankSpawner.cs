@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TankSpawner : ObjectPooler
 {
-    private List<GameObject> enemyList, spawnFXList, trackerList;
+    private List<GameObject> enemyList, spawnFXList;
     private GameObject playerSpawnFX, playerTank;
     private int enemyIndex = 0;
 
@@ -13,7 +13,6 @@ public class TankSpawner : ObjectPooler
     {
         enemyList = new List<GameObject>();
         spawnFXList = new List<GameObject>();
-        trackerList = new List<GameObject>();
 
         CreatePlayer();
         CreatePool();
@@ -26,7 +25,6 @@ public class TankSpawner : ObjectPooler
             if (i <= 4)
             {
                 Clone(samples[2], spawnFXList);
-                Clone(samples[4], trackerList);
             }
 
             Clone(samples[3], enemyList);
@@ -78,21 +76,6 @@ public class TankSpawner : ObjectPooler
         gameObj.SetActive(true);
 
         enemyIndex++;
-    }
-
-    public GameObject GetTracker(Vector2 position)
-    {
-
-        foreach (GameObject gameObj in trackerList)
-        {
-            if (!gameObj.activeSelf)
-            {
-                gameObj.transform.position = position;
-                gameObj.SetActive(true);
-                return gameObj;
-            }
-        }
-        return null;
     }
 
     public void DestroyActiveTank()
