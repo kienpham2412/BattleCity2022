@@ -169,6 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootingPos: {fileID: 5755880876758960803}
   tankAnimator: {fileID: 3011441667899040740}
+  tracker: {fileID: 0}
 --- !u!114 &6925281585520479611
 MonoBehaviour:
   m_ObjectHideFlags: 0

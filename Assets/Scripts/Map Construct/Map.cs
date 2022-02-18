@@ -20,6 +20,8 @@ public class Coordinate
         new Coordinate(-1,0)
     };
 
+    public Coordinate() { }
+
     public Coordinate(int x, int y)
     {
         this.x = x;

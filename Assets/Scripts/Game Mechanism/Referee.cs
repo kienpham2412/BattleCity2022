@@ -72,12 +72,16 @@ public class Referee : MonoBehaviour
         tankSpawner.FreezeActiveTank();
     }
 
+    public GameObject GetTankTracker(Vector2 position){
+        return tankSpawner.GetTracker(position);
+    }
+
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(2f);
         tankSpawner.GetClone(Map.enemySpawnLeft.ToVector2(), Quaternion.identity);
-        tankSpawner.GetClone(Map.enemySpawnMid.ToVector2(), Quaternion.identity);
-        tankSpawner.GetClone(Map.enemySpawnRight.ToVector2(), Quaternion.identity);
+        // tankSpawner.GetClone(Map.enemySpawnMid.ToVector2(), Quaternion.identity);
+        // tankSpawner.GetClone(Map.enemySpawnRight.ToVector2(), Quaternion.identity);
         tankSpawner.GetPlayerFX(Map.playerSpawnLeft.ToVector2());
     }
 
