@@ -18,7 +18,7 @@ public static class Extensions
         }
     }
 
-    public static void Instantiate(this Marker obj){
-        Object.Instantiate(obj.marker, obj.coordinate.ToVector3(), Quaternion.identity);
-    }
+    // public static void Instantiate(this Marker obj){
+    //     Object.Instantiate(obj.marker, obj.coordinate.ToVector3(), Quaternion.identity);
+    // }
 }

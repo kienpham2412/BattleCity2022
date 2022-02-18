@@ -6,14 +6,14 @@ using System.Linq;
 
 public class Marker
 {
-    public GameObject marker;
+    // public GameObject marker;
     public Coordinate coordinate;
     public Marker parent;
     public float g, h, f;
 
-    public Marker(GameObject marker, float g, float h, Coordinate coordinate, Marker parent)
+    public Marker(/*GameObject marker,*/ float g, float h, Coordinate coordinate, Marker parent)
     {
-        this.marker = marker;
+        // this.marker = marker;
         this.g = g;
         this.h = h;
         this.f = this.g + this.h;
@@ -39,59 +39,72 @@ public class Marker
 
 public class PathFinder : MonoBehaviour
 {
-    public GameObject begin;
-    public GameObject end;
-    public GameObject marker;
-    private Marker beginMarker;
-    private Marker endMarker;
-    private Marker currentMarker;
-    private PlayerControl myControl;
-    private List<Coordinate> path = new List<Coordinate>();
+    // public GameObject begin;
+    // public GameObject end;
+    // public GameObject marker;
+    // private Marker beginMarker;
+    // private Marker endMarker;
+    // private Marker currentMarker;
+
+    // private PlayerControl myControl;
+    // private List<Coordinate> path = new List<Coordinate>();
+    private MapBuilder mapBuilder;
+    public static PathFinder singleton;
     private List<Marker> open = new List<Marker>();
     private List<Coordinate> close = new List<Coordinate>();
-    private List<Marker> checkedMarker = new List<Marker>();
+    // private List<Marker> checkedMarker = new List<Marker>();
     private Map map;
     private bool isFound = false;
 
-    private void Awake()
+    // private void Awake()
+    // {
+    //     // myControl = new PlayerControl();
+    //     // myControl.MapBuilding.GenerateNode.performed += ctx => GenerateNodes();
+    //     // myControl.MapBuilding.GeneratePath.performed += ctx => FindPath();
+    //     // myControl.MapBuilding.ShowShortestPath.performed += ctx => ShowPath();
+    // }
+
+    // public void GetPath(Map map)
+    // {
+    //     this.map = map;
+    //     path.Clear(); // error found
+    //     for (int x = 0; x < map.mapSize; x++)
+    //     {
+    //         for (int y = 0; y < map.mapSize; y++)
+    //         {
+    //             if (map.baseMap[x, y] == 1) continue;
+    //             if (map.baseMap[x, y] == 3) continue;
+    //             if (map.baseMap[x, y] == 5) continue;
+    //             path.Add(new Coordinate(x, y));
+    //         }
+    //     }
+    // }
+
+    // private void GenerateNodes()
+    // {
+    //     path.Shuffle();
+    //     RemoveMarkers();
+
+    //     beginMarker = new Marker(begin, 0, 0, path[0], null);
+    //     beginMarker.Instantiate();
+    //     endMarker = new Marker(end, 0, 0, path[1], null);
+    //     endMarker.Instantiate();
+
+    //     beginMarker.CalculateH(endMarker);
+    //     beginMarker.CalculateF();
+    //     open.Add(beginMarker);
+
+    //     isFound = false;
+    // }
+
+    void Start()
     {
-        // myControl = new PlayerControl();
-        // myControl.MapBuilding.GenerateNode.performed += ctx => GenerateNodes();
-        // myControl.MapBuilding.GeneratePath.performed += ctx => FindPath();
-        // myControl.MapBuilding.ShowShortestPath.performed += ctx => ShowPath();
-    }
+        singleton = GetComponent<PathFinder>();
+        mapBuilder = GetComponent<GameManager>().mapBuilder;
+        map = mapBuilder.map;
+        Debug.Log($"size: {map.mapSize}");
 
-    public void GetPath(Map map)
-    {
-        this.map = map;
-        path.Clear(); // error found
-        for (int x = 0; x < map.mapSize; x++)
-        {
-            for (int y = 0; y < map.mapSize; y++)
-            {
-                if (map.baseMap[x, y] == 1) continue;
-                if (map.baseMap[x, y] == 3) continue;
-                if (map.baseMap[x, y] == 5) continue;
-                path.Add(new Coordinate(x, y));
-            }
-        }
-    }
-
-    private void GenerateNodes()
-    {
-        path.Shuffle();
-        RemoveMarkers();
-
-        beginMarker = new Marker(begin, 0, 0, path[0], null);
-        beginMarker.Instantiate();
-        endMarker = new Marker(end, 0, 0, path[1], null);
-        endMarker.Instantiate();
-
-        beginMarker.CalculateH(endMarker);
-        beginMarker.CalculateF();
-        open.Add(beginMarker);
-
-        isFound = false;
+        // FindPath(Map.tower, Map.enemySpawnLeft);
     }
 
     private void RemoveMarkers()
@@ -109,56 +122,66 @@ public class PathFinder : MonoBehaviour
         close.Clear();
     }
 
-    private void FindPath()
+    public Marker FindPath(Coordinate begin, Coordinate end)
     {
-        if (isFound) return;
+        Marker beginMarker = new Marker(0, 0, begin, null);
+        Marker endMarker = new Marker(0, 0, end, null);
+        Marker currentMarker;
+        open.Add(beginMarker);
 
-        open = open.OrderBy(mrk => mrk.f).ToList<Marker>();
-        currentMarker = open[0];
-        open.RemoveAt(0);
-        close.Add(currentMarker.coordinate);
-        Debug.Log("current marker at: " + currentMarker.coordinate.x + "-" + currentMarker.coordinate.y);
-
-        foreach (Coordinate coor in Coordinate.directions)
+        // if (isFound) return;
+        do
         {
-            Coordinate neighbour = currentMarker.coordinate + coor;
-            if (!neighbour.IsInsideMap(map.mapSize)) continue;
-            if (map.baseMap[neighbour.x, neighbour.y] == 1) continue;
-            if (map.baseMap[neighbour.x, neighbour.y] == 3) continue;
-            if (map.baseMap[neighbour.x, neighbour.y] == 5) continue;
-            if (IsClosed(neighbour)) continue;
-            if (neighbour.Equals(endMarker.coordinate))
+            open = open.OrderBy(mrk => mrk.f).ToList<Marker>();
+            currentMarker = open[0];
+            open.RemoveAt(0);
+            // Debug.Log($"current marker: {currentMarker.coordinate.x} - {currentMarker.coordinate.y}");
+            close.Add(currentMarker.coordinate);
+            // Debug.Log("current marker at: " + currentMarker.coordinate.x + "-" + currentMarker.coordinate.y);
+
+            foreach (Coordinate coor in Coordinate.directions)
             {
-                endMarker.parent = currentMarker;
-                isFound = true;
-                Debug.Log("Goal found");
-                return;
+                Coordinate neighbour = currentMarker.coordinate + coor;
+                if (!neighbour.IsInsideMap(map.mapSize)) continue;
+                if (map.baseMap[neighbour.x, neighbour.y] == 1) continue;
+                if (map.baseMap[neighbour.x, neighbour.y] == 3) continue;
+                if (map.baseMap[neighbour.x, neighbour.y] == 5) continue;
+                if (IsClosed(neighbour)) continue;
+                if (neighbour.Equals(endMarker.coordinate))
+                {
+                    endMarker.parent = currentMarker;
+                    isFound = true;
+                    // Debug.Log($"end marker: {endMarker.coordinate.x} - {endMarker.coordinate.y}");
+                    return endMarker;
+                }
+
+                Marker newMarker = new Marker(/*marker,*/ 0, 0, neighbour, currentMarker);
+                newMarker.CalculateG(currentMarker);
+                newMarker.CalculateH(endMarker);
+                newMarker.CalculateF();
+                // newMarker.Instantiate();
+                open.Add(newMarker);
             }
-
-            Marker newMarker = new Marker(marker, 0, 0, neighbour, currentMarker);
-            newMarker.CalculateG(currentMarker);
-            newMarker.CalculateH(endMarker);
-            newMarker.CalculateF();
-            newMarker.Instantiate();
-            open.Add(newMarker);
-        }
+        } while (!isFound);
+        return null;
+        // ShowPath();
     }
 
-    private void ShowPath()
-    {
-        if (!isFound) return;
+    // private void ShowPath()
+    // {
+    //     if (!isFound) return;
 
-        RemoveMarkers();
-        Marker cur = endMarker;
-        while (cur.parent != null)
-        {
-            cur.Instantiate();
-            cur = cur.parent;
-        }
-        beginMarker.Instantiate();
+    //     RemoveMarkers();
+    //     Marker cur = endMarker;
+    //     while (cur.parent != null)
+    //     {
+    //         cur.Instantiate();
+    //         cur = cur.parent;
+    //     }
+    //     beginMarker.Instantiate();
 
-        checkedMarker.Clear();
-    }
+    //     checkedMarker.Clear();
+    // }
 
     private bool IsClosed(Coordinate thisCoordinate)
     {

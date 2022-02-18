@@ -10,7 +10,7 @@ public class MapBuilder : MonoBehaviour
     public List<GameObject> obstacles = new List<GameObject>();
     public GameObject wall;
     public GameObject mapObject;
-    private PathFinder pathFinder;
+    // private PathFinder pathFinder;
     public Map map;
     private int mapSize;
     private float wallOffset;
@@ -18,7 +18,7 @@ public class MapBuilder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pathFinder = GetComponent<PathFinder>();
+        // pathFinder = GetComponent<PathFinder>();
         map = new Map();
         mapSize = map.mapSize;
         // CreateBlankMap();
@@ -42,7 +42,7 @@ public class MapBuilder : MonoBehaviour
     public void GenerateRandomMap()
     {
         map.Random();
-        pathFinder.GetPath(map);
+        // pathFinder.GetPath(map);
         DestroyObstacles();
         BuildBlocks();
     }
@@ -53,7 +53,7 @@ public class MapBuilder : MonoBehaviour
     public void GenerateBaseMap()
     {
         map.CreateBaseMap();
-        pathFinder.GetPath(map);
+        // pathFinder.GetPath(map);
         DestroyObstacles();
         BuildBlocks();
     }

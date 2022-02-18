@@ -5,6 +5,7 @@ using UnityEngine;
 public class Referee : MonoBehaviour
 {
     public static Referee singleton;
+    private GameManager gameManager;
     private MapBuilder mapBuilder;
     private Map map;
 
@@ -23,9 +24,10 @@ public class Referee : MonoBehaviour
     void Start()
     {
         singleton = GetComponent<Referee>();
-
-        GameManager.singleton.LoadMap("Blank");
-        mapBuilder = GameManager.singleton.mapBuilder;
+        gameManager = GetComponent<GameManager>();
+        gameManager.LoadMap("Base");
+        
+        mapBuilder = gameManager.mapBuilder;
         map = mapBuilder.map;
         map.spaces.Shuffle();
 
@@ -64,11 +66,13 @@ public class Referee : MonoBehaviour
         StartCoroutine(ItemCoroutine());
     }
 
-    public void DestroyEnemies(){
+    public void DestroyEnemies()
+    {
         tankSpawner.DestroyActiveTank();
     }
 
-    public void FreezeEnemies(){
+    public void FreezeEnemies()
+    {
         tankSpawner.FreezeActiveTank();
     }
 

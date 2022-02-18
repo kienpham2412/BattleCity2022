@@ -22,6 +22,11 @@ public class Coordinate
 
     public Coordinate() { }
 
+    public Coordinate(Vector3 position){
+        this.x = (int) position.x;
+        this.y = (int) position.y;
+    }
+
     public Coordinate(int x, int y)
     {
         this.x = x;
