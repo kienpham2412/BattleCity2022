@@ -45,6 +45,10 @@ public class Selector : MonoBehaviour
         // Debug.Log("selector size: " + gameObject.GetComponent<SpriteRenderer>().bounds.size.x);
     }
 
+    /// <summary>
+    /// Active and deactive user input
+    /// </summary>
+    /// <param name="isActive">Active state to set to the input</param>
     public void ActiveInput(bool isActive)
     {
         if (isActive)
@@ -57,6 +61,9 @@ public class Selector : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Place a block to the map
+    /// </summary>
     private void PlaceObstacle()
     {
         mapBuilder.Replace(new Coordinate((int)transform.position.x, (int)transform.position.y), obstacleIndex);

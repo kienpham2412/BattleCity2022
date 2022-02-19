@@ -9,6 +9,7 @@ public class ParticalController : ObjectPooler
         Collision = 0, Destroy = 1
     }
     private List<GameObject> collideExplosion, destroyExplosion;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -18,6 +19,9 @@ public class ParticalController : ObjectPooler
         CreatePool();
     }
 
+    /// <summary>
+    /// Create a partical pool
+    /// </summary>
     private void CreatePool()
     {
         for (int i = 0; i < 20; i++)
@@ -31,7 +35,13 @@ public class ParticalController : ObjectPooler
         }
     }
 
-    public GameObject GetClone(Vector2 position, Quaternion rotation, Partical type)
+    /// <summary>
+    /// Get a partical clone
+    /// </summary>
+    /// <param name="position">The position where the partical is placed</param>
+    /// <param name="type">The type of partical</param>
+    /// <returns></returns>
+    public GameObject GetClone(Vector2 position, Partical type)
     {
         if (type == Partical.Collision)
         {
@@ -40,7 +50,7 @@ public class ParticalController : ObjectPooler
                 if (!gameObj.activeSelf)
                 {
                     gameObj.transform.position = position;
-                    gameObj.transform.rotation = rotation;
+                    gameObj.transform.rotation = Quaternion.identity;
                     gameObj.SetActive(true);
 
                     return gameObj;
@@ -54,7 +64,7 @@ public class ParticalController : ObjectPooler
                 if (!gameObj.activeSelf)
                 {
                     gameObj.transform.position = position;
-                    gameObj.transform.rotation = rotation;
+                    gameObj.transform.rotation = Quaternion.identity;
                     gameObj.SetActive(true);
 
                     return gameObj;

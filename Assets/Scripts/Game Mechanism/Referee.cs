@@ -41,41 +41,70 @@ public class Referee : MonoBehaviour
 
     // }
 
+    /// <summary>
+    /// Spawn collision explosion effect on the map
+    /// </summary>
+    /// <param name="position">The position to spawn the effect</param>
     public void SpawnClExplosion(Vector2 position)
     {
-        particalCtrl.GetClone(position, Quaternion.identity, ParticalController.Partical.Collision);
+        particalCtrl.GetClone(position, ParticalController.Partical.Collision);
     }
 
+    /// <summary>
+    /// Spawn destroy explosion effect on the map
+    /// </summary>
+    /// <param name="position">The position to spawn the effect</param>
     public void SpawnDestroyExplosion(Vector2 position)
     {
-        particalCtrl.GetClone(position, Quaternion.identity, ParticalController.Partical.Destroy);
+        particalCtrl.GetClone(position, ParticalController.Partical.Destroy);
     }
 
+    /// <summary>
+    /// Get enemy clone
+    /// </summary>
+    /// <param name="position">The position to place the enemy</param>
     public void GetEnemyClone(Vector2 position)
     {
         tankSpawner.GetEnemyClone(position);
     }
 
+    /// <summary>
+    /// Get player clone
+    /// </summary>
+    /// <param name="position">The position to place the player</param>
     public void GetPlayerClone(Vector2 position)
     {
         tankSpawner.SpawnPlayer(position);
     }
 
+    /// <summary>
+    /// Spawn an item on the map
+    /// </summary>
     public void SpawnItem()
     {
         StartCoroutine(ItemCoroutine());
     }
 
+    /// <summary>
+    /// Destroy all enemies
+    /// </summary>
     public void DestroyEnemies()
     {
         tankSpawner.DestroyActiveTank();
     }
 
+    /// <summary>
+    /// Freeze all enemies
+    /// </summary>
     public void FreezeEnemies()
     {
         tankSpawner.FreezeActiveTank();
     }
 
+    /// <summary>
+    /// Spawn the tanks after a certain of time
+    /// </summary>
+    /// <returns></returns>
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(2f);
@@ -85,6 +114,10 @@ public class Referee : MonoBehaviour
         tankSpawner.GetPlayerFX(Map.playerSpawnLeft.ToVector2());
     }
 
+    /// <summary>
+    /// Spawn an item after a certain of time
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ItemCoroutine()
     {
         Debug.Log("Start item coroutine");

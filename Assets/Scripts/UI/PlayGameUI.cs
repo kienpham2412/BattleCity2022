@@ -46,11 +46,17 @@ public class PlayGameUI : UIManager
         base.HideMenu(index);
     }
 
+    /// <summary>
+    /// This function is called when the game object is active on the scene
+    /// </summary>
     public void OnEnable()
     {
         myControl.UI.Enable();
     }
 
+    /// <summary>
+    /// This function is called when the game object is inactive on the scene
+    /// </summary>
     public void OnDisable()
     {
         myControl.UI.Disable();

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class MapBuilder : MonoBehaviour
 {
-    public enum Block{
+    public enum Block
+    {
         Space = 0, Concrete = 1, Brick = 2, Water = 3, Tree = 4, Tower = 5
     }
     public List<GameObject> obstacles = new List<GameObject>();
     public GameObject wall;
     public GameObject mapObject;
-    // private PathFinder pathFinder;
     public Map map;
     private int mapSize;
     private float wallOffset;
@@ -31,7 +31,6 @@ public class MapBuilder : MonoBehaviour
     public void CreateBlankMap()
     {
         map.CreateBlank();
-        // pathFinder.GetPath(map);
         DestroyObstacles();
         BuildBlocks();
     }
@@ -42,7 +41,6 @@ public class MapBuilder : MonoBehaviour
     public void GenerateRandomMap()
     {
         map.Random();
-        // pathFinder.GetPath(map);
         DestroyObstacles();
         BuildBlocks();
     }
@@ -53,7 +51,6 @@ public class MapBuilder : MonoBehaviour
     public void GenerateBaseMap()
     {
         map.CreateBaseMap();
-        // pathFinder.GetPath(map);
         DestroyObstacles();
         BuildBlocks();
     }
@@ -86,14 +83,24 @@ public class MapBuilder : MonoBehaviour
         }
     }
 
-    public void Replace(Coordinate position, int obstacleIndex)
+    /// <summary>
+    /// Replace a block to another on the map
+    /// </summary>
+    /// <param name="position">The coordinate of the block</param>
+    /// <param name="obstacleIndex">The new block to be added to the map</param>
+    public void Replace(Coordinate coor, int obstacleIndex)
     {
-        map.baseMap[position.x, position.y] = obstacleIndex;
-        DestroyAnObstacle(position.ToVector3());
-        Instantiate(obstacles[obstacleIndex], position.ToVector3(), this.transform.rotation, mapObject.transform);
+        map.baseMap[coor.x, coor.y] = obstacleIndex;
+        DestroyAnObstacle(coor.ToVector3());
+        Instantiate(obstacles[obstacleIndex], coor.ToVector3(), this.transform.rotation, mapObject.transform);
     }
 
-    public void BuildSavedMap(Map map){
+    /// <summary>
+    /// Build a saved map
+    /// </summary>
+    /// <param name="map">The map to be loaded</param>
+    public void BuildSavedMap(Map map)
+    {
         this.map = map;
         this.map.PlaceTower();
         this.map.PlaceSpawnPoint();
@@ -112,6 +119,10 @@ public class MapBuilder : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Destroy a block on the map
+    /// </summary>
+    /// <param name="position">The position of the block to be destroyed</param>
     private void DestroyAnObstacle(Vector3 position)
     {
         foreach (Transform child in mapObject.transform)

@@ -116,14 +116,23 @@ public class ConstructUI : UIManager
         GameManager.singleton.LoadMap(name);
     }
 
+    /// <summary>
+    /// Generate map event
+    /// </summary>
     public void GenerateMap(){
         GameManager.singleton.mapBuilder.GenerateRandomMap();
     }
 
+    /// <summary>
+    /// Generate base map event
+    /// </summary>
     public void GenerateBaseMap(){
         GameManager.singleton.mapBuilder.GenerateBaseMap();
     }
 
+    /// <summary>
+    /// Generate black map event
+    /// </summary>
     public void CreateBlankMap(){
         GameManager.singleton.mapBuilder.CreateBlankMap();
     }

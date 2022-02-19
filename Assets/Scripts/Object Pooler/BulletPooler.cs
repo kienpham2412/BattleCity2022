@@ -17,6 +17,9 @@ public class BulletPooler : ObjectPooler
         CreatePool();
     }
 
+    /// <summary>
+    /// Create a bullet pool
+    /// </summary>
     private void CreatePool()
     {
         for (int i = 0; i < 10; i++)
@@ -26,6 +29,15 @@ public class BulletPooler : ObjectPooler
         }
     }
 
+    /// <summary>
+    /// Get a bullet clone
+    /// </summary>
+    /// <param name="position">The position where the bullet is placed</param>
+    /// <param name="rotation">The rotation of the bullet</param>
+    /// <param name="powerUp">Power up state of the bullet</param>
+    /// <param name="tankID">ID object the the tank that shoot this bullet</param>
+    /// <param name="playerOrigin">Is that the player or enemy tank</param>
+    /// <returns></returns>
     public GameObject GetClone(Vector2 position, Quaternion rotation, bool powerUp, int tankID, bool playerOrigin = true)
     {
         if (powerUp)

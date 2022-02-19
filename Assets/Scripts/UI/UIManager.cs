@@ -10,6 +10,9 @@ public abstract class UIManager : MonoBehaviour
     protected GameMenu menu;
     private SceneName thisScene;
 
+    /// <summary>
+    /// This function is called first when scene is loaded
+    /// </summary>
     public virtual void Awake() {
         // myControl = new PlayerControl();
     }

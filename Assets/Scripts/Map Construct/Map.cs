@@ -104,11 +104,17 @@ public class Map
         spaces = new List<Coordinate>();
     }
 
+    /// <summary>
+    /// Create a blank map
+    /// </summary>
     public void CreateBlank()
     {
         Initialize(false);
     }
 
+    /// <summary>
+    /// Create a base map with only 0 and 1 value
+    /// </summary>
     public void CreateBaseMap()
     {
         Initialize(true);
@@ -116,6 +122,9 @@ public class Map
         Debug.Log("finish generate");
     }
 
+    /// <summary>
+    /// Generate a random map
+    /// </summary>
     public void Random()
     {
         CreateBaseMap();
@@ -125,11 +134,17 @@ public class Map
         PlaceSpawnPoint();
     }
 
+    /// <summary>
+    /// Place the tower block to the map
+    /// </summary>
     public void PlaceTower()
     {
         SetMap(Map.tower, (int)MapBuilder.Block.Tower);
     }
 
+    /// <summary>
+    /// Place the tower walls to the map
+    /// </summary>
     private void PlaceTowerWall()
     {
         SetMap(Map.towerWall1, (int)MapBuilder.Block.Brick);
@@ -139,6 +154,9 @@ public class Map
         SetMap(Map.towerWall5, (int)MapBuilder.Block.Brick);
     }
 
+    /// <summary>
+    /// Place tank spawn points to the map
+    /// </summary>
     public void PlaceSpawnPoint()
     {
         SetMap(Map.enemySpawnLeft, (int)MapBuilder.Block.Space);
@@ -148,6 +166,11 @@ public class Map
         SetMap(Map.playerSpawnRight, (int)MapBuilder.Block.Space);
     }
 
+    /// <summary>
+    /// Set a block to the certain coordinate of the map
+    /// </summary>
+    /// <param name="coordinate">The coordinate of the block</param>
+    /// <param name="value">The index of the block</param>
     public void SetMap(Coordinate coordinate, int value)
     {
         baseMap[coordinate.x, coordinate.y] = value;
@@ -168,6 +191,9 @@ public class Map
         }
     }
 
+    /// <summary>
+    /// Generate a full map from base map
+    /// </summary>
     private void RegenerageMap()
     {
         Coordinate coordinate;
@@ -191,6 +217,9 @@ public class Map
         }
     }
 
+    /// <summary>
+    /// Saved spaces in the map
+    /// </summary>
     public void SaveSpaceCoor()
     {
         for (int x = 0; x < mapSize; x++)
@@ -215,6 +244,11 @@ public class Map
         }
     }
 
+    /// <summary>
+    /// Change some blocks of the base map to the new blocks
+    /// </summary>
+    /// <param name="coordinate"></param>
+    /// <param name="drillable"></param>
     private void Change(Coordinate coordinate, bool drillable)
     {
         int randowNumber;
@@ -266,29 +300,5 @@ public class Map
         GeneratePath(begin + Coordinate.directions[1]);
         GeneratePath(begin + Coordinate.directions[2]);
         GeneratePath(begin + Coordinate.directions[3]);
-    }
-
-    private void StraightPath(Coordinate begin, string direction)
-    {
-        if (NeighbourSpace(begin) >= 2 || !begin.IsInsideMap(mapSize)) return;
-
-        baseMap[begin.x, begin.y] = 0;
-        switch (direction)
-        {
-            case "up":
-                GeneratePath(begin + Coordinate.up);
-                break;
-            case "down":
-                GeneratePath(begin + Coordinate.down);
-                break;
-            case "left":
-                GeneratePath(begin + Coordinate.left);
-                break;
-            case "right":
-                GeneratePath(begin + Coordinate.right);
-                break;
-            default:
-                break;
-        }
     }
 }

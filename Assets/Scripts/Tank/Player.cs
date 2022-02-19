@@ -74,6 +74,10 @@ public class Player : Tank
         if (xDirection == 1) TurnRight();
     }
 
+    /// <summary>
+    /// Make the player tank more powerful
+    /// </summary>
+    /// <returns></returns>
     IEnumerator PowerUp()
     {
         powerUp = true;
@@ -81,6 +85,10 @@ public class Player : Tank
         powerUp = false;
     }
 
+    /// <summary>
+    /// This function is triggered when player collide with an item
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Star"))
@@ -93,10 +101,7 @@ public class Player : Tank
     {
         ActiveInput(true);
     }
-
-    /// <summary>
-    /// This function is called when the behaviour becomes disabled.
-    /// </summary>
+    
     protected override void OnDisable()
     {
         ActiveInput(false);

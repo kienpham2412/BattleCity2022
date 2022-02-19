@@ -5,6 +5,12 @@ using UnityEngine;
 public static class Extensions
 {
     private static System.Random random = new System.Random();
+
+    /// <summary>
+    /// Shuffle all members of the list
+    /// </summary>
+    /// <param name="list">The list to be shuffled</param>
+    /// <typeparam name="T"></typeparam>
     public static void Shuffle<T>(this IList<T> list)
     {
         int count = list.Count;
@@ -17,8 +23,4 @@ public static class Extensions
             list[count] = value;
         }
     }
-
-    // public static void Instantiate(this Marker obj){
-    //     Object.Instantiate(obj.marker, obj.coordinate.ToVector3(), Quaternion.identity);
-    // }
 }

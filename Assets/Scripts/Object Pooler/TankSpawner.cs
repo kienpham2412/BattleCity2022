@@ -18,6 +18,9 @@ public class TankSpawner : ObjectPooler
         CreatePool();
     }
 
+    /// <summary>
+    ///  Create a pool of spawn effects and the enemy tanks
+    /// </summary>
     private void CreatePool()
     {
         for (int i = 0; i < 20; i++)
@@ -31,6 +34,9 @@ public class TankSpawner : ObjectPooler
         }
     }
 
+    /// <summary>
+    /// Create the player clone
+    /// </summary>
     private void CreatePlayer()
     {
         playerSpawnFX = Instantiate(samples[0], new Vector2(0, 0), Quaternion.identity);
@@ -40,18 +46,32 @@ public class TankSpawner : ObjectPooler
         playerTank.SetActive(false);
     }
 
+    /// <summary>
+    /// Get the player spawn effect object
+    /// </summary>
+    /// <param name="position">The position where the effect is placed</param>
     public void GetPlayerFX(Vector2 position)
     {
         playerSpawnFX.transform.position = position;
         playerSpawnFX.SetActive(true);
     }
 
+    /// <summary>
+    /// Get the player tank
+    /// </summary>
+    /// <param name="position">The position where the tank is placed</param>
     public void SpawnPlayer(Vector2 position)
     {
         playerTank.transform.position = position;
         playerTank.SetActive(true);
     }
 
+    /// <summary>
+    /// Get a the cloned enemy spawn effect
+    /// </summary>
+    /// <param name="position">The position where the effect is placed</param>
+    /// <param name="rotation">The rotation of this object</param>
+    /// <returns></returns>
     public override GameObject GetClone(Vector2 position, Quaternion rotation)
     {
         foreach (GameObject gameObj in spawnFXList)
@@ -68,6 +88,10 @@ public class TankSpawner : ObjectPooler
         return null;
     }
 
+    /// <summary>
+    /// Get a cloned enemy from the pool
+    /// </summary>
+    /// <param name="position">The position where the enemy tank is placed</param>
     public void GetEnemyClone(Vector2 position)
     {
         GameObject gameObj = enemyList[enemyIndex];
@@ -78,6 +102,9 @@ public class TankSpawner : ObjectPooler
         enemyIndex++;
     }
 
+    /// <summary>
+    /// Destroy all active tanks on the map
+    /// </summary>
     public void DestroyActiveTank()
     {
         foreach (GameObject gameObj in enemyList)
@@ -89,6 +116,9 @@ public class TankSpawner : ObjectPooler
         }
     }
 
+    /// <summary>
+    /// Freeze all active tanks on the map
+    /// </summary>
     public void FreezeActiveTank()
     {
         foreach (GameObject gameObj in enemyList)

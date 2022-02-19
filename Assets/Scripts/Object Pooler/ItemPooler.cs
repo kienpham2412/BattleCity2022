@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemPooler : ObjectPooler
 {
     private List<GameObject> itemPool;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -13,6 +14,9 @@ public class ItemPooler : ObjectPooler
         CreatePool();
     }
 
+    /// <summary>
+    /// Create the item pool
+    /// </summary>
     private void CreatePool()
     {
         for (int i = 0; i < samples.Length; i++)
@@ -21,6 +25,11 @@ public class ItemPooler : ObjectPooler
         }
     }
 
+    /// <summary>
+    /// Get an item from the pool
+    /// </summary>
+    /// <param name="position">The position where the item is placed</param>
+    /// <returns></returns>
     public GameObject GetClone(Vector2 position)
     {
         itemPool.Shuffle();
