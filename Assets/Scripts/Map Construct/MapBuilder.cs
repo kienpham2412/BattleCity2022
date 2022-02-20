@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class MapBuilder : MonoBehaviour
 {
-    public enum Block
-    {
-        Space = 0, Concrete = 1, Brick = 2, Water = 3, Tree = 4, Tower = 5
-    }
+    public const int SPACE = 0;
+    public const int CONCRETE = 1;
+    public const int BRICK = 2;
+    public const int WATER = 3;
+    public const int TREE = 4;
+    public const int TOWER = 5;
     public List<GameObject> obstacles = new List<GameObject>();
     public GameObject wall;
     public GameObject mapObject;
@@ -20,7 +22,7 @@ public class MapBuilder : MonoBehaviour
     {
         // pathFinder = GetComponent<PathFinder>();
         map = new Map();
-        mapSize = map.mapSize;
+        mapSize = Map.SIZE;
         // CreateBlankMap();
         // Debug.Log("obstacle size: " + obstacles[1].GetComponent<SpriteRenderer>().bounds.size.x);
     }
@@ -90,9 +92,10 @@ public class MapBuilder : MonoBehaviour
     /// <param name="obstacleIndex">The new block to be added to the map</param>
     public void Replace(Coordinate coor, int obstacleIndex)
     {
+        Vector3 position = Coordinate.ToVector3(coor);
         map.baseMap[coor.x, coor.y] = obstacleIndex;
-        DestroyAnObstacle(coor.ToVector3());
-        Instantiate(obstacles[obstacleIndex], coor.ToVector3(), this.transform.rotation, mapObject.transform);
+        DestroyAnObstacle(position);
+        Instantiate(obstacles[obstacleIndex], position, this.transform.rotation, mapObject.transform);
     }
 
     /// <summary>

@@ -108,10 +108,10 @@ public class Referee : MonoBehaviour
     IEnumerator SpawnEnemy()
     {
         yield return new WaitForSeconds(2f);
-        tankSpawner.GetClone(Map.enemySpawnLeft.ToVector2(), Quaternion.identity);
+        tankSpawner.GetClone(Coordinate.ToVector2(Map.enemySpawnLeft), Quaternion.identity);
         // tankSpawner.GetClone(Map.enemySpawnMid.ToVector2(), Quaternion.identity);
         // tankSpawner.GetClone(Map.enemySpawnRight.ToVector2(), Quaternion.identity);
-        tankSpawner.GetPlayerFX(Map.playerSpawnLeft.ToVector2());
+        tankSpawner.GetPlayerFX(Coordinate.ToVector2(Map.playerSpawnLeft));
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ public class Referee : MonoBehaviour
             spaceIndex = 0;
         }
 
-        itemPooler.GetClone(map.spaces[spaceIndex].ToVector2());
+        itemPooler.GetClone(Coordinate.ToVector2(map.spaces[spaceIndex]));
         spaceIndex++;
     }
 }

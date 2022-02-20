@@ -17,7 +17,7 @@ public class Enemy : Tank
 
         base.Start();
         marker = PathFinder.singleton.FindPath(Map.tower, new Coordinate(gameObject.transform.position));
-        markerPosition = marker.coordinate.ToVector3();
+        markerPosition = Coordinate.ToVector3(marker.coordinate);
 
         Invoke("ActiveTracking", 5f);
     }
@@ -42,7 +42,7 @@ public class Enemy : Tank
 
         if (marker != null)
         {
-            markerPosition = marker.coordinate.ToVector3();
+            markerPosition = Coordinate.ToVector3(marker.coordinate);
             Vector3 dirToMarker = markerPosition - gameObject.transform.position;
             angle = Vector3.SignedAngle(gameObject.transform.up, dirToMarker, gameObject.transform.forward);
             gameObject.transform.Rotate(0, 0, angle);

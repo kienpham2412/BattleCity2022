@@ -19,19 +19,19 @@ public class Marker
         this.parent = parent;
     }
 
-    public void CalculateG(Marker parent)
+    public static void CalculateG(Marker currentMarker, Marker parent)
     {
-        this.g = parent.g + 1;
+        currentMarker.g = parent.g + 1;
     }
 
-    public void CalculateH(Marker destination)
+    public static void CalculateH(Marker currentMarker, Marker destination)
     {
-        this.h = Vector2.Distance(this.coordinate.ToVector2(), destination.coordinate.ToVector2());
+        currentMarker.h = Vector2.Distance(Coordinate.ToVector2(currentMarker.coordinate), Coordinate.ToVector2(destination.coordinate));
     }
 
-    public void CalculateF()
+    public static void CalculateF(Marker currentMarker)
     {
-        f = g + h;
+        currentMarker.f = currentMarker.g + currentMarker.h;
     }
 }
 
@@ -42,6 +42,7 @@ public class PathFinder : MonoBehaviour
     private List<Marker> open = new List<Marker>();
     private List<Coordinate> close = new List<Coordinate>();
     private Map map;
+    private int mapSize = Map.SIZE;
     private bool isFound = false;
 
     void Start()
@@ -74,7 +75,7 @@ public class PathFinder : MonoBehaviour
             foreach (Coordinate coor in Coordinate.directions)
             {
                 Coordinate neighbour = currentMarker.coordinate + coor;
-                if (!neighbour.IsInsideMap(map.mapSize)) continue;
+                if (!Coordinate.IsInsideMap(neighbour, mapSize)) continue;
                 if (map.baseMap[neighbour.x, neighbour.y] == 1) continue;
                 if (map.baseMap[neighbour.x, neighbour.y] == 3) continue;
                 if (map.baseMap[neighbour.x, neighbour.y] == 5) continue;
@@ -87,9 +88,12 @@ public class PathFinder : MonoBehaviour
                 }
 
                 Marker newMarker = new Marker(/*marker,*/ 0, 0, neighbour, currentMarker);
-                newMarker.CalculateG(currentMarker);
-                newMarker.CalculateH(endMarker);
-                newMarker.CalculateF();
+                Marker.CalculateG(newMarker, currentMarker);
+                Marker.CalculateH(newMarker, endMarker);
+                Marker.CalculateF(newMarker);
+                // newMarker.CalculateG(currentMarker);
+                // newMarker.CalculateH(endMarker);
+                // newMarker.CalculateF();
                 open.Add(newMarker);
             }
         } while (!isFound);

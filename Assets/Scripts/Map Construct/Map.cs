@@ -37,27 +37,27 @@ public class Coordinate
     /// Convert coordinate to Vector2
     /// </summary>
     /// <returns></returns>
-    public Vector2 ToVector2()
+    public static Vector2 ToVector2(Coordinate coordinate)
     {
-        return new Vector2((float)x, (float)y);
+        return new Vector2((float)coordinate.x, (float)coordinate.y);
     }
 
     /// <summary>
     /// Convert coordinate to Vector3
     /// </summary>
     /// <returns></returns>
-    public Vector3 ToVector3()
+    public static Vector3 ToVector3(Coordinate coordinate)
     {
-        return new Vector3((float)x, (float)y, 0);
+        return new Vector3((float)coordinate.x, (float)coordinate.y, 0);
     }
 
     /// <summary>
     /// Is this coordinate inside the map
     /// </summary>
     /// <returns>true or false</returns>
-    public bool IsInsideMap(int mapSize)
+    public static bool IsInsideMap(Coordinate coordinate, int mapSize)
     {
-        if (x < 0 || x >= mapSize || y < 0 || y >= mapSize) return false;
+        if (coordinate.x < 0 || coordinate.x >= mapSize || coordinate.y < 0 || coordinate.y >= mapSize) return false;
         return true;
     }
 
@@ -84,7 +84,7 @@ public class Map
 {
     public string mapName;
     public int[,] baseMap;
-    public int mapSize = 13;
+    public const int SIZE = 13;
     public List<Coordinate> spaces;
     public static Coordinate tower = new Coordinate(6, 0);
     public static Coordinate enemySpawnLeft = new Coordinate(0, 12);
@@ -100,7 +100,7 @@ public class Map
 
     public Map()
     {
-        baseMap = new int[mapSize, mapSize];
+        baseMap = new int[SIZE, SIZE];
         spaces = new List<Coordinate>();
     }
 
@@ -139,7 +139,7 @@ public class Map
     /// </summary>
     public void PlaceTower()
     {
-        SetMap(Map.tower, (int)MapBuilder.Block.Tower);
+        SetMap(Map.tower, (int)MapBuilder.TOWER);
     }
 
     /// <summary>
@@ -147,11 +147,11 @@ public class Map
     /// </summary>
     private void PlaceTowerWall()
     {
-        SetMap(Map.towerWall1, (int)MapBuilder.Block.Brick);
-        SetMap(Map.towerWall2, (int)MapBuilder.Block.Brick);
-        SetMap(Map.towerWall3, (int)MapBuilder.Block.Brick);
-        SetMap(Map.towerWall4, (int)MapBuilder.Block.Brick);
-        SetMap(Map.towerWall5, (int)MapBuilder.Block.Brick);
+        SetMap(Map.towerWall1, MapBuilder.BRICK);
+        SetMap(Map.towerWall2, MapBuilder.BRICK);
+        SetMap(Map.towerWall3, MapBuilder.BRICK);
+        SetMap(Map.towerWall4, MapBuilder.BRICK);
+        SetMap(Map.towerWall5, MapBuilder.BRICK);
     }
 
     /// <summary>
@@ -159,11 +159,11 @@ public class Map
     /// </summary>
     public void PlaceSpawnPoint()
     {
-        SetMap(Map.enemySpawnLeft, (int)MapBuilder.Block.Space);
-        SetMap(Map.enemySpawnMid, (int)MapBuilder.Block.Space);
-        SetMap(Map.enemySpawnRight, (int)MapBuilder.Block.Space);
-        SetMap(Map.playerSpawnLeft, (int)MapBuilder.Block.Space);
-        SetMap(Map.playerSpawnRight, (int)MapBuilder.Block.Space);
+        SetMap(Map.enemySpawnLeft, MapBuilder.SPACE);
+        SetMap(Map.enemySpawnMid, MapBuilder.SPACE);
+        SetMap(Map.enemySpawnRight, MapBuilder.SPACE);
+        SetMap(Map.playerSpawnLeft, MapBuilder.SPACE);
+        SetMap(Map.playerSpawnRight, MapBuilder.SPACE);
     }
 
     /// <summary>
@@ -182,9 +182,9 @@ public class Map
     /// <param name="fill">true if the map is full of concretes and false if the map is empty</param>
     public void Initialize(bool fill)
     {
-        for (int x = 0; x < mapSize; x++)
+        for (int x = 0; x < SIZE; x++)
         {
-            for (int y = 0; y < mapSize; y++)
+            for (int y = 0; y < SIZE; y++)
             {
                 baseMap[x, y] = Convert.ToInt32(fill);
             }
@@ -199,9 +199,9 @@ public class Map
         Coordinate coordinate;
         spaces.Clear();
 
-        for (int x = 0; x < mapSize; x++)
+        for (int x = 0; x < SIZE; x++)
         {
-            for (int y = 0; y < mapSize; y++)
+            for (int y = 0; y < SIZE; y++)
             {
                 coordinate = new Coordinate(x, y);
                 if (baseMap[x, y] == 0)
@@ -222,19 +222,19 @@ public class Map
     /// </summary>
     public void SaveSpaceCoor()
     {
-        for (int x = 0; x < mapSize; x++)
+        for (int x = 0; x < SIZE; x++)
         {
-            for (int y = 0; y < mapSize; y++)
+            for (int y = 0; y < SIZE; y++)
             {
-                if (baseMap[x, y] == (int)MapBuilder.Block.Concrete)
+                if (baseMap[x, y] == MapBuilder.CONCRETE)
                 {
                     continue;
                 }
-                if (baseMap[x, y] == (int)MapBuilder.Block.Water)
+                if (baseMap[x, y] == MapBuilder.WATER)
                 {
                     continue;
                 }
-                if (baseMap[x, y] == (int)MapBuilder.Block.Tower)
+                if (baseMap[x, y] == MapBuilder.TOWER)
                 {
                     continue;
                 }
@@ -279,7 +279,7 @@ public class Map
         foreach (Coordinate dir in Coordinate.directions)
         {
             Coordinate neighbour = thisCoordinate + dir;
-            if (!neighbour.IsInsideMap(mapSize)) continue;
+            if (!Coordinate.IsInsideMap(neighbour, SIZE)) continue;
             if (baseMap[neighbour.x, neighbour.y] == 0) spaceCount++;
         }
         return spaceCount;
@@ -291,7 +291,7 @@ public class Map
     /// <param name="begin">The start coordinate</param>
     private void GeneratePath(Coordinate begin)
     {
-        if (NeighbourSpace(begin) >= 2 || !begin.IsInsideMap(mapSize)) return;
+        if (NeighbourSpace(begin) >= 2 || !Coordinate.IsInsideMap(begin, SIZE)) return;
 
         baseMap[begin.x, begin.y] = 0;
 
