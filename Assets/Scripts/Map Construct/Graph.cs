@@ -1,14 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Node
 {
     public const int ACCESSIBLE = 2;
     public const int IN_ACCESSIBLE_YET = 1;
     public const int IN_ACCESSIBLE = 0;
-    public int index;
     public Coordinate coordinate;
+    public int index;
     public int accessibiliby;
 
     public Node(Coordinate coordinate, int accessibiliby)
@@ -19,24 +21,18 @@ public class Node
     }
 }
 
-public class Graph : MonoBehaviour
+public class Graph
 {
-    private Map map;
-    private LinkedList<Node>[] graph;
+    private int[,] baseMap;
+    private LinkedList<Node>[] adjacentList;
     private int mapSize;
-    private int arrayLength;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        map = GetComponent<GameManager>().mapBuilder.map;
-        mapSize = Map.SIZE;
-        arrayLength = mapSize * mapSize;
+    private int length;
 
-        // CreateGraph();
-        BuildGraph();
-        Graph.PrintGraph(graph);
-        Debug.Log("successful");
+    public Graph(int[,] baseMap)
+    {
+        this.baseMap = baseMap;
+        mapSize = Map.SIZE;
+        length = mapSize * mapSize;
     }
 
     private void AddEdge(Coordinate first, Coordinate second)
@@ -45,8 +41,8 @@ public class Graph : MonoBehaviour
         int secondAccessibility = GetAccessibility(second);
         Node firstNode = new Node(first, firstAccessibility);
         Node secondNode = new Node(second, secondAccessibility);
-        CreateAdjacentList(firstNode.index);
-        CreateAdjacentList(secondNode.index);
+        Creategraph(firstNode.index);
+        Creategraph(secondNode.index);
 
         if (firstAccessibility == Node.IN_ACCESSIBLE)
         {
@@ -57,22 +53,13 @@ public class Graph : MonoBehaviour
             return;
         }
 
-        graph[firstNode.index].AddLast(secondNode);
-        graph[secondNode.index].AddLast(firstNode);
+        adjacentList[firstNode.index].AddLast(secondNode);
+        adjacentList[secondNode.index].AddLast(firstNode);
     }
 
-    // private void CreateGraph()
-    // {
-    //     graph = new LinkedList<Node>[arrayLength];
-    //     for (int i = 0; i < arrayLength; i++)
-    //     {
-    //         graph[i] = new LinkedList<Node>();
-    //     }
-    // }
-
-    private void BuildGraph()
+    public LinkedList<Node>[] BuildGraph()
     {
-        graph = new LinkedList<Node>[arrayLength];
+        adjacentList = new LinkedList<Node>[length];
 
         for (int y = 0; y < mapSize; y++)
         {
@@ -91,21 +78,22 @@ public class Graph : MonoBehaviour
                 }
             }
         }
+        return adjacentList;
     }
 
-    private void CreateAdjacentList(int nodeIndex)
+    private void Creategraph(int nodeIndex)
     {
-        if (graph[nodeIndex] == null)
+        if (adjacentList[nodeIndex] == null)
         {
-            graph[nodeIndex] = new LinkedList<Node>();
+            adjacentList[nodeIndex] = new LinkedList<Node>();
         }
     }
 
     public static void PrintGraph(LinkedList<Node>[] graph)
     {
-        int arrayLength = graph.Length;
+        int length = graph.Length;
         Debug.Log("Graph for this map: ");
-        for (int i = 0; i < arrayLength; i++)
+        for (int i = 0; i < length; i++)
         {
             string ouput = $"node {i}";
             foreach (Node node in graph[i])
@@ -118,7 +106,7 @@ public class Graph : MonoBehaviour
 
     private int GetAccessibility(Coordinate coordinate)
     {
-        int block = map.baseMap[coordinate.x, coordinate.y];
+        int block = baseMap[coordinate.x, coordinate.y];
         if (block == MapBuilder.WATER)
         {
             return Node.IN_ACCESSIBLE;

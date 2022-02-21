@@ -9,6 +9,7 @@ public class MapSaver
     static string filePath = Application.dataPath + "/Maps";
     BinaryFormatter bf;
     FileStream file;
+    private Graph graph;
     public MapSaver()
     {
         bf = new BinaryFormatter();
@@ -24,8 +25,8 @@ public class MapSaver
         CreateDir();
 
         map.mapName = name;
-        // map.PlaceTower();
-        // map.PlaceSpawnPoint();
+        graph = new Graph(map.baseMap);
+        map.adjacentList = graph.BuildGraph();
 
         file = File.Create(CreatePath(name));
         bf.Serialize(file, map);
@@ -51,8 +52,9 @@ public class MapSaver
     /// <summary>
     /// Create a save directory
     /// </summary>
-    private void CreateDir(){
-        if(Directory.Exists(filePath)) return;
+    private void CreateDir()
+    {
+        if (Directory.Exists(filePath)) return;
 
         Directory.CreateDirectory(filePath);
         Debug.Log("Create directory: Maps");

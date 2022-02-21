@@ -20,11 +20,8 @@ public class MapBuilder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // pathFinder = GetComponent<PathFinder>();
         map = new Map();
         mapSize = Map.SIZE;
-        // CreateBlankMap();
-        // Debug.Log("obstacle size: " + obstacles[1].GetComponent<SpriteRenderer>().bounds.size.x);
     }
 
     /// <summary>

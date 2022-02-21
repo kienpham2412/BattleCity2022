@@ -86,6 +86,7 @@ public class Map
     public int[,] baseMap;
     public const int SIZE = 13;
     public List<Coordinate> spaces;
+    public LinkedList<Node>[] adjacentList;
     public static Coordinate tower = new Coordinate(6, 0);
     public static Coordinate enemySpawnLeft = new Coordinate(0, 12);
     public static Coordinate enemySpawnMid = new Coordinate(6, 12);

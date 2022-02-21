@@ -10,28 +10,20 @@ public class Marker
     public Marker parent;
     public float g, h, f;
 
-    public Marker(float g, float h, Coordinate coordinate, Marker parent)
+    public Marker(Coordinate coordinate, Marker parent)
     {
-        this.g = g;
-        this.h = h;
+        this.g = 0;
+        this.h = 0;
         this.f = this.g + this.h;
         this.coordinate = coordinate;
         this.parent = parent;
     }
 
-    public static void CalculateG(Marker currentMarker, Marker parent)
+    public static void CalculateF(Marker thisMarker, Marker parent, Marker destination)
     {
-        currentMarker.g = parent.g + 1;
-    }
-
-    public static void CalculateH(Marker currentMarker, Marker destination)
-    {
-        currentMarker.h = Vector2.Distance(Coordinate.ToVector2(currentMarker.coordinate), Coordinate.ToVector2(destination.coordinate));
-    }
-
-    public static void CalculateF(Marker currentMarker)
-    {
-        currentMarker.f = currentMarker.g + currentMarker.h;
+        thisMarker.g = parent.g + 1;
+        thisMarker.h = Vector2.Distance(Coordinate.ToVector2(thisMarker.coordinate), Coordinate.ToVector2(destination.coordinate));
+        thisMarker.f = thisMarker.g + thisMarker.h;
     }
 }
 
@@ -40,16 +32,16 @@ public class PathFinder : MonoBehaviour
     private MapBuilder mapBuilder;
     public static PathFinder singleton;
     private List<Marker> open = new List<Marker>();
-    private List<Coordinate> close = new List<Coordinate>();
-    private Map map;
+    private List<int> closeIndex = new List<int>();
+    private LinkedList<Node>[] adjacentList;
     private int mapSize = Map.SIZE;
-    private bool isFound = false;
+    private bool isChecking = true;
 
     void Start()
     {
         singleton = GetComponent<PathFinder>();
         mapBuilder = GetComponent<GameManager>().mapBuilder;
-        map = mapBuilder.map;
+        adjacentList = mapBuilder.map.adjacentList;
     }
 
     /// <summary>
@@ -60,56 +52,59 @@ public class PathFinder : MonoBehaviour
     /// <returns></returns>
     public Marker FindPath(Coordinate begin, Coordinate end)
     {
-        Marker beginMarker = new Marker(0, 0, begin, null);
-        Marker endMarker = new Marker(0, 0, end, null);
+        int targetIndex = mapSize * end.y + end.x;
+        Marker beginMarker = new Marker(begin, null);
+        Marker endMarker = new Marker(end, null);
         Marker currentMarker;
         open.Add(beginMarker);
 
         do
         {
+            if (open.Count == 0)
+            {
+                isChecking = false;
+                break;
+            }
+            
             open = open.OrderBy(mrk => mrk.f).ToList<Marker>();
             currentMarker = open[0];
             open.RemoveAt(0);
-            close.Add(currentMarker.coordinate);
+            int index = mapSize * currentMarker.coordinate.y + currentMarker.coordinate.x;
+            closeIndex.Add(index);
 
-            foreach (Coordinate coor in Coordinate.directions)
+            foreach (Node node in adjacentList[index])
             {
-                Coordinate neighbour = currentMarker.coordinate + coor;
-                if (!Coordinate.IsInsideMap(neighbour, mapSize)) continue;
-                if (map.baseMap[neighbour.x, neighbour.y] == 1) continue;
-                if (map.baseMap[neighbour.x, neighbour.y] == 3) continue;
-                if (map.baseMap[neighbour.x, neighbour.y] == 5) continue;
-                if (IsClosed(neighbour)) continue;
-                if (neighbour.Equals(endMarker.coordinate))
+                if (IsClosedIndex(node.index))
+                {
+                    continue;
+                }
+
+                if (node.accessibiliby == Node.IN_ACCESSIBLE_YET)
+                {
+                    continue;
+                }
+
+                if (node.index == targetIndex)
                 {
                     endMarker.parent = currentMarker;
-                    isFound = true;
                     return endMarker;
                 }
 
-                Marker newMarker = new Marker(/*marker,*/ 0, 0, neighbour, currentMarker);
-                Marker.CalculateG(newMarker, currentMarker);
-                Marker.CalculateH(newMarker, endMarker);
-                Marker.CalculateF(newMarker);
-                // newMarker.CalculateG(currentMarker);
-                // newMarker.CalculateH(endMarker);
-                // newMarker.CalculateF();
+                Marker newMarker = new Marker(node.coordinate, currentMarker);
+                Marker.CalculateF(newMarker, currentMarker, endMarker);
                 open.Add(newMarker);
             }
-        } while (!isFound);
+
+        } while (isChecking);
+
         return null;
     }
 
-    /// <summary>
-    /// Check if a coordinate is checked in A* argorithm before
-    /// </summary>
-    /// <param name="thisCoordinate">The coordinate to be checked</param>
-    /// <returns>True if this coordinate is checked before and False if not</returns>
-    private bool IsClosed(Coordinate thisCoordinate)
+    private bool IsClosedIndex(int index)
     {
-        foreach (Coordinate coor in close)
+        foreach (int i in closeIndex)
         {
-            if (thisCoordinate.Equals(coor))
+            if (i == index)
             {
                 return true;
             }
