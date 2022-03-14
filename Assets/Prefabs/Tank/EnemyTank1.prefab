@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3011441667899040746}
   - component: {fileID: 3011441667899040741}
   - component: {fileID: 3011441667899040740}
-  - component: {fileID: 3229127805655430446}
   - component: {fileID: 6925281585520479611}
+  - component: {fileID: -8962625576873450563}
   m_Layer: 0
   m_Name: EnemyTank1
   m_TagString: EnemyTank
@@ -155,21 +155,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3229127805655430446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3011441667899040737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e1d9ea05eb7ecb43a50104ecb5e0685, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingPos: {fileID: 5755880876758960803}
-  tankAnimator: {fileID: 3011441667899040740}
-  tracker: {fileID: 0}
 --- !u!114 &6925281585520479611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +167,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1090ced868ea3ea44804305ebf079198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8962625576873450563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3011441667899040737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809c7bdb9bfff924cb46f233b2f0837b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankAnimator: {fileID: 3011441667899040740}
 --- !u!1 &5755880876758960803
 GameObject:
   m_ObjectHideFlags: 0
