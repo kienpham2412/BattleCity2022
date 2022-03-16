@@ -13,6 +13,8 @@ public class Node
     public int index;
     public int accessibiliby;
 
+    public Node(){}
+
     public Node(Coordinate coordinate, int accessibiliby)
     {
         this.index = Map.SIZE * coordinate.y + coordinate.x;

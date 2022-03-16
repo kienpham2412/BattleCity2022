@@ -6,7 +6,7 @@ public class State
 {
     public enum STATE
     {
-        IDLE, PATROL
+        IDLE, PATROL, WANDER
     }
     public enum EVENT
     {
@@ -35,6 +35,7 @@ public class State
 
     public virtual void Enter()
     {
+        Debug.Log($"Begin {name} state");
         stateEvent = EVENT.UPDATE;
     }
 
@@ -70,59 +71,9 @@ public class State
     {
         moveForward = thisGameObject.transform.up * speed;
         enemyRB.velocity = moveForward;
-        SetAnimation(true);
     }
 
-    public void Stop()
-    {
-        enemyRB.velocity = new Vector2(0, 0);
-        SetAnimation(false);
-    }
-
-    public void SetAnimation(bool isRunning)
-    {
-        tankAnimator.SetBool("isRunning", isRunning);
-    }
-}
-
-public class Idle : State
-{
-    public Idle(GameObject thisGameObject, Marker marker, Rigidbody2D enemyRB, Animator tankAnimator) : base(thisGameObject, marker, enemyRB, tankAnimator)
-    {
-        name = STATE.IDLE;
-    }
-
-    public override void Enter()
-    {
-        marker = PathFinder.singleton.FindPath(Map.playerSpawnRight, new Coordinate(thisGameObject.transform.position));
-        base.Enter();
-    }
-
-    public override void Update()
-    {
-        stateEvent = EVENT.EXIT;
-    }
-
-    public override void Exit()
-    {
-        nextState = new Patrol(thisGameObject, marker, enemyRB, tankAnimator);
-    }
-}
-
-public class Patrol : State
-{
-    public Patrol(GameObject thisGameObject, Marker marker, Rigidbody2D enemyRB, Animator tankAnimator) : base(thisGameObject, marker, enemyRB, tankAnimator)
-    {
-        name = STATE.PATROL;
-    }
-
-    public override void Enter()
-    {
-        markerPosition = Coordinate.ToVector3(marker.coordinate);
-        base.Enter();
-    }
-
-    public override void Update()
+    protected void MoveToDestination()
     {
         float distance = Vector3.Distance(thisGameObject.transform.position, markerPosition);
 
@@ -149,10 +100,103 @@ public class Patrol : State
         }
     }
 
+    protected void Stop()
+    {
+        enemyRB.velocity = new Vector2(0, 0);
+        SetAnimation(false);
+    }
+
+    protected void SetAnimation(bool isRunning)
+    {
+        tankAnimator.SetBool("isRunning", isRunning);
+    }
+}
+
+public class Idle : State
+{
+    public Idle(GameObject thisGameObject, Marker marker, Rigidbody2D enemyRB, Animator tankAnimator) : base(thisGameObject, marker, enemyRB, tankAnimator)
+    {
+        name = STATE.IDLE;
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        stateEvent = EVENT.EXIT;
+    }
+
+    public override void Exit()
+    {
+        nextState = new Wander(thisGameObject, marker, enemyRB, tankAnimator);
+    }
+}
+
+public class Patrol : State
+{
+    public Patrol(GameObject thisGameObject, Marker marker, Rigidbody2D enemyRB, Animator tankAnimator) : base(thisGameObject, marker, enemyRB, tankAnimator)
+    {
+        name = STATE.PATROL;
+    }
+
+    public override void Enter()
+    {
+        marker = PathFinder.singleton.FindPath(Map.playerSpawnRight, new Coordinate(thisGameObject.transform.position));
+        markerPosition = Coordinate.ToVector3(marker.coordinate);
+        SetAnimation(true);
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        MoveToDestination();
+    }
+
     public override void Exit()
     {
         Stop();
-        nextState = null;
+        nextState = new Idle(thisGameObject, marker, enemyRB, tankAnimator);
+        base.Exit();
+    }
+}
+
+public class Wander : State
+{
+    public Wander(GameObject thisGameObject, Marker marker, Rigidbody2D enemyRB, Animator tankAnimator) : base(thisGameObject, marker, enemyRB, tankAnimator)
+    {
+        name = STATE.WANDER;
+    }
+
+    public override void Enter()
+    {
+        Coordinate current = new Coordinate(thisGameObject.transform.position);
+        Coordinate destination = PathFinder.singleton.GetNextCoordinate(current);
+
+        if (destination == null)
+        {
+            stateEvent = EVENT.EXIT;
+            return;
+        }
+
+        Marker destinationMarker = new Marker(destination, null);
+        marker = new Marker(current, destinationMarker);
+        markerPosition = Coordinate.ToVector3(marker.coordinate);
+        SetAnimation(true);
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        MoveToDestination();
+    }
+
+    public override void Exit()
+    {
+        Stop();
+        nextState = new Idle(thisGameObject, marker, enemyRB, tankAnimator);
         base.Exit();
     }
 }

@@ -39,7 +39,7 @@ public class PathFinder : MonoBehaviour
 
     void Start()
     {
-        singleton = GetComponent<PathFinder>();
+        singleton = this;
         mapBuilder = GetComponent<GameManager>().mapBuilder;
         adjacentList = mapBuilder.map.adjacentList;
     }
@@ -52,7 +52,7 @@ public class PathFinder : MonoBehaviour
     /// <returns></returns>
     public Marker FindPath(Coordinate begin, Coordinate end)
     {
-        int targetIndex = mapSize * end.y + end.x;
+        int targetIndex = PathFinder.GetIndexByCoordinate(end);
         Marker beginMarker = new Marker(begin, null);
         Marker endMarker = new Marker(end, null);
         Marker currentMarker;
@@ -65,7 +65,7 @@ public class PathFinder : MonoBehaviour
                 isChecking = false;
                 break;
             }
-            
+
             open = open.OrderBy(mrk => mrk.f).ToList<Marker>();
             currentMarker = open[0];
             open.RemoveAt(0);
@@ -110,5 +110,34 @@ public class PathFinder : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public static int GetIndexByCoordinate(Coordinate coordinate)
+    {
+        int targetIndex = Map.SIZE * coordinate.y + coordinate.x;
+        return targetIndex;
+    }
+
+    private bool GetTrueByRate(int rate)
+    {
+        int num = Random.Range(1, 101);
+        return num < rate ? true : false;
+    }
+
+    public Coordinate GetNextCoordinate(Coordinate current)
+    {
+        int index = PathFinder.GetIndexByCoordinate(current);
+
+        foreach (Node node in adjacentList[index])
+        {
+            if (node.accessibiliby == Node.ACCESSIBLE)
+            {
+                if (GetTrueByRate(20))
+                {
+                    return node.coordinate;
+                }
+            }
+        }
+        return null;
     }
 }

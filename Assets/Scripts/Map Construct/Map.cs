@@ -51,6 +51,15 @@ public class Coordinate
         return new Vector3((float)coordinate.x, (float)coordinate.y, 0);
     }
 
+    public static Coordinate GetCurrentCoordinate(Vector3 position){
+        Coordinate currentCoordinate;
+        int x = (int)Mathf.RoundToInt(position.x);
+        int y = (int)Mathf.RoundToInt(position.y);
+
+        currentCoordinate = new Coordinate(x, y);
+        return currentCoordinate;
+    }
+
     /// <summary>
     /// Is this coordinate inside the map
     /// </summary>
@@ -72,7 +81,7 @@ public class Coordinate
         return new Coordinate(a.x + b.x, a.y + b.y);
     }
 
-    public bool Equals(Coordinate thisCoordinate)
+    public bool Compare(Coordinate thisCoordinate)
     {
         if (this.x == thisCoordinate.x && this.y == thisCoordinate.y) return true;
         return false;

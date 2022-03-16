@@ -35,12 +35,6 @@ public class Referee : MonoBehaviour
         SpawnItem();
     }
 
-    // Update is called once per frame
-    // void Update()
-    // {
-
-    // }
-
     /// <summary>
     /// Spawn collision explosion effect on the map
     /// </summary>
