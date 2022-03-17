@@ -132,7 +132,7 @@ public class PathFinder : MonoBehaviour
         {
             if (node.accessibiliby == Node.ACCESSIBLE)
             {
-                if (GetTrueByRate(20))
+                if (GetTrueByRate(50))
                 {
                     return node.coordinate;
                 }

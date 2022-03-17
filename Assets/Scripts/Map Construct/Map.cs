@@ -53,8 +53,8 @@ public class Coordinate
 
     public static Coordinate GetCurrentCoordinate(Vector3 position){
         Coordinate currentCoordinate;
-        int x = (int)Mathf.RoundToInt(position.x);
-        int y = (int)Mathf.RoundToInt(position.y);
+        int x = Mathf.RoundToInt(position.x);
+        int y = Mathf.RoundToInt(position.y);
 
         currentCoordinate = new Coordinate(x, y);
         return currentCoordinate;

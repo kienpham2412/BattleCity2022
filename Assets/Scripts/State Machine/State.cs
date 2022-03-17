@@ -35,7 +35,6 @@ public class State
 
     public virtual void Enter()
     {
-        Debug.Log($"Begin {name} state");
         stateEvent = EVENT.UPDATE;
     }
 
