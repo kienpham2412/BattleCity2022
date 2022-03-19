@@ -22,9 +22,10 @@ public class Coordinate
 
     public Coordinate() { }
 
-    public Coordinate(Vector3 position){
-        this.x = (int) position.x;
-        this.y = (int) position.y;
+    public Coordinate(Vector3 position)
+    {
+        this.x = (int)position.x;
+        this.y = (int)position.y;
     }
 
     public Coordinate(int x, int y)
@@ -33,25 +34,18 @@ public class Coordinate
         this.y = y;
     }
 
-    /// <summary>
-    /// Convert coordinate to Vector2
-    /// </summary>
-    /// <returns></returns>
     public static Vector2 ToVector2(Coordinate coordinate)
     {
         return new Vector2((float)coordinate.x, (float)coordinate.y);
     }
 
-    /// <summary>
-    /// Convert coordinate to Vector3
-    /// </summary>
-    /// <returns></returns>
     public static Vector3 ToVector3(Coordinate coordinate)
     {
         return new Vector3((float)coordinate.x, (float)coordinate.y, 0);
     }
 
-    public static Coordinate GetCurrentCoordinate(Vector3 position){
+    public static Coordinate GetCurrentCoordinate(Vector3 position)
+    {
         Coordinate currentCoordinate;
         int x = Mathf.RoundToInt(position.x);
         int y = Mathf.RoundToInt(position.y);
@@ -60,22 +54,28 @@ public class Coordinate
         return currentCoordinate;
     }
 
-    /// <summary>
-    /// Is this coordinate inside the map
-    /// </summary>
-    /// <returns>true or false</returns>
+    public static bool CheckDistance(Coordinate a, Coordinate b, float distanceToCheck)
+    {
+        Vector3 vectorA = Coordinate.ToVector3(a);
+        Vector3 vectorB = Coordinate.ToVector3(b);
+        float distance = Vector3.Distance(vectorA, vectorB);
+
+        if (distance <= distanceToCheck)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public static bool IsInsideMap(Coordinate coordinate, int mapSize)
     {
         if (coordinate.x < 0 || coordinate.x >= mapSize || coordinate.y < 0 || coordinate.y >= mapSize) return false;
         return true;
     }
 
-    /// <summary>
-    /// Return the sum of 2 coordinates
-    /// </summary>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    /// <returns></returns>
     public static Coordinate operator +(Coordinate a, Coordinate b)
     {
         return new Coordinate(a.x + b.x, a.y + b.y);
@@ -114,17 +114,11 @@ public class Map
         spaces = new List<Coordinate>();
     }
 
-    /// <summary>
-    /// Create a blank map
-    /// </summary>
     public void CreateBlank()
     {
         Initialize(false);
     }
 
-    /// <summary>
-    /// Create a base map with only 0 and 1 value
-    /// </summary>
     public void CreateBaseMap()
     {
         Initialize(true);
@@ -132,9 +126,6 @@ public class Map
         Debug.Log("finish generate");
     }
 
-    /// <summary>
-    /// Generate a random map
-    /// </summary>
     public void Random()
     {
         CreateBaseMap();
@@ -144,17 +135,11 @@ public class Map
         PlaceSpawnPoint();
     }
 
-    /// <summary>
-    /// Place the tower block to the map
-    /// </summary>
     public void PlaceTower()
     {
         SetMap(Map.tower, (int)MapBuilder.TOWER);
     }
 
-    /// <summary>
-    /// Place the tower walls to the map
-    /// </summary>
     private void PlaceTowerWall()
     {
         SetMap(Map.towerWall1, MapBuilder.BRICK);
@@ -164,9 +149,6 @@ public class Map
         SetMap(Map.towerWall5, MapBuilder.BRICK);
     }
 
-    /// <summary>
-    /// Place tank spawn points to the map
-    /// </summary>
     public void PlaceSpawnPoint()
     {
         SetMap(Map.enemySpawnLeft, MapBuilder.SPACE);
@@ -176,20 +158,11 @@ public class Map
         SetMap(Map.playerSpawnRight, MapBuilder.SPACE);
     }
 
-    /// <summary>
-    /// Set a block to the certain coordinate of the map
-    /// </summary>
-    /// <param name="coordinate">The coordinate of the block</param>
-    /// <param name="value">The index of the block</param>
     public void SetMap(Coordinate coordinate, int value)
     {
         baseMap[coordinate.x, coordinate.y] = value;
     }
 
-    /// <summary>
-    /// Create a basic map
-    /// </summary>
-    /// <param name="fill">true if the map is full of concretes and false if the map is empty</param>
     public void Initialize(bool fill)
     {
         for (int x = 0; x < SIZE; x++)
@@ -201,9 +174,6 @@ public class Map
         }
     }
 
-    /// <summary>
-    /// Generate a full map from base map
-    /// </summary>
     private void RegenerageMap()
     {
         Coordinate coordinate;
@@ -227,9 +197,6 @@ public class Map
         }
     }
 
-    /// <summary>
-    /// Saved spaces in the map
-    /// </summary>
     public void SaveSpaceCoor()
     {
         for (int x = 0; x < SIZE; x++)
@@ -254,11 +221,6 @@ public class Map
         }
     }
 
-    /// <summary>
-    /// Change some blocks of the base map to the new blocks
-    /// </summary>
-    /// <param name="coordinate"></param>
-    /// <param name="drillable"></param>
     private void Change(Coordinate coordinate, bool drillable)
     {
         int randowNumber;
@@ -278,11 +240,6 @@ public class Map
         SetMap(coordinate, randowNumber);
     }
 
-    /// <summary>
-    /// Count spaces at the top, down, left, right of current coordinate
-    /// </summary>
-    /// <param name="thisCoordinate"></param>
-    /// <returns></returns>
     private int NeighbourSpace(Coordinate thisCoordinate)
     {
         int spaceCount = 0;
@@ -295,10 +252,6 @@ public class Map
         return spaceCount;
     }
 
-    /// <summary>
-    /// Generate a path from begin coordinate
-    /// </summary>
-    /// <param name="begin">The start coordinate</param>
     private void GeneratePath(Coordinate begin)
     {
         if (NeighbourSpace(begin) >= 2 || !Coordinate.IsInsideMap(begin, SIZE)) return;

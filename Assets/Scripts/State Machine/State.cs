@@ -15,21 +15,17 @@ public class State
     public STATE name;
     protected EVENT stateEvent;
     protected State nextState;
-    protected GameObject thisGameObject;
-    protected Rigidbody2D enemyRB;
-    protected Marker marker;
+    protected PathFinder pathFinder;
     protected Vector3 markerPosition;
     protected Vector3 moveForward;
-    protected Animator tankAnimator;
+    protected EnemyData enemyData;
     protected float angle;
     protected float speed = 1f;
 
-    public State(GameObject thisGameObject, Marker marker, Rigidbody2D enemyRB, Animator tankAnimator)
+    public State(EnemyData enemyData, PathFinder pathFinder)
     {
-        this.marker = marker;
-        this.thisGameObject = thisGameObject;
-        this.enemyRB = enemyRB;
-        this.tankAnimator = tankAnimator;
+        this.enemyData = enemyData;
+        this.pathFinder = pathFinder;
         this.stateEvent = EVENT.ENTER;
     }
 
@@ -68,13 +64,13 @@ public class State
 
     public void MoveForward()
     {
-        moveForward = thisGameObject.transform.up * speed;
-        enemyRB.velocity = moveForward;
+        moveForward = enemyData.enemyGO.transform.up * speed;
+        enemyData.enemyRB.velocity = moveForward;
     }
 
     protected void MoveToDestination()
     {
-        float distance = Vector3.Distance(thisGameObject.transform.position, markerPosition);
+        float distance = Vector3.Distance(enemyData.enemyGO.transform.position, markerPosition);
 
         if (distance > 0.01f)
         {
@@ -82,44 +78,48 @@ public class State
             return;
         }
 
-        thisGameObject.transform.position = markerPosition;
-        marker = marker.parent;
+        enemyData.enemyGO.transform.position = markerPosition;
+        enemyData.marker = enemyData.marker.parent;
 
-        if (marker != null)
+        if (enemyData.marker != null)
         {
-            markerPosition = Coordinate.ToVector3(marker.coordinate);
-            Vector3 dirToMarker = markerPosition - thisGameObject.transform.position;
-            angle = Vector3.SignedAngle(thisGameObject.transform.up, dirToMarker, thisGameObject.transform.forward);
-            thisGameObject.transform.Rotate(0, 0, angle);
+            markerPosition = Coordinate.ToVector3(enemyData.marker.coordinate);
+            Vector3 dirToMarker = markerPosition - enemyData.enemyGO.transform.position;
+            angle = Vector3.SignedAngle(enemyData.enemyGO.transform.up, dirToMarker, enemyData.enemyGO.transform.forward);
+            enemyData.enemyGO.transform.Rotate(0, 0, angle);
         }
         else
         {
             stateEvent = EVENT.EXIT;
-            Debug.Log("reach destination");
         }
     }
 
     protected void Stop()
     {
-        enemyRB.velocity = new Vector2(0, 0);
+        enemyData.enemyRB.velocity = new Vector2(0, 0);
         SetAnimation(false);
     }
 
     protected void SetAnimation(bool isRunning)
     {
-        tankAnimator.SetBool("isRunning", isRunning);
+        enemyData.enemyAnimator.SetBool("isRunning", isRunning);
     }
 }
 
 public class Idle : State
 {
-    public Idle(GameObject thisGameObject, Marker marker, Rigidbody2D enemyRB, Animator tankAnimator) : base(thisGameObject, marker, enemyRB, tankAnimator)
+    float distanceToTower;
+    float distanceToPlayer;
+
+    public Idle(EnemyData enemyData, PathFinder pathFinder) : base(enemyData, pathFinder)
     {
         name = STATE.IDLE;
     }
 
     public override void Enter()
     {
+        distanceToPlayer = Vector3.Distance(enemyData.enemyGO.transform.position, Player.Instance.transform.position);
+        distanceToTower = Vector3.Distance(enemyData.enemyGO.transform.position, Coordinate.ToVector3(Map.tower));
         base.Enter();
     }
 
@@ -130,21 +130,39 @@ public class Idle : State
 
     public override void Exit()
     {
-        nextState = new Wander(thisGameObject, marker, enemyRB, tankAnimator);
+        if (distanceToTower <= PathFinder.TOWER_RANGE)
+        {
+            nextState = new Pursue(this.enemyData, Map.tower, pathFinder, PathFinder.TOWER_RANGE);
+            Debug.Log("pursuing tower");
+        }
+        else if (distanceToPlayer <= PathFinder.PLAYER_RANGE)
+        {
+            nextState = new Pursue(this.enemyData, Player.Instance.GetCoordinate(), pathFinder, PathFinder.TOWER_RANGE);
+            Debug.Log("pursuing player");
+        }
+        else
+        {
+            nextState = new Patrol(enemyData, pathFinder);
+        }
     }
 }
 
-public class Patrol : State
+public class Pursue : State
 {
-    public Patrol(GameObject thisGameObject, Marker marker, Rigidbody2D enemyRB, Animator tankAnimator) : base(thisGameObject, marker, enemyRB, tankAnimator)
+    Coordinate target;
+    float limitRange;
+
+    public Pursue(EnemyData enemyData, Coordinate target, PathFinder pathFinder, float limitRange) : base(enemyData, pathFinder)
     {
         name = STATE.PATROL;
+        this.target = target;
+        this.limitRange = limitRange;
     }
 
     public override void Enter()
     {
-        marker = PathFinder.singleton.FindPath(Map.playerSpawnRight, new Coordinate(thisGameObject.transform.position));
-        markerPosition = Coordinate.ToVector3(marker.coordinate);
+        enemyData.marker = PathFinder.singleton.FindPath(new Coordinate(enemyData.enemyGO.transform.position), target, limitRange);
+        markerPosition = Coordinate.ToVector3(enemyData.marker.coordinate);
         SetAnimation(true);
         base.Enter();
     }
@@ -157,22 +175,23 @@ public class Patrol : State
     public override void Exit()
     {
         Stop();
-        nextState = new Idle(thisGameObject, marker, enemyRB, tankAnimator);
+        nextState = new Idle(enemyData, pathFinder);
         base.Exit();
     }
 }
 
-public class Wander : State
+public class Patrol : State
 {
-    public Wander(GameObject thisGameObject, Marker marker, Rigidbody2D enemyRB, Animator tankAnimator) : base(thisGameObject, marker, enemyRB, tankAnimator)
+
+    public Patrol(EnemyData enemyData, PathFinder pathFinder) : base(enemyData, pathFinder)
     {
         name = STATE.WANDER;
     }
 
     public override void Enter()
     {
-        Coordinate current = new Coordinate(thisGameObject.transform.position);
-        Coordinate destination = PathFinder.singleton.GetNextCoordinate(current);
+        Coordinate current = new Coordinate(enemyData.enemyGO.transform.position);
+        Coordinate destination = PathFinder.singleton.GetNextCoordinate(current, ref enemyData.previous);
 
         if (destination == null)
         {
@@ -181,8 +200,8 @@ public class Wander : State
         }
 
         Marker destinationMarker = new Marker(destination, null);
-        marker = new Marker(current, destinationMarker);
-        markerPosition = Coordinate.ToVector3(marker.coordinate);
+        enemyData.marker = new Marker(current, destinationMarker);
+        markerPosition = Coordinate.ToVector3(enemyData.marker.coordinate);
         SetAnimation(true);
         base.Enter();
     }
@@ -195,7 +214,7 @@ public class Wander : State
     public override void Exit()
     {
         Stop();
-        nextState = new Idle(thisGameObject, marker, enemyRB, tankAnimator);
+        nextState = new Idle(enemyData, pathFinder);
         base.Exit();
     }
 }

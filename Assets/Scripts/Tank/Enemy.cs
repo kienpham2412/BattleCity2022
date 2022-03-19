@@ -16,7 +16,7 @@ public class Enemy : Tank
         powerUp = false;
 
         base.Start();
-        marker = PathFinder.singleton.FindPath(Map.tower, new Coordinate(gameObject.transform.position));
+        // marker = PathFinder.singleton.FindPath(Map.tower, new Coordinate(gameObject.transform.position), 5f);
         markerPosition = Coordinate.ToVector3(marker.coordinate);
 
         Invoke("ActiveTracking", 5f);

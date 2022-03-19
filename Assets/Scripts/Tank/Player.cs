@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Player : Tank
 {
-    public static Player singleton;
+    public static Player Instance;
     private PlayerControl playerControl;
     private InputAction movement;
     private InputAction shoot;
@@ -16,7 +16,7 @@ public class Player : Tank
 
     void Awake()
     {
-        singleton = GetComponent<Player>();
+        Instance = this;
 
         playerControl = new PlayerControl();
         movement = playerControl.Gameplay.Movement;
@@ -44,10 +44,6 @@ public class Player : Tank
         }
     }
 
-    /// <summary>
-    /// Enable and disable the input of the tank control
-    /// </summary>
-    /// <param name="isActive"></param>
     public void ActiveInput(bool isActive)
     {
         if (isActive)
@@ -60,9 +56,10 @@ public class Player : Tank
         }
     }
 
-    /// <summary>
-    /// Move the tank by control direction
-    /// </summary>
+    public Coordinate GetCoordinate(){
+        return Coordinate.GetCurrentCoordinate(transform.position);
+    }
+
     void Move()
     {
         direction = movement.ReadValue<Vector2>();
@@ -74,10 +71,6 @@ public class Player : Tank
         if (xDirection == 1) TurnRight();
     }
 
-    /// <summary>
-    /// Make the player tank more powerful
-    /// </summary>
-    /// <returns></returns>
     IEnumerator PowerUp()
     {
         powerUp = true;
@@ -85,10 +78,6 @@ public class Player : Tank
         powerUp = false;
     }
 
-    /// <summary>
-    /// This function is triggered when player collide with an item
-    /// </summary>
-    /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Star"))

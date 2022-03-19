@@ -8,7 +8,6 @@ public class PlayGameUI : UIManager
 
     public override void Awake()
     {
-        // base.Awake();
         this.myControl = new PlayerControl();
         this.myControl.UI.Cancel.performed += context => ShowExitMenu();
     }
@@ -19,44 +18,31 @@ public class PlayGameUI : UIManager
         base.Start();
     }
 
-    /// <summary>
-    /// Display a question to make sure player wants to exit
-    /// </summary>
     public void ShowExitMenu()
     {
         if (!menu.GetMenu(1).activeSelf)
         {
             menu.ShowMenu(1);
-            Player.singleton.ActiveInput(false);
+            Player.Instance.ActiveInput(false);
         }
         else
         {
             menu.HideMenu(1);
-            Player.singleton.ActiveInput(true);
+            Player.Instance.ActiveInput(true);
         }
     }
 
-    /// <summary>
-    /// Hide a menu
-    /// </summary>
-    /// <param name="index">Index value of the menu</param>
     public override void HideMenu(int index)
     {
-        Player.singleton.ActiveInput(true);
+        Player.Instance.ActiveInput(true);
         base.HideMenu(index);
     }
 
-    /// <summary>
-    /// This function is called when the game object is active on the scene
-    /// </summary>
     public void OnEnable()
     {
         myControl.UI.Enable();
     }
 
-    /// <summary>
-    /// This function is called when the game object is inactive on the scene
-    /// </summary>
     public void OnDisable()
     {
         myControl.UI.Disable();

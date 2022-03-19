@@ -34,7 +34,9 @@ public class PathFinder : MonoBehaviour
     private List<Marker> open = new List<Marker>();
     private List<int> closeIndex = new List<int>();
     private LinkedList<Node>[] adjacentList;
-    private int mapSize = Map.SIZE;
+    public const float UNLIMITED = 30;
+    public const float TOWER_RANGE = 4;
+    public const float PLAYER_RANGE = 4;
     private bool isChecking = true;
 
     void Start()
@@ -44,18 +46,15 @@ public class PathFinder : MonoBehaviour
         adjacentList = mapBuilder.map.adjacentList;
     }
 
-    /// <summary>
-    /// Find a path inside the map using A* argorithm
-    /// </summary>
-    /// <param name="begin">The begin coordinate</param>
-    /// <param name="end">The destination coordinate</param>
-    /// <returns></returns>
-    public Marker FindPath(Coordinate begin, Coordinate end)
+    public Marker FindPath(Coordinate start, Coordinate destination, float limitRange)
     {
-        int targetIndex = PathFinder.GetIndexByCoordinate(end);
-        Marker beginMarker = new Marker(begin, null);
-        Marker endMarker = new Marker(end, null);
+        int targetIndex = PathFinder.GetIndexByCoordinate(start);
+        Marker beginMarker = new Marker(destination, null);
+        Marker endMarker = new Marker(start, null);
         Marker currentMarker;
+
+        open.Clear();
+        closeIndex.Clear();
         open.Add(beginMarker);
 
         do
@@ -69,12 +68,17 @@ public class PathFinder : MonoBehaviour
             open = open.OrderBy(mrk => mrk.f).ToList<Marker>();
             currentMarker = open[0];
             open.RemoveAt(0);
-            int index = mapSize * currentMarker.coordinate.y + currentMarker.coordinate.x;
+            int index = PathFinder.GetIndexByCoordinate(currentMarker.coordinate);
             closeIndex.Add(index);
 
             foreach (Node node in adjacentList[index])
             {
                 if (IsClosedIndex(node.index))
+                {
+                    continue;
+                }
+
+                if (!Coordinate.CheckDistance(destination, node.coordinate, limitRange))
                 {
                     continue;
                 }
@@ -94,7 +98,6 @@ public class PathFinder : MonoBehaviour
                 Marker.CalculateF(newMarker, currentMarker, endMarker);
                 open.Add(newMarker);
             }
-
         } while (isChecking);
 
         return null;
@@ -124,7 +127,7 @@ public class PathFinder : MonoBehaviour
         return num < rate ? true : false;
     }
 
-    public Coordinate GetNextCoordinate(Coordinate current)
+    public Coordinate GetNextCoordinate(Coordinate current, ref Coordinate previous)
     {
         int index = PathFinder.GetIndexByCoordinate(current);
 
@@ -132,12 +135,17 @@ public class PathFinder : MonoBehaviour
         {
             if (node.accessibiliby == Node.ACCESSIBLE)
             {
-                if (GetTrueByRate(50))
+                if (node.coordinate.Compare(previous)) continue;
+
+                if (GetTrueByRate(85))
                 {
+                    previous = current;
                     return node.coordinate;
                 }
             }
         }
+
+        previous = current;
         return null;
     }
 }
