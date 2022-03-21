@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Partical
+{
+    Collision = 0, Destroy = 1
+}
+
 public class ParticalController : ObjectPooler
 {
-    public enum Partical
-    {
-        Collision = 0, Destroy = 1
-    }
+    public static ParticalController Instance;
     private List<GameObject> collideExplosion, destroyExplosion;
 
     // Start is called before the first frame update
     protected override void Start()
     {
+        Instance = this;
         collideExplosion = new List<GameObject>();
         destroyExplosion = new List<GameObject>();
 

@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class TankSpawner : ObjectPooler
 {
+    public static TankSpawner Instance;
     private List<GameObject> enemyList, spawnFXList;
     private GameObject playerSpawnFX, playerTank;
     private int enemyIndex = 0;
+    private int destroyedTank = 0;
 
     // Start is called before the first frame update
     protected override void Start()
     {
+        Instance = this;
         enemyList = new List<GameObject>();
         spawnFXList = new List<GameObject>();
 
@@ -94,12 +97,14 @@ public class TankSpawner : ObjectPooler
     /// <param name="position">The position where the enemy tank is placed</param>
     public void GetEnemyClone(Vector2 position)
     {
-        GameObject gameObj = enemyList[enemyIndex];
-        gameObj.transform.position = position;
-        // gameObj.transform.rotation = Quaternion.Euler(0, 0, 180);
-        gameObj.SetActive(true);
+        if (enemyIndex < enemyList.Count)
+        {
+            GameObject gameObj = enemyList[enemyIndex];
+            gameObj.transform.position = position;
+            gameObj.SetActive(true);
 
-        enemyIndex++;
+            enemyIndex++;
+        }
     }
 
     /// <summary>
@@ -127,6 +132,25 @@ public class TankSpawner : ObjectPooler
             {
                 gameObj.GetComponent<Enemy>().ActiveFreezing();
             }
+        }
+    }
+
+    public bool CheckRemainingEnemy()
+    {
+        if (enemyIndex < 20)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void CountDestroyed()
+    {
+        destroyedTank++;
+        Debug.Log(destroyedTank);
+        if (destroyedTank == 20)
+        {
+            PlayState.Instance.Next();
         }
     }
 }

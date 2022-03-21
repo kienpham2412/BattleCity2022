@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyData{
-    public EnemyData(GameObject enemyGO, Marker marker, Rigidbody2D enemyRB, Animator enemyAnimator, Coordinate previous){
+public class EnemyData
+{
+    public EnemyData(GameObject enemyGO, Marker marker, Rigidbody2D enemyRB, Animator enemyAnimator, Coordinate previous)
+    {
         this.enemyGO = enemyGO;
         this.marker = marker;
         this.enemyRB = enemyRB;
@@ -24,6 +26,7 @@ public class EnemyAI : MonoBehaviour
     public Animator tankAnimator;
     private Marker marker;
     private Rigidbody2D enemyRB;
+    private Vector3 spawnPosition;
     private State currentState;
     public Coordinate previous;
     private PathFinder pathFinder;
@@ -43,8 +46,8 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentState != null)
-        currentState = currentState.Process();
+        if (currentState != null)
+            currentState = currentState.Process();
     }
 
     protected virtual void OnDisable()
@@ -54,7 +57,16 @@ public class EnemyAI : MonoBehaviour
             firstTime = false;
             return;
         }
-        Referee.singleton.SpawnDestroyExplosion(gameObject.transform.position);
-        Debug.Log("enemy destroyed");
+        ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
+        if (TankSpawner.Instance.CheckRemainingEnemy())
+        {
+            TankSpawner.Instance.GetClone(spawnPosition, Quaternion.identity);
+        }
+        TankSpawner.Instance.CountDestroyed();
+    }
+
+    private void OnEnable()
+    {
+        spawnPosition = gameObject.transform.position;
     }
 }

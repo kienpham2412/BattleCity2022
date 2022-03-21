@@ -36,7 +36,7 @@ public class PathFinder : MonoBehaviour
     private LinkedList<Node>[] adjacentList;
     public const float UNLIMITED = 30;
     public const float TOWER_RANGE = 4;
-    public const float PLAYER_RANGE = 4;
+    public const float PLAYER_RANGE = 5;
     private bool isChecking = true;
 
     void Start()

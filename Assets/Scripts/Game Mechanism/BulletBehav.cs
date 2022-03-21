@@ -70,7 +70,7 @@ public class BulletBehav : MonoBehaviour
     private void CreatDamage(Collision2D other)
     {
         other.transform.SendMessage("TakeDamage", message);
-        Referee.singleton.SpawnClExplosion(other.contacts[0].point);
+        ParticalController.Instance.GetClone(other.contacts[0].point, Partical.Collision);
     }
 
     public void setOrigin(bool isPlayer, int tankID)

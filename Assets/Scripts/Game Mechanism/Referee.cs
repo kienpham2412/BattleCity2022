@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Referee : MonoBehaviour
 {
-    public static Referee singleton;
+    public static Referee Instance;
     private GameManager gameManager;
     private MapBuilder mapBuilder;
     private Map map;
@@ -23,7 +23,7 @@ public class Referee : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        singleton = GetComponent<Referee>();
+        Instance = GetComponent<Referee>();
         gameManager = GetComponent<GameManager>();
         gameManager.LoadMap("Base");
         
@@ -31,28 +31,7 @@ public class Referee : MonoBehaviour
         map = mapBuilder.map;
         map.spaces.Shuffle();
 
-        StartCoroutine(SpawnEnemy());
         SpawnItem();
-    }
-
-    public void SpawnClExplosion(Vector2 position)
-    {
-        particalCtrl.GetClone(position, ParticalController.Partical.Collision);
-    }
-
-    public void SpawnDestroyExplosion(Vector2 position)
-    {
-        particalCtrl.GetClone(position, ParticalController.Partical.Destroy);
-    }
-
-    public void GetEnemyClone(Vector2 position)
-    {
-        tankSpawner.GetEnemyClone(position);
-    }
-
-    public void GetPlayerClone(Vector2 position)
-    {
-        tankSpawner.SpawnPlayer(position);
     }
 
     public void SpawnItem()
@@ -60,19 +39,8 @@ public class Referee : MonoBehaviour
         StartCoroutine(ItemCoroutine());
     }
 
-    public void DestroyEnemies()
+    public void SpawnTanks()
     {
-        tankSpawner.DestroyActiveTank();
-    }
-
-    public void FreezeEnemies()
-    {
-        tankSpawner.FreezeActiveTank();
-    }
-
-    IEnumerator SpawnEnemy()
-    {
-        yield return new WaitForSeconds(2f);
         tankSpawner.GetClone(Coordinate.ToVector2(Map.enemySpawnLeft), Quaternion.identity);
         tankSpawner.GetClone(Coordinate.ToVector2(Map.enemySpawnMid), Quaternion.identity);
         tankSpawner.GetClone(Coordinate.ToVector2(Map.enemySpawnRight), Quaternion.identity);

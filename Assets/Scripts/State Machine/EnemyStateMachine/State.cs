@@ -137,7 +137,7 @@ public class Idle : State
         }
         else if (distanceToPlayer <= PathFinder.PLAYER_RANGE)
         {
-            nextState = new Pursue(this.enemyData, Player.Instance.GetCoordinate(), pathFinder, PathFinder.TOWER_RANGE);
+            nextState = new Pursue(this.enemyData, Player.Instance.GetCoordinate(), pathFinder, PathFinder.PLAYER_RANGE);
             Debug.Log("pursuing player");
         }
         else
@@ -161,7 +161,13 @@ public class Pursue : State
 
     public override void Enter()
     {
-        enemyData.marker = PathFinder.singleton.FindPath(new Coordinate(enemyData.enemyGO.transform.position), target, limitRange);
+        enemyData.marker = pathFinder.FindPath(new Coordinate(enemyData.enemyGO.transform.position), target, limitRange);
+        if (enemyData.marker == null)
+        {
+            stateEvent = EVENT.EXIT;
+            return;
+        }
+
         markerPosition = Coordinate.ToVector3(enemyData.marker.coordinate);
         SetAnimation(true);
         base.Enter();
@@ -191,7 +197,7 @@ public class Patrol : State
     public override void Enter()
     {
         Coordinate current = new Coordinate(enemyData.enemyGO.transform.position);
-        Coordinate destination = PathFinder.singleton.GetNextCoordinate(current, ref enemyData.previous);
+        Coordinate destination = pathFinder.GetNextCoordinate(current, ref enemyData.previous);
 
         if (destination == null)
         {

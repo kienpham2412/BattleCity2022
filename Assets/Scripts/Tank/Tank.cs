@@ -100,7 +100,7 @@ public abstract class Tank : MonoBehaviour
             firstTime = false;
             return;
         }
-        Referee.singleton.SpawnDestroyExplosion(gameObject.transform.position);
+        ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
         Debug.Log("enemy destroyed");
     }
 }

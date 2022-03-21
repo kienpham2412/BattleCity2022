@@ -18,13 +18,13 @@ public class ItemBehav : MonoBehaviour
         switch (thisItem)
         {
             case Item.Clock:
-                Referee.singleton.FreezeEnemies();
+                TankSpawner.Instance.FreezeActiveTank();
                 break;
             case Item.Shovel:
                 Debug.Log("Shovel");
                 break;
             case Item.Grenade:
-                Referee.singleton.DestroyEnemies();
+                TankSpawner.Instance.DestroyActiveTank();
                 break;
             case Item.Tank:
                 Debug.Log("Tank");
@@ -42,7 +42,7 @@ public class ItemBehav : MonoBehaviour
             return;
         }
 
-        Referee.singleton.SpawnItem();
+        Referee.Instance.SpawnItem();
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
