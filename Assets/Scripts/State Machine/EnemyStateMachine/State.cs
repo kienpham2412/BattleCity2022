@@ -137,7 +137,7 @@ public class Idle : State
         }
         else if (distanceToPlayer <= PathFinder.PLAYER_RANGE)
         {
-            nextState = new Pursue(this.enemyData, Player.Instance.GetCoordinate(), pathFinder, PathFinder.PLAYER_RANGE);
+            nextState = new Pursue(this.enemyData, Player.Instance.GetCoordinate(), pathFinder, PathFinder.UNLIMITED);
             Debug.Log("pursuing player");
         }
         else

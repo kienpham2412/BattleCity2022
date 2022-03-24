@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager singleton;
+    public static GameManager Instance;
     private MapSaver mapSaver;
     public MapBuilder mapBuilder;
     // Start is called before the first frame update
     void Start()
     {
-        singleton = GetComponent<GameManager>();
+        Instance = GetComponent<GameManager>();
         mapSaver = new MapSaver();
     }
 

@@ -103,7 +103,7 @@ public class ConstructUI : UIManager
         TMP_InputField input = nameInput.gameObject.GetComponent<TMP_InputField>();
 
         if (input.text == "") return;
-        GameManager.singleton.SaveMap(input.text);
+        GameManager.Instance.SaveMap(input.text);
         Debug.Log(input.text);
     }
 
@@ -113,28 +113,28 @@ public class ConstructUI : UIManager
     public void LoadMap()
     {
         string name = dropdown.options[dropdown.value].text;
-        GameManager.singleton.LoadMap(name);
+        GameManager.Instance.LoadMap(name);
     }
 
     /// <summary>
     /// Generate map event
     /// </summary>
     public void GenerateMap(){
-        GameManager.singleton.mapBuilder.GenerateRandomMap();
+        GameManager.Instance.mapBuilder.GenerateRandomMap();
     }
 
     /// <summary>
     /// Generate base map event
     /// </summary>
     public void GenerateBaseMap(){
-        GameManager.singleton.mapBuilder.GenerateBaseMap();
+        GameManager.Instance.mapBuilder.GenerateBaseMap();
     }
 
     /// <summary>
     /// Generate black map event
     /// </summary>
     public void CreateBlankMap(){
-        GameManager.singleton.mapBuilder.CreateBlankMap();
+        GameManager.Instance.mapBuilder.CreateBlankMap();
     }
 
     public void OnEnable()

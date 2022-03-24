@@ -13,6 +13,7 @@ public class PlayState : GameState
 
     public override void Perform()
     {
+        Referee.Instance.LoadPlayMap();            
         Referee.Instance.SpawnTanks();
         gameObject.SetActive(true);
         Debug.Log("play state triggered");

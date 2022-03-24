@@ -7,10 +7,8 @@ public class Referee : MonoBehaviour
     public static Referee Instance;
     private GameManager gameManager;
     private MapBuilder mapBuilder;
+    private PathFinder pathFinder;
     private Map map;
-
-    [SerializeField]
-    private ParticalController particalCtrl;
 
     [SerializeField]
     private TankSpawner tankSpawner;
@@ -25,12 +23,15 @@ public class Referee : MonoBehaviour
     {
         Instance = GetComponent<Referee>();
         gameManager = GetComponent<GameManager>();
+        pathFinder = GetComponent<PathFinder>();
+    }
+
+    public void LoadPlayMap(){
         gameManager.LoadMap("Base");
-        
         mapBuilder = gameManager.mapBuilder;
         map = mapBuilder.map;
         map.spaces.Shuffle();
-
+        pathFinder.LoadGraph();
         SpawnItem();
     }
 

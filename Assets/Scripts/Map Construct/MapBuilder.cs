@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapBuilder : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class MapBuilder : MonoBehaviour
     {
         map = new Map();
         mapSize = Map.SIZE;
+
+        if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Construct")){
+            CreateBlankMap();
+        }
     }
 
     /// <summary>

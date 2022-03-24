@@ -30,7 +30,6 @@ public class Marker
 public class PathFinder : MonoBehaviour
 {
     private MapBuilder mapBuilder;
-    public static PathFinder singleton;
     private List<Marker> open = new List<Marker>();
     private List<int> closeIndex = new List<int>();
     private LinkedList<Node>[] adjacentList;
@@ -41,8 +40,10 @@ public class PathFinder : MonoBehaviour
 
     void Start()
     {
-        singleton = this;
         mapBuilder = GetComponent<GameManager>().mapBuilder;
+    }
+
+    public void LoadGraph(){
         adjacentList = mapBuilder.map.adjacentList;
     }
 

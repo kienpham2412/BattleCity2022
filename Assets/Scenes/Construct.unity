@@ -3857,7 +3857,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1545930288}
   - component: {fileID: 1545930289}
-  - component: {fileID: 1545930290}
   m_Layer: 0
   m_Name: MapConstructor
   m_TagString: Untagged
@@ -3902,22 +3901,7 @@ MonoBehaviour:
   mapObject: {fileID: 1397409688}
   map:
     mapName: 
-    mapSize: 13
---- !u!114 &1545930290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1545930287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a24cd7e764c7994da3fb3ee9fdc5fd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  begin: {fileID: 6709454298986977941, guid: af4312d4eed8a9e4bab9d9b9c30beec9, type: 3}
-  end: {fileID: 3084437054990711417, guid: 4eaeca116dbe8ad4da651095ac137a2c, type: 3}
-  marker: {fileID: 804672426380101581, guid: 6b52be5f00d0290409b3cf8caae16018, type: 3}
+    spaces: []
 --- !u!1 &1646129578
 GameObject:
   m_ObjectHideFlags: 0
