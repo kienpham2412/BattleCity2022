@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ReadyState : GameState
 {
-    public override void Perform(){
+    public override void Perform()
+    {
         Debug.Log("ready state triggered");
         StartCoroutine(Intro());
     }
@@ -16,7 +17,8 @@ public class ReadyState : GameState
         base.Next();
     }
 
-    IEnumerator Intro(){
+    IEnumerator Intro()
+    {
         yield return new WaitForSeconds(2);
         Next();
     }

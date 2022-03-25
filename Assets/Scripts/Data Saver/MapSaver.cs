@@ -69,4 +69,17 @@ public class MapSaver
     {
         return filePath + "/" + name + ".map";
     }
+
+    public List<string> GetFilesName()
+    {
+        DirectoryInfo dirInfo = new DirectoryInfo(filePath);
+        FileInfo[] files = dirInfo.GetFiles("*.map");
+        List<string> mapNames = new List<string>();
+        foreach (FileInfo f in files)
+        {
+            string name = f.Name.Replace(".map", "");
+            mapNames.Add(name);
+        }
+        return mapNames;
+    }
 }

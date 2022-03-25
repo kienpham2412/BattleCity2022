@@ -18,13 +18,13 @@ public class ItemBehav : MonoBehaviour
         switch (thisItem)
         {
             case Item.Clock:
-                TankSpawner.Instance.FreezeActiveTank();
+                MessageManager.Instance.SendMessage(new Message(MessageType.OnClockAcquired));
                 break;
             case Item.Shovel:
                 Debug.Log("Shovel");
                 break;
             case Item.Grenade:
-                TankSpawner.Instance.DestroyActiveTank();
+                MessageManager.Instance.SendMessage(new Message(MessageType.OnGrenadeAcquired));
                 break;
             case Item.Tank:
                 Debug.Log("Tank");

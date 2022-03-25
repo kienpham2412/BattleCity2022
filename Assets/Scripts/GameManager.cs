@@ -30,4 +30,8 @@ public class GameManager : MonoBehaviour
     public void LoadMap(string name){
         mapBuilder.BuildSavedMap(mapSaver.Load(name));
     }
+
+    public List<string> GetAllMapNames(){
+        return mapSaver.GetFilesName();
+    }
 }

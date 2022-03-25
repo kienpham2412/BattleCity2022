@@ -7,7 +7,6 @@ public class Referee : MonoBehaviour
     public static Referee Instance;
     private GameManager gameManager;
     private MapBuilder mapBuilder;
-    private PathFinder pathFinder;
     private Map map;
 
     [SerializeField]
@@ -16,6 +15,8 @@ public class Referee : MonoBehaviour
     [SerializeField]
     private ItemPooler itemPooler;
 
+    private List<string> mapNames;
+    private int currentMapIndex = 0;
     private int spaceIndex = 0;
 
     // Start is called before the first frame update
@@ -23,16 +24,18 @@ public class Referee : MonoBehaviour
     {
         Instance = GetComponent<Referee>();
         gameManager = GetComponent<GameManager>();
-        pathFinder = GetComponent<PathFinder>();
+        mapNames = gameManager.GetAllMapNames();
     }
 
-    public void LoadPlayMap(){
-        gameManager.LoadMap("Base");
+    public void LoadPlayMap()
+    {
+        gameManager.LoadMap(mapNames[currentMapIndex]);
+        currentMapIndex++;
         mapBuilder = gameManager.mapBuilder;
         map = mapBuilder.map;
         map.spaces.Shuffle();
-        pathFinder.LoadGraph();
         SpawnItem();
+        MessageManager.Instance.SendMessage(new Message(MessageType.OnGameRestart));
     }
 
     public void SpawnItem()

@@ -27,7 +27,7 @@ public class Marker
     }
 }
 
-public class PathFinder : MonoBehaviour
+public class PathFinder : MonoBehaviour, ISubscriber
 {
     private MapBuilder mapBuilder;
     private List<Marker> open = new List<Marker>();
@@ -41,9 +41,11 @@ public class PathFinder : MonoBehaviour
     void Start()
     {
         mapBuilder = GetComponent<GameManager>().mapBuilder;
+        MessageManager.Instance.AddSubscriber(MessageType.OnGameRestart, this);
     }
 
-    public void LoadGraph(){
+    public void Handle(Message message)
+    {
         adjacentList = mapBuilder.map.adjacentList;
     }
 

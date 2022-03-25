@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankSpawner : ObjectPooler
+public class TankSpawner : ObjectPooler, ISubscriber
 {
     public static TankSpawner Instance;
     private List<GameObject> enemyList, spawnFXList;
@@ -16,9 +16,17 @@ public class TankSpawner : ObjectPooler
         Instance = this;
         enemyList = new List<GameObject>();
         spawnFXList = new List<GameObject>();
+        MessageManager.Instance.AddSubscriber(MessageType.OnEnemyDestroyed, this);
 
         CreatePlayer();
         CreatePool();
+    }
+
+    public void Handle(Message message)
+    {
+        if (CheckRemainingEnemy())
+            GetClone((Vector3)message.content, Quaternion.identity);
+        CountDestroyed();
     }
 
     /// <summary>
@@ -107,37 +115,9 @@ public class TankSpawner : ObjectPooler
         }
     }
 
-    /// <summary>
-    /// Destroy all active tanks on the map
-    /// </summary>
-    public void DestroyActiveTank()
-    {
-        foreach (GameObject gameObj in enemyList)
-        {
-            if (gameObj.activeSelf)
-            {
-                gameObj.SetActive(false);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Freeze all active tanks on the map
-    /// </summary>
-    public void FreezeActiveTank()
-    {
-        foreach (GameObject gameObj in enemyList)
-        {
-            if (gameObj.activeSelf)
-            {
-                gameObj.GetComponent<Enemy>().ActiveFreezing();
-            }
-        }
-    }
-
     public bool CheckRemainingEnemy()
     {
-        if (enemyIndex < 20)
+        if (enemyIndex < 3)
         {
             return true;
         }
@@ -148,7 +128,7 @@ public class TankSpawner : ObjectPooler
     {
         destroyedTank++;
         Debug.Log(destroyedTank);
-        if (destroyedTank == 20)
+        if (destroyedTank == 3)
         {
             PlayState.Instance.Next();
         }

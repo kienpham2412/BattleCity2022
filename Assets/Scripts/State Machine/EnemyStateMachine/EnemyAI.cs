@@ -20,7 +20,7 @@ public class EnemyData
     public Coordinate previous;
 }
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, ISubscriber
 {
     EnemyData enemyData;
     public Animator tankAnimator;
@@ -39,8 +39,23 @@ public class EnemyAI : MonoBehaviour
         enemyRB = GetComponent<Rigidbody2D>();
         previous = new Coordinate(gameObject.transform.position);
         enemyData = new EnemyData(gameObject, marker, enemyRB, tankAnimator, previous);
-
         currentState = new Idle(enemyData, pathFinder);
+
+        MessageManager.Instance.AddSubscriber(MessageType.OnGrenadeAcquired, this);
+        MessageManager.Instance.AddSubscriber(MessageType.OnClockAcquired, this);
+    }
+
+    public void Handle(Message message)
+    {
+        switch (message.type)
+        {
+            case MessageType.OnGrenadeAcquired:
+                gameObject.SetActive(false);
+                break;
+            case MessageType.OnClockAcquired:
+                StartCoroutine(Freeze());
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -48,6 +63,13 @@ public class EnemyAI : MonoBehaviour
     {
         if (currentState != null)
             currentState = currentState.Process();
+    }
+
+    IEnumerator Freeze()
+    {
+        enemyRB.constraints = RigidbodyConstraints2D.FreezePosition;
+        yield return new WaitForSeconds(10f);
+        enemyRB.constraints = RigidbodyConstraints2D.None;
     }
 
     protected virtual void OnDisable()
@@ -58,11 +80,7 @@ public class EnemyAI : MonoBehaviour
             return;
         }
         ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
-        if (TankSpawner.Instance.CheckRemainingEnemy())
-        {
-            TankSpawner.Instance.GetClone(spawnPosition, Quaternion.identity);
-        }
-        TankSpawner.Instance.CountDestroyed();
+        MessageManager.Instance.SendMessage(new Message(MessageType.OnEnemyDestroyed, gameObject.transform.position));
     }
 
     private void OnEnable()
