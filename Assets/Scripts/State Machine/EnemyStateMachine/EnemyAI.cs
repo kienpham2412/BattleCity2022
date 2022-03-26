@@ -20,30 +20,18 @@ public class EnemyData
     public Coordinate previous;
 }
 
-public class EnemyAI : MonoBehaviour, ISubscriber
+public class EnemyAI : Tank, ISubscriber
 {
     EnemyData enemyData;
-    public Animator tankAnimator;
     private Marker marker;
-    private Rigidbody2D enemyRB;
     private Vector3 spawnPosition;
     private State currentState;
     public Coordinate previous;
     private PathFinder pathFinder;
-    private bool firstTime = true;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        pathFinder = FindObjectOfType<PathFinder>();
-        enemyRB = GetComponent<Rigidbody2D>();
-        previous = new Coordinate(gameObject.transform.position);
-        enemyData = new EnemyData(gameObject, marker, enemyRB, tankAnimator, previous);
-        currentState = new Idle(enemyData, pathFinder);
-
-        MessageManager.Instance.AddSubscriber(MessageType.OnGrenadeAcquired, this);
-        MessageManager.Instance.AddSubscriber(MessageType.OnClockAcquired, this);
-    }
+    private IEnumerator attackRoutine;
+    private const float TIME_SHOOTING_LIMIT = 2;
+    private float shootingSpeed = 1.5f;
+    private float startShooting = 0;
 
     public void Handle(Message message)
     {
@@ -55,6 +43,25 @@ public class EnemyAI : MonoBehaviour, ISubscriber
             case MessageType.OnClockAcquired:
                 StartCoroutine(Freeze());
                 break;
+            case MessageType.OnGameRestart:
+                pathFinder = FindObjectOfType<PathFinder>();
+                previous = new Coordinate(gameObject.transform.position);
+                rb = GetComponent<Rigidbody2D>();
+                enemyData = new EnemyData(gameObject, marker, rb, tankAnimator, previous);
+                currentState = new Idle(enemyData, pathFinder);
+                playerOrigin = false;
+                powerUp = false;
+                break;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(shootingPos.transform.position, transform.up, new Vector3(3, 0, 0).magnitude);
+
+        if (hit.collider != null)
+        {
+            AutoShoot(shootingSpeed * Time.deltaTime);
         }
     }
 
@@ -65,14 +72,24 @@ public class EnemyAI : MonoBehaviour, ISubscriber
             currentState = currentState.Process();
     }
 
-    IEnumerator Freeze()
+    private void AutoShoot(float speed)
     {
-        enemyRB.constraints = RigidbodyConstraints2D.FreezePosition;
-        yield return new WaitForSeconds(10f);
-        enemyRB.constraints = RigidbodyConstraints2D.None;
+        startShooting += speed;
+        if (startShooting >= TIME_SHOOTING_LIMIT)
+        {
+            Shoot(playerOrigin);
+            startShooting = 1;
+        }
     }
 
-    protected virtual void OnDisable()
+    IEnumerator Freeze()
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
+        yield return new WaitForSeconds(10f);
+        rb.constraints = RigidbodyConstraints2D.None;
+    }
+
+    protected override void OnDisable()
     {
         if (firstTime)
         {
@@ -86,5 +103,8 @@ public class EnemyAI : MonoBehaviour, ISubscriber
     private void OnEnable()
     {
         spawnPosition = gameObject.transform.position;
+        MessageManager.Instance.AddSubscriber(MessageType.OnGrenadeAcquired, this);
+        MessageManager.Instance.AddSubscriber(MessageType.OnClockAcquired, this);
+        MessageManager.Instance.AddSubscriber(MessageType.OnGameRestart, this);
     }
 }

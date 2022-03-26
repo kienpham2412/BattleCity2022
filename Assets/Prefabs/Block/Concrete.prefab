@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -3681416608861664539}
   - component: {fileID: -8824536592228323689}
   - component: {fileID: 2707645805907943842}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Concrete
   m_TagString: Concrete
   m_Icon: {fileID: 0}

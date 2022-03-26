@@ -17,6 +17,7 @@ public class TankSpawner : ObjectPooler, ISubscriber
         enemyList = new List<GameObject>();
         spawnFXList = new List<GameObject>();
         MessageManager.Instance.AddSubscriber(MessageType.OnEnemyDestroyed, this);
+        MessageManager.Instance.AddSubscriber(MessageType.OnGameRestart, this);
 
         CreatePlayer();
         CreatePool();
@@ -24,9 +25,18 @@ public class TankSpawner : ObjectPooler, ISubscriber
 
     public void Handle(Message message)
     {
-        if (CheckRemainingEnemy())
-            GetClone((Vector3)message.content, Quaternion.identity);
-        CountDestroyed();
+        switch (message.type)
+        {
+            case MessageType.OnEnemyDestroyed:
+                if (CheckRemainingEnemy())
+                    GetClone((Vector3)message.content, Quaternion.identity);
+                CountDestroyed();
+                break;
+            case MessageType.OnGameRestart:
+                enemyIndex = 0;
+                destroyedTank = 0;
+                break;
+        }
     }
 
     /// <summary>
@@ -130,7 +140,7 @@ public class TankSpawner : ObjectPooler, ISubscriber
         Debug.Log(destroyedTank);
         if (destroyedTank == 3)
         {
-            PlayState.Instance.Next();
+            MessageManager.Instance.SendMessage(new Message(MessageType.OnGameFinish));
         }
     }
 }

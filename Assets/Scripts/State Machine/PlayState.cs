@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayState : GameState
+public class PlayState : GameState, ISubscriber
 {
-    public static PlayState Instance;
-
     private void Start()
     {
-        Instance = this;
+        MessageManager.Instance.AddSubscriber(MessageType.OnGameFinish, this);
+    }
+
+    public void Handle(Message message){
+        Next();
     }
 
     public override void Perform()

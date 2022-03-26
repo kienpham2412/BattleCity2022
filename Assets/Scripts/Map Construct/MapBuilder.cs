@@ -14,7 +14,7 @@ public class MapBuilder : MonoBehaviour
     public List<GameObject> obstacles = new List<GameObject>();
     public GameObject wall;
     public GameObject mapObject;
-    public Map map;
+    [HideInInspector] public Map map;
     private int mapSize;
     private float wallOffset;
 

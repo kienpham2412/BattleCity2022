@@ -11,7 +11,7 @@ public abstract class Tank : MonoBehaviour
     protected Rigidbody2D rb;
     protected bool playerOrigin, powerUp;
     protected float speed = 1f;
-    private bool firstTime = true;
+    protected bool firstTime = true;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -101,6 +101,5 @@ public abstract class Tank : MonoBehaviour
             return;
         }
         ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
-        Debug.Log("enemy destroyed");
     }
 }

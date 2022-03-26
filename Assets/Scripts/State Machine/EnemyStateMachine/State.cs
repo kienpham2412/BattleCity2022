@@ -137,7 +137,7 @@ public class Idle : State
         }
         else if (distanceToPlayer <= PathFinder.PLAYER_RANGE)
         {
-            nextState = new Pursue(this.enemyData, Player.Instance.GetCoordinate(), pathFinder, PathFinder.UNLIMITED);
+            nextState = new Pursue(this.enemyData, Player.Instance.GetCoordinate(), pathFinder, PathFinder.PLAYER_RANGE);
             Debug.Log("pursuing player");
         }
         else
@@ -165,6 +165,7 @@ public class Pursue : State
         if (enemyData.marker == null)
         {
             stateEvent = EVENT.EXIT;
+            nextState = new Patrol(enemyData, pathFinder);
             return;
         }
 

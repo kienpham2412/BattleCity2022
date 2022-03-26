@@ -7,7 +7,8 @@ public enum MessageType
     OnGameRestart = 0,
     OnEnemyDestroyed = 1,
     OnGrenadeAcquired = 2,
-    OnClockAcquired = 3
+    OnClockAcquired = 3,
+    OnGameFinish = 4
 }
 
 public class Message
@@ -46,14 +47,15 @@ public class MessageManager : MonoBehaviour
     {
         if (!subscribers.ContainsKey(type))
             subscribers.Add(type, new List<ISubscriber>());
-
-        subscribers[type].Add(subscriber);
+        if (!subscribers[type].Contains(subscriber))
+            subscribers[type].Add(subscriber);
     }
 
     public void RemoveSubscriber(MessageType type, ISubscriber subscriber)
     {
         if (subscribers.ContainsKey(type))
-            subscribers[type].Remove(subscriber);
+            if (subscribers[type].Contains(subscriber))
+                subscribers[type].Remove(subscriber);
     }
 
     public void SendMessage(Message message)

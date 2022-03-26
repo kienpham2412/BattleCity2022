@@ -8,6 +8,7 @@ public class Referee : MonoBehaviour
     private GameManager gameManager;
     private MapBuilder mapBuilder;
     private Map map;
+    private IEnumerator itemRoutine;
 
     [SerializeField]
     private TankSpawner tankSpawner;
@@ -40,7 +41,16 @@ public class Referee : MonoBehaviour
 
     public void SpawnItem()
     {
-        StartCoroutine(ItemCoroutine());
+        itemRoutine = ItemCoroutine();
+        StartCoroutine(itemRoutine);
+    }
+
+    public void StopSpawningItem()
+    {
+        if (itemRoutine != null)
+        {
+            StopCoroutine(itemRoutine);
+        }
     }
 
     public void SpawnTanks()

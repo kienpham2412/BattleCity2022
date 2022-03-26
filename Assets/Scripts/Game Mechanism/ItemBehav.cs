@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemBehav : MonoBehaviour
+public class ItemBehav : MonoBehaviour, ISubscriber
 {
     private enum Item
     {
@@ -12,6 +12,11 @@ public class ItemBehav : MonoBehaviour
     [SerializeField]
     private Item thisItem;
     protected bool firstTime = true;
+
+    private void Start()
+    {
+        MessageManager.Instance.AddSubscriber(MessageType.OnGameFinish, this);
+    }
 
     private void TriggerEvent()
     {
@@ -32,6 +37,12 @@ public class ItemBehav : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void Handle(Message message)
+    {
+        gameObject.SetActive(false);
+        Referee.Instance.StopSpawningItem();
     }
 
     private void OnDisable()

@@ -179,7 +179,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 809c7bdb9bfff924cb46f233b2f0837b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootingPos: {fileID: 5755880876758960803}
   tankAnimator: {fileID: 3011441667899040740}
+  previous:
+    x: 0
+    y: 0
 --- !u!1 &5755880876758960803
 GameObject:
   m_ObjectHideFlags: 0
