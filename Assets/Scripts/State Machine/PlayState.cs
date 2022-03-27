@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class PlayState : GameState, ISubscriber
 {
-    private void Start()
-    {
-        MessageManager.Instance.AddSubscriber(MessageType.OnGameFinish, this);
-    }
-
     public void Handle(Message message){
         Next();
     }
@@ -26,5 +21,9 @@ public class PlayState : GameState, ISubscriber
         gameObject.SetActive(false);
         Debug.Log("finish play state");
         base.Next();
+    }
+
+    private void OnEnable() {
+        MessageManager.Instance.AddSubscriber(MessageType.OnGameFinish, this);
     }
 }

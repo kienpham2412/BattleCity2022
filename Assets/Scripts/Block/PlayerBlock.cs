@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class PlayerBlock : Block
 {
-    [SerializeField]
-    private GameObject shieldFX;
+    [SerializeField] private GameObject shieldFX;
+    public int playerHealth;
     private float immotalTime;
+
     // Start is called before the first frame update
     void Start()
     {
-        health = 5;
+        ResetHealth();
     }
 
     private void SetImmmotal(bool isImmotal)
     {
         immotal = isImmotal;
         shieldFX.SetActive(isImmotal);
+    }
+
+    public void ResetHealth()
+    {
+        health = playerHealth;
     }
 
     IEnumerator ImmotalActive()

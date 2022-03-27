@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : Tank
+[RequireComponent(typeof(PlayerBlock))]
+public class Player : Tank, ISubscriber
 {
     public static Player Instance;
     private PlayerControl playerControl;
@@ -32,6 +33,12 @@ public class Player : Tank
         Debug.Log("tank player awake");
     }
 
+    public void Handle(Message message)
+    {
+        gameObject.SetActive(false);
+        GetComponent<PlayerBlock>().ResetHealth();
+    }
+
     void Update()
     {
         if (xDirection != 0 || yDirection != 0)
@@ -56,7 +63,8 @@ public class Player : Tank
         }
     }
 
-    public Coordinate GetCoordinate(){
+    public Coordinate GetCoordinate()
+    {
         return Coordinate.GetCurrentCoordinate(transform.position);
     }
 
@@ -88,9 +96,10 @@ public class Player : Tank
 
     private void OnEnable()
     {
+        MessageManager.Instance.AddSubscriber(MessageType.OnGameRestart, this);
         ActiveInput(true);
     }
-    
+
     protected override void OnDisable()
     {
         ActiveInput(false);

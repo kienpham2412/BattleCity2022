@@ -20,6 +20,7 @@ public class EnemyData
     public Coordinate previous;
 }
 
+[RequireComponent(typeof(EnemyBlock))]
 public class EnemyAI : Tank, ISubscriber
 {
     EnemyData enemyData;
@@ -30,6 +31,7 @@ public class EnemyAI : Tank, ISubscriber
     private PathFinder pathFinder;
     private IEnumerator attackRoutine;
     private const float TIME_SHOOTING_LIMIT = 2;
+    private const float SHOOTING_RANGE = 4;
     private float shootingSpeed = 1.5f;
     private float startShooting = 0;
 
@@ -51,13 +53,15 @@ public class EnemyAI : Tank, ISubscriber
                 currentState = new Idle(enemyData, pathFinder);
                 playerOrigin = false;
                 powerUp = false;
+
+                GetComponent<EnemyBlock>().ResetHealth();
                 break;
         }
     }
 
     private void FixedUpdate()
     {
-        RaycastHit2D hit = Physics2D.Raycast(shootingPos.transform.position, transform.up, new Vector3(3, 0, 0).magnitude);
+        RaycastHit2D hit = Physics2D.Raycast(shootingPos.transform.position, transform.up, SHOOTING_RANGE);
 
         if (hit.collider != null)
         {

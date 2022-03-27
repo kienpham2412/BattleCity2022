@@ -172,6 +172,8 @@ public class Pursue : State
         markerPosition = Coordinate.ToVector3(enemyData.marker.coordinate);
         SetAnimation(true);
         base.Enter();
+
+        nextState = new Idle(enemyData, pathFinder);
     }
 
     public override void Update()
@@ -182,7 +184,6 @@ public class Pursue : State
     public override void Exit()
     {
         Stop();
-        nextState = new Idle(enemyData, pathFinder);
         base.Exit();
     }
 }

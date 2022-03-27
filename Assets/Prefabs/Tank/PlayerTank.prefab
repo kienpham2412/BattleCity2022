@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldFX: {fileID: 5057030377994773397}
+  playerHealth: 5
 --- !u!1001 &3215450438292339889
 PrefabInstance:
   m_ObjectHideFlags: 0
