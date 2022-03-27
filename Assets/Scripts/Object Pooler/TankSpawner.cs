@@ -52,6 +52,7 @@ public class TankSpawner : ObjectPooler, ISubscriber
             }
 
             Clone(samples[3], enemyList);
+            Clone(samples[4], enemyList);
         }
     }
 

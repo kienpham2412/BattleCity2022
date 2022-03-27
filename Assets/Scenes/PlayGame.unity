@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
+  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1378,7 +1378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &721457041
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1474,6 +1474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextState: {fileID: 447848615}
+  stageDisplay: {fileID: 1338775529}
 --- !u!1 &736564941
 GameObject:
   m_ObjectHideFlags: 0
@@ -2025,8 +2026,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000015259, y: 0}
-  m_SizeDelta: {x: 374.5871, y: 100.864}
+  m_AnchoredPosition: {x: -0.000015259, y: 0}
+  m_SizeDelta: {x: 222.3557, y: 50.432}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1338775529
 MonoBehaviour:
@@ -2075,7 +2076,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 55.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2847,6 +2848,7 @@ MonoBehaviour:
   - {fileID: 9019677759601484815, guid: 145a44011a1fb1542b65cc5300a0bd23, type: 3}
   - {fileID: 814362906814996229, guid: 2fb88afe7a19a084c964c400001288d4, type: 3}
   - {fileID: 3011441667899040737, guid: 6fe560dadeab68e4aa12f482e0cf5839, type: 3}
+  - {fileID: 7552170883087944049, guid: 32b2cfb73f396524aa0a8965e019a344, type: 3}
 --- !u!114 &2011169250
 MonoBehaviour:
   m_ObjectHideFlags: 0

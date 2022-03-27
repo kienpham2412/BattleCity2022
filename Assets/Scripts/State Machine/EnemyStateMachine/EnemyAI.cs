@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class EnemyData
 {
-    public EnemyData(GameObject enemyGO, Marker marker, Rigidbody2D enemyRB, Animator enemyAnimator, Coordinate previous)
+    public EnemyData(GameObject enemyGO, Marker marker, Rigidbody2D enemyRB, Animator enemyAnimator, Coordinate previous, float speed)
     {
         this.enemyGO = enemyGO;
         this.marker = marker;
         this.enemyRB = enemyRB;
         this.enemyAnimator = enemyAnimator;
         this.previous = previous;
+        this.speed = speed;
     }
 
     public GameObject enemyGO;
@@ -18,6 +19,7 @@ public class EnemyData
     public Rigidbody2D enemyRB;
     public Animator enemyAnimator;
     public Coordinate previous;
+    public float speed;
 }
 
 [RequireComponent(typeof(EnemyBlock))]
@@ -27,7 +29,7 @@ public class EnemyAI : Tank, ISubscriber
     private Marker marker;
     private Vector3 spawnPosition;
     private State currentState;
-    public Coordinate previous;
+    private Coordinate previous;
     private PathFinder pathFinder;
     private IEnumerator attackRoutine;
     private const float TIME_SHOOTING_LIMIT = 2;
@@ -49,7 +51,7 @@ public class EnemyAI : Tank, ISubscriber
                 pathFinder = FindObjectOfType<PathFinder>();
                 previous = new Coordinate(gameObject.transform.position);
                 rb = GetComponent<Rigidbody2D>();
-                enemyData = new EnemyData(gameObject, marker, rb, tankAnimator, previous);
+                enemyData = new EnemyData(gameObject, marker, rb, tankAnimator, previous, speed);
                 currentState = new Idle(enemyData, pathFinder);
                 playerOrigin = false;
                 powerUp = false;

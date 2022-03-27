@@ -10,7 +10,7 @@ public abstract class Tank : MonoBehaviour
     private static Quaternion lookUp, lookDown, lookLeft, lookRight;
     protected Rigidbody2D rb;
     protected bool playerOrigin, powerUp;
-    protected float speed = 1f;
+    public float speed = 1f;
     protected bool firstTime = true;
 
     // Start is called before the first frame update

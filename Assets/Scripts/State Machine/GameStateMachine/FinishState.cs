@@ -18,7 +18,8 @@ public class FinishState : GameState
         Debug.Log("finish");
     }
 
-    IEnumerator Delay(){
+    IEnumerator Delay()
+    {
         yield return new WaitForSeconds(3);
         Next();
     }

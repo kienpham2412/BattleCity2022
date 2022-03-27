@@ -20,7 +20,6 @@ public class State
     protected Vector3 moveForward;
     protected EnemyData enemyData;
     protected float angle;
-    protected float speed = 1f;
 
     public State(EnemyData enemyData, PathFinder pathFinder)
     {
@@ -64,7 +63,7 @@ public class State
 
     public void MoveForward()
     {
-        moveForward = enemyData.enemyGO.transform.up * speed;
+        moveForward = enemyData.enemyGO.transform.up * enemyData.speed;
         enemyData.enemyRB.velocity = moveForward;
     }
 

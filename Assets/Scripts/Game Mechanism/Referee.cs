@@ -17,13 +17,13 @@ public class Referee : MonoBehaviour
     private ItemPooler itemPooler;
 
     private List<string> mapNames;
-    private int currentMapIndex = 0;
     private int spaceIndex = 0;
+    private int currentMapIndex = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        Instance = GetComponent<Referee>();
+        Instance = this;
         gameManager = GetComponent<GameManager>();
         mapNames = gameManager.GetAllMapNames();
     }
@@ -37,6 +37,10 @@ public class Referee : MonoBehaviour
         map.spaces.Shuffle();
         SpawnItem();
         MessageManager.Instance.SendMessage(new Message(MessageType.OnGameRestart));
+    }
+
+    public void ChangeToNextStage(){
+        currentMapIndex++;
     }
 
     public void SpawnItem()
