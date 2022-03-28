@@ -13,6 +13,7 @@ public class Player : Tank, ISubscriber
     private Vector2 direction;
     private const float POWERUP_LENGTH = 15f;
     private float xDirection, yDirection;
+    public int life;
 
 
     void Awake()
@@ -29,6 +30,7 @@ public class Player : Tank, ISubscriber
 
         playerOrigin = true;
         powerUp = false;
+        life = 3;
 
         Debug.Log("tank player awake");
     }

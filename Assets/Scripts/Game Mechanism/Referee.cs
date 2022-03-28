@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Referee : MonoBehaviour
+public class Referee : MonoBehaviour, ISubscriber
 {
     public static Referee Instance;
     private GameManager gameManager;
@@ -26,6 +26,12 @@ public class Referee : MonoBehaviour
         Instance = this;
         gameManager = GetComponent<GameManager>();
         mapNames = gameManager.GetAllMapNames();
+        MessageManager.Instance.AddSubscriber(MessageType.OnPlayerDestroyed, this);
+    }
+
+    public void Handle(Message message)
+    {
+        StartCoroutine(RespawnPlayer());
     }
 
     public void LoadPlayMap()
@@ -39,7 +45,8 @@ public class Referee : MonoBehaviour
         MessageManager.Instance.SendMessage(new Message(MessageType.OnGameRestart));
     }
 
-    public void ChangeToNextStage(){
+    public void ChangeToNextStage()
+    {
         currentMapIndex++;
     }
 
@@ -62,6 +69,12 @@ public class Referee : MonoBehaviour
         tankSpawner.GetClone(Coordinate.ToVector2(Map.enemySpawnLeft), Quaternion.identity);
         tankSpawner.GetClone(Coordinate.ToVector2(Map.enemySpawnMid), Quaternion.identity);
         tankSpawner.GetClone(Coordinate.ToVector2(Map.enemySpawnRight), Quaternion.identity);
+        tankSpawner.GetPlayerFX(Coordinate.ToVector2(Map.playerSpawnLeft));
+    }
+
+    IEnumerator RespawnPlayer()
+    {
+        yield return new WaitForSeconds(2);
         tankSpawner.GetPlayerFX(Coordinate.ToVector2(Map.playerSpawnLeft));
     }
 

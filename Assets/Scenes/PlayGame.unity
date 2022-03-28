@@ -465,6 +465,7 @@ GameObject:
   - component: {fileID: 251911040}
   - component: {fileID: 251911039}
   - component: {fileID: 251911041}
+  - component: {fileID: 251911042}
   m_Layer: 0
   m_Name: EnemyShowCase
   m_TagString: Untagged
@@ -524,7 +525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -566,13 +567,25 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 7
   m_StartCorner: 3
   m_StartAxis: 1
   m_CellSize: {x: 20, y: 20}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 2
+--- !u!114 &251911042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251911037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57d3810cb83cd794e95ed4f75455bf30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &348199233
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,7 +1271,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 9
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 41ca842449fe6a345ac8a0a761581165, type: 2}
   m_sharedMaterial: {fileID: -2977177199727098384, guid: 41ca842449fe6a345ac8a0a761581165, type: 2}
@@ -3802,6 +3815,7 @@ GameObject:
   - component: {fileID: 1971044267}
   - component: {fileID: 1971044266}
   - component: {fileID: 1971044268}
+  - component: {fileID: 1971044269}
   m_Layer: 0
   m_Name: PlayerLife
   m_TagString: Untagged
@@ -3894,6 +3908,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1971044269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971044264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dbb122fb393adb4a802e591fea341c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeDisplay: {fileID: 538726270}
 --- !u!1 &2011169243
 GameObject:
   m_ObjectHideFlags: 0

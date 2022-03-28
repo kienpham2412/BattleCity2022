@@ -8,7 +8,9 @@ public enum MessageType
     OnEnemyDestroyed = 1,
     OnGrenadeAcquired = 2,
     OnClockAcquired = 3,
-    OnGameFinish = 4
+    OnGameFinish = 4,
+    OnPlayerDestroyed = 5,
+    OnGameOver = 6
 }
 
 public class Message
