@@ -39,9 +39,6 @@ public class TankSpawner : ObjectPooler, ISubscriber
         }
     }
 
-    /// <summary>
-    ///  Create a pool of spawn effects and the enemy tanks
-    /// </summary>
     private void CreatePool()
     {
         for (int i = 0; i < 20; i++)
@@ -51,14 +48,11 @@ public class TankSpawner : ObjectPooler, ISubscriber
                 Clone(samples[2], spawnFXList);
             }
 
-            Clone(samples[3], enemyList);
-            Clone(samples[4], enemyList);
+            int randomIndex = Random.Range(3, 5);
+            Clone(samples[randomIndex], enemyList);
         }
     }
 
-    /// <summary>
-    /// Create the player clone
-    /// </summary>
     private void CreatePlayer()
     {
         playerSpawnFX = Instantiate(samples[0], new Vector2(0, 0), Quaternion.identity);
@@ -68,32 +62,18 @@ public class TankSpawner : ObjectPooler, ISubscriber
         playerTank.SetActive(false);
     }
 
-    /// <summary>
-    /// Get the player spawn effect object
-    /// </summary>
-    /// <param name="position">The position where the effect is placed</param>
     public void GetPlayerFX(Vector2 position)
     {
         playerSpawnFX.transform.position = position;
         playerSpawnFX.SetActive(true);
     }
 
-    /// <summary>
-    /// Get the player tank
-    /// </summary>
-    /// <param name="position">The position where the tank is placed</param>
     public void SpawnPlayer(Vector2 position)
     {
         playerTank.transform.position = position;
         playerTank.SetActive(true);
     }
 
-    /// <summary>
-    /// Get a the cloned enemy spawn effect
-    /// </summary>
-    /// <param name="position">The position where the effect is placed</param>
-    /// <param name="rotation">The rotation of this object</param>
-    /// <returns></returns>
     public override GameObject GetClone(Vector2 position, Quaternion rotation)
     {
         foreach (GameObject gameObj in spawnFXList)
@@ -110,10 +90,6 @@ public class TankSpawner : ObjectPooler, ISubscriber
         return null;
     }
 
-    /// <summary>
-    /// Get a cloned enemy from the pool
-    /// </summary>
-    /// <param name="position">The position where the enemy tank is placed</param>
     public void GetEnemyClone(Vector2 position)
     {
         if (enemyIndex < enemyList.Count)
@@ -128,7 +104,7 @@ public class TankSpawner : ObjectPooler, ISubscriber
 
     public bool CheckRemainingEnemy()
     {
-        if (enemyIndex < 3)
+        if (enemyIndex < 20)
         {
             return true;
         }
@@ -139,7 +115,7 @@ public class TankSpawner : ObjectPooler, ISubscriber
     {
         destroyedTank++;
         Debug.Log(destroyedTank);
-        if (destroyedTank == 3)
+        if (destroyedTank == 20)
         {
             MessageManager.Instance.SendMessage(new Message(MessageType.OnGameFinish));
         }

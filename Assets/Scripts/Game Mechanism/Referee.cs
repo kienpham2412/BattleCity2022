@@ -50,6 +50,12 @@ public class Referee : MonoBehaviour, ISubscriber
         currentMapIndex++;
     }
 
+    public bool CheckIfTheGameEnd()
+    {
+        if (currentMapIndex == mapNames.Count - 1) return true;
+        else return false;
+    }
+
     public void SpawnItem()
     {
         itemRoutine = ItemCoroutine();
@@ -62,6 +68,7 @@ public class Referee : MonoBehaviour, ISubscriber
         {
             StopCoroutine(itemRoutine);
         }
+        Debug.Log("Stop spawning item");
     }
 
     public void SpawnTanks()

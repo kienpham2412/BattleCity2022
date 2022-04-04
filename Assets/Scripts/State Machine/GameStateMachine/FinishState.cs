@@ -14,7 +14,9 @@ public class FinishState : GameState
     public override void Next()
     {
         gameObject.SetActive(false);
-        GameStateController.Instance.Active();
+        if (Referee.Instance.CheckIfTheGameEnd()) nextState.Perform();
+        else GameStateController.Instance.Active();
+
         Debug.Log("finish");
     }
 

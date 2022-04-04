@@ -103,7 +103,7 @@ public class EnemyAI : Tank, ISubscriber
             return;
         }
         ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
-        MessageManager.Instance.SendMessage(new Message(MessageType.OnEnemyDestroyed, gameObject.transform.position));
+        MessageManager.Instance.SendMessage(new Message(MessageType.OnEnemyDestroyed, spawnPosition));
         TankShowCase.Instance.Destroy();
     }
 

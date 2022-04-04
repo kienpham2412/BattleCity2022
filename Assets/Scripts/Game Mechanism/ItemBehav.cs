@@ -41,8 +41,8 @@ public class ItemBehav : MonoBehaviour, ISubscriber
 
     public void Handle(Message message)
     {
-        gameObject.SetActive(false);
         Referee.Instance.StopSpawningItem();
+        gameObject.SetActive(false);
     }
 
     private void OnDisable()
