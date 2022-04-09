@@ -9,6 +9,7 @@ public enum Partical
 
 public class ParticalController : ObjectPooler
 {
+    public AudioClip destroyingClip;
     public static ParticalController Instance;
     private List<GameObject> collideExplosion, destroyExplosion;
 
@@ -69,6 +70,7 @@ public class ParticalController : ObjectPooler
                     gameObj.transform.position = position;
                     gameObj.transform.rotation = Quaternion.identity;
                     gameObj.SetActive(true);
+                    AudioController.Instance.PlayUsingReserveSource(destroyingClip);
 
                     return gameObj;
                 }

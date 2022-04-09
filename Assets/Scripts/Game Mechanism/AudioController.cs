@@ -18,6 +18,9 @@ public class AudioController : MonoBehaviour
     public AudioSource sfxSource;
     public AudioClip sfxClip;
 
+    [Header("Reserve Source")]
+    public AudioSource[] reserveSources;
+
     public static AudioController Instance;
     private string musicKey = "BackgroundMusic";
     private string sfxKey = "SFX";
@@ -60,11 +63,15 @@ public class AudioController : MonoBehaviour
 
     public void PlaySFX(AudioSource source, AudioClip audioClip)
     {
+        if (audioSource.isPlaying) return;
+
         source.PlayOneShot(audioClip, sfxVolume);
     }
 
     public void PlayMusic(MusicType type)
     {
+        if (audioSource.isPlaying) return;
+
         switch (type)
         {
             case MusicType.open:
@@ -79,8 +86,42 @@ public class AudioController : MonoBehaviour
         }
     }
 
+    public float GetMusicLength(MusicType type)
+    {
+        float length = 0;
+        switch (type)
+        {
+            case MusicType.open:
+                length = openMusic.length;
+                break;
+            case MusicType.win:
+                length = openMusic.length;
+                break;
+            case MusicType.lose:
+                length = openMusic.length;
+                break;
+        }
+        return length;
+    }
+
     public void PlaySelectEventSFX()
     {
+        if (audioSource.isPlaying) return;
+
         sfxSource.PlayOneShot(sfxClip, sfxVolume);
+    }
+
+    public void PlayUsingReserveSource(AudioClip audioClip)
+    {
+        if (audioSource.isPlaying) return;
+
+        foreach (AudioSource source in reserveSources)
+        {
+            if (!source.isPlaying)
+            {
+                source.PlayOneShot(audioClip, sfxVolume);
+                break;
+            }
+        }
     }
 }

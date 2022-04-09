@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -5085861437361431764}
   m_Layer: 0
   m_Name: Helmet
-  m_TagString: Helmet
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc4f6ac494a002a41b152ee195a4b398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemType: 0
 --- !u!61 &-5085861437361431764
 BoxCollider2D:
   m_ObjectHideFlags: 0

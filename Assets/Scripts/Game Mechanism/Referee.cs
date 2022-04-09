@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Referee : MonoBehaviour, ISubscriber
 {
+    [Header("Sound")]
+    public AudioSource source;
+    public AudioClip spawnSFX;
+
     public static Referee Instance;
     private GameManager gameManager;
     private MapBuilder mapBuilder;
     private Map map;
     private IEnumerator itemRoutine;
 
+    [Space]
     [SerializeField]
     private TankSpawner tankSpawner;
 
@@ -113,6 +118,7 @@ public class Referee : MonoBehaviour, ISubscriber
         }
 
         itemPooler.GetClone(Coordinate.ToVector2(map.spaces[spaceIndex]));
+        AudioController.Instance.PlaySFX(source, spawnSFX);
         spaceIndex++;
     }
 }

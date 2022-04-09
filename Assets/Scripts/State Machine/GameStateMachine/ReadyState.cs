@@ -11,6 +11,7 @@ public class ReadyState : GameState
 
     public override void Perform()
     {
+        AudioController.Instance.PlayMusic(MusicType.open);
         DisplayStage();
         StartCoroutine(DelayToNext());
     }

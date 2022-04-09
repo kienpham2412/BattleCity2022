@@ -9,12 +9,13 @@ public class VictoryState : GameState
     {
         Time.timeScale = 0;
         gameObject.SetActive(true);
+        AudioController.Instance.PlayMusic(MusicType.win);
         StartCoroutine(ReturnToTitle());
     }
 
     IEnumerator ReturnToTitle()
     {
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSecondsRealtime(AudioController.Instance.GetMusicLength(MusicType.win) + 1);
         SceneManager.LoadScene("TitleScreen");
         Time.timeScale = 1;
     }

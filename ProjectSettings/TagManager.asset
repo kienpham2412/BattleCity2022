@@ -15,6 +15,7 @@ TagManager:
   - EnemyTank
   - Helmet
   - Star
+  - Item
   layers:
   - Default
   - TransparentFX

@@ -45,7 +45,8 @@ public class EnemyAI : Tank, ISubscriber
                 gameObject.SetActive(false);
                 break;
             case MessageType.OnClockAcquired:
-                StartCoroutine(Freeze());
+                if (gameObject.activeInHierarchy)
+                    StartCoroutine(Freeze());
                 break;
             case MessageType.OnGameRestart:
                 pathFinder = FindObjectOfType<PathFinder>();

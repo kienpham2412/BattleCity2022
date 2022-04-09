@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5383086331211239462}
   m_Layer: 0
   m_Name: Star
-  m_TagString: Star
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc4f6ac494a002a41b152ee195a4b398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisItem: 4
+  itemType: 4
 --- !u!61 &5383086331211239462
 BoxCollider2D:
   m_ObjectHideFlags: 0

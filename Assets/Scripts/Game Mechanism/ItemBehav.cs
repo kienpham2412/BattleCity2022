@@ -9,8 +9,9 @@ public class ItemBehav : MonoBehaviour, ISubscriber
         Helmet = 0, Shovel = 1, Grenade = 2, Clock = 3, Star = 4, Tank = 5
     }
 
+    [Space]
     [SerializeField]
-    private Item thisItem;
+    private Item itemType;
     protected bool firstTime = true;
 
     private void Start()
@@ -20,8 +21,11 @@ public class ItemBehav : MonoBehaviour, ISubscriber
 
     private void TriggerEvent()
     {
-        switch (thisItem)
+        switch (itemType)
         {
+            case Item.Star:
+                Player.Instance.TriggerPowerUp();
+                break;
             case Item.Clock:
                 MessageManager.Instance.SendMessage(new Message(MessageType.OnClockAcquired));
                 break;
@@ -51,8 +55,6 @@ public class ItemBehav : MonoBehaviour, ISubscriber
             firstTime = false;
             return;
         }
-
-        Referee.Instance.SpawnItem();
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)

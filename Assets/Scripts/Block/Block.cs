@@ -13,16 +13,9 @@ public abstract class Block : MonoBehaviour
     /// <param name="message">The bullet infomation</param>
     protected virtual void TakeDamage(object[] message)
     {
-        if (immotal)
-        {
-            return;
-        }
+        if (immotal) return;
 
         health -= (int)message[0];
-        if (health <= 0)
-        {
-            gameObject.SetActive(false);
-        }
-        // Debug.Log($"Hit by bullet at {gameObject.transform.position} with {damage} damage");
+        if (health <= 0) gameObject.SetActive(false);
     }
 }

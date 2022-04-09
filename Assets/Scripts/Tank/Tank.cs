@@ -4,6 +4,12 @@ using UnityEngine;
 
 public abstract class Tank : MonoBehaviour
 {
+    [Header("Sound")]
+    public AudioSource movingSource;
+    public AudioSource shootingSource;
+    public AudioClip movingClip, shootingClip;
+
+    [Space]
     public GameObject shootingPos;
     public Animator tankAnimator;
     private Vector3 moveForward;
@@ -12,6 +18,7 @@ public abstract class Tank : MonoBehaviour
     protected bool playerOrigin, powerUp;
     public float speed = 1f;
     protected bool firstTime = true;
+    protected bool isMoving = false;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -30,6 +37,7 @@ public abstract class Tank : MonoBehaviour
     protected void TurnUp()
     {
         gameObject.transform.rotation = lookUp;
+        PlayMovingSFX();
     }
 
     /// <summary>
@@ -38,6 +46,7 @@ public abstract class Tank : MonoBehaviour
     protected void TurnDown()
     {
         gameObject.transform.rotation = lookDown;
+        PlayMovingSFX();
     }
 
     /// <summary>
@@ -46,6 +55,7 @@ public abstract class Tank : MonoBehaviour
     protected void TurnLeft()
     {
         gameObject.transform.rotation = lookLeft;
+        PlayMovingSFX();
     }
 
     /// <summary>
@@ -54,6 +64,7 @@ public abstract class Tank : MonoBehaviour
     protected void TurnRight()
     {
         gameObject.transform.rotation = lookRight;
+        PlayMovingSFX();
     }
 
     /// <summary>
@@ -81,7 +92,19 @@ public abstract class Tank : MonoBehaviour
     /// <param name="playerOrigin">Is the bullet shoot by the player</param>
     protected void Shoot(bool playerOrigin)
     {
+        AudioController.Instance.PlaySFX(shootingSource, shootingClip);
         BulletPooler.singleton.GetClone(shootingPos.transform.position, transform.rotation, powerUp, gameObject.GetInstanceID(), playerOrigin);
+    }
+
+    protected void PlayMovingSFX()
+    {
+        if (!movingSource.isPlaying)
+            AudioController.Instance.PlaySFX(movingSource, movingClip);
+    }
+
+    protected void StopMovingSFX()
+    {
+        if (movingSource.isPlaying) movingSource.Stop();
     }
 
     /// <summary>
@@ -101,5 +124,6 @@ public abstract class Tank : MonoBehaviour
             return;
         }
         ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
+        StopMovingSFX();
     }
 }

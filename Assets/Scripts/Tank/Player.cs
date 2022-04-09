@@ -6,6 +6,10 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerBlock))]
 public class Player : Tank, ISubscriber
 {
+    [Header("Item SFX")]
+    public AudioSource source;
+    public AudioClip clip;
+
     public static Player Instance;
     private PlayerControl playerControl;
     private InputAction movement;
@@ -13,7 +17,6 @@ public class Player : Tank, ISubscriber
     private Vector2 direction;
     private const float POWERUP_LENGTH = 15f;
     private float xDirection, yDirection;
-    public int life;
 
 
     void Awake()
@@ -25,20 +28,28 @@ public class Player : Tank, ISubscriber
         shoot = playerControl.Gameplay.Shoot;
 
         movement.performed += ctx => Move();
-        movement.canceled += ctx => { xDirection = yDirection = 0; };
+        movement.canceled += ctx => StopMoving();
         shoot.performed += ctx => Shoot(playerOrigin);
 
         playerOrigin = true;
         powerUp = false;
-        life = 3;
 
         Debug.Log("tank player awake");
     }
 
     public void Handle(Message message)
     {
-        gameObject.SetActive(false);
-        GetComponent<PlayerBlock>().ResetHealth();
+        switch (message.type)
+        {
+            case MessageType.OnGameRestart:
+                gameObject.SetActive(false);
+                GetComponent<PlayerBlock>().ResetHealth();
+                break;
+            case MessageType.OnPlayerDestroyed:
+                ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
+                break;
+        }
+
     }
 
     void Update()
@@ -81,6 +92,17 @@ public class Player : Tank, ISubscriber
         if (xDirection == 1) TurnRight();
     }
 
+    void StopMoving()
+    {
+        xDirection = yDirection = 0;
+        StopMovingSFX();
+    }
+
+    public void TriggerPowerUp()
+    {
+        StartCoroutine(PowerUp());
+    }
+
     IEnumerator PowerUp()
     {
         powerUp = true;
@@ -90,21 +112,20 @@ public class Player : Tank, ISubscriber
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Star"))
-        {
-            StartCoroutine(PowerUp());
-        }
+        if (other.gameObject.CompareTag("Item"))
+            AudioController.Instance.PlaySFX(source, clip);
     }
 
     private void OnEnable()
     {
         MessageManager.Instance.AddSubscriber(MessageType.OnGameRestart, this);
+        MessageManager.Instance.AddSubscriber(MessageType.OnPlayerDestroyed, this);
         ActiveInput(true);
     }
 
     protected override void OnDisable()
     {
         ActiveInput(false);
-        base.OnDisable();
+        StopMovingSFX();
     }
 }
