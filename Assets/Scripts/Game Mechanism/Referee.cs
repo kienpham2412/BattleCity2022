@@ -18,7 +18,7 @@ public class Referee : MonoBehaviour, ISubscriber
 
     private List<string> mapNames;
     private int spaceIndex = 0;
-    private int currentMapIndex = 0;
+    private int currentMapIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -26,12 +26,29 @@ public class Referee : MonoBehaviour, ISubscriber
         Instance = this;
         gameManager = GetComponent<GameManager>();
         mapNames = gameManager.GetAllMapNames();
+        currentMapIndex = PlayerPrefs.GetInt("CustomMap", 1);
+        Debug.Log("Map index: " + currentMapIndex);
+
+        MessageManager.Instance.AddSubscriber(MessageType.OnGameOver, this);
+        MessageManager.Instance.AddSubscriber(MessageType.OnGameFinish, this);
         MessageManager.Instance.AddSubscriber(MessageType.OnPlayerDestroyed, this);
     }
 
     public void Handle(Message message)
     {
-        StartCoroutine(RespawnPlayer());
+        switch (message.type)
+        {
+            case MessageType.OnPlayerDestroyed:
+                StartCoroutine(RespawnPlayer());
+                break;
+            case MessageType.OnGameFinish:
+                StopAllCoroutines();
+                break;
+            case MessageType.OnGameOver:
+                StopAllCoroutines();
+                break;
+        }
+
     }
 
     public void LoadPlayMap()

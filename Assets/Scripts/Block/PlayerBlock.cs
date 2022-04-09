@@ -38,6 +38,7 @@ public class PlayerBlock : Block
             gameObject.SetActive(false);
             MessageManager.Instance.SendMessage(new Message(MessageType.OnPlayerDestroyed));
         }
+        if (playerLife < 0) MessageManager.Instance.SendMessage(new Message(MessageType.OnGameOver));
     }
 
     public void ResetHealth()

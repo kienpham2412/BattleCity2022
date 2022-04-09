@@ -83,3 +83,8 @@ public class MapSaver
         return mapNames;
     }
 }
+
+public class MapSaverController : MonoBehaviour
+{
+
+}

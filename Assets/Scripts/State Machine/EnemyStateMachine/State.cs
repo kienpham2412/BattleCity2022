@@ -131,12 +131,12 @@ public class Idle : State
     {
         if (distanceToTower <= PathFinder.TOWER_RANGE)
         {
-            nextState = new Pursue(this.enemyData, Map.tower, pathFinder, PathFinder.TOWER_RANGE);
+            nextState = new Pursue(this.enemyData, Map.tower, pathFinder, PathFinder.TOWER_RANGE + 3);
             Debug.Log("pursuing tower");
         }
         else if (distanceToPlayer <= PathFinder.PLAYER_RANGE)
         {
-            nextState = new Pursue(this.enemyData, Player.Instance.GetCoordinate(), pathFinder, PathFinder.PLAYER_RANGE);
+            nextState = new Pursue(this.enemyData, Player.Instance.GetCoordinate(), pathFinder, PathFinder.PLAYER_RANGE + 3);
             Debug.Log("pursuing player");
         }
         else

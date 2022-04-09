@@ -33,7 +33,7 @@ public class TitleUI : UIManager
     /// </summary>
     public void ShowVideoSetting()
     {
-        menu.ShowMenu(4);
+        menu.ShowMenu(3);
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public class TitleUI : UIManager
     /// </summary>
     public void ShowMusicSetting()
     {
-        menu.ShowMenu(5);
+        menu.ShowMenu(4);
     }
 
     /// <summary>

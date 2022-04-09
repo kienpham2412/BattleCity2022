@@ -6,6 +6,7 @@ public class GameStateController : MonoBehaviour
 {
     public static GameStateController Instance;
     public GameState firstState;
+    public GameState gameOverState;
 
     // Start is called before the first frame update
     void Start()
@@ -23,5 +24,9 @@ public class GameStateController : MonoBehaviour
 
         transform.GetChild(0).gameObject.SetActive(true);
         firstState.Perform();
+    }
+
+    public void TriggerGameOverState(){
+        gameOverState.Perform();
     }
 }

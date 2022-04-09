@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class PlayState : GameState, ISubscriber
 {
-    
+
 
     public void Handle(Message message)
     {
-        Next();
+        switch (message.type)
+        {
+            case MessageType.OnGameFinish:
+                Next();
+                break;
+            case MessageType.OnGameOver:
+                gameObject.SetActive(false);
+                GameStateController.Instance.TriggerGameOverState();
+                break;
+        }
     }
 
     public override void Perform()
@@ -16,18 +25,17 @@ public class PlayState : GameState, ISubscriber
         Referee.Instance.LoadPlayMap();
         Referee.Instance.SpawnTanks();
         gameObject.SetActive(true);
-        Debug.Log("play state triggered");
     }
 
     public override void Next()
     {
         gameObject.SetActive(false);
-        Debug.Log("finish play state");
         base.Next();
     }
 
     private void OnEnable()
     {
         MessageManager.Instance.AddSubscriber(MessageType.OnGameFinish, this);
+        MessageManager.Instance.AddSubscriber(MessageType.OnGameOver, this);
     }
 }

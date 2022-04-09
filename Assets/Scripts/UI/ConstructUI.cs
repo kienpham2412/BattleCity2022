@@ -9,8 +9,6 @@ public class ConstructUI : UIManager
 {
     public GameObject nameDropdown;
     public GameObject nameInput;
-    private TMP_Dropdown dropdown;
-    private TMP_InputField input;
     protected PlayerControl myControl;
 
     public override void Awake()
@@ -24,24 +22,6 @@ public class ConstructUI : UIManager
     public override void Start()
     {
         base.Start();
-        LoadFileName();
-    }
-
-    /// <summary>
-    /// Load saved filenames
-    /// </summary>
-    public void LoadFileName()
-    {
-        List<string> filenames = new List<string>();
-
-        string[] files = Directory.GetFiles(Application.dataPath + "/Maps", "*.map", SearchOption.AllDirectories);
-        foreach (string aFile in files)
-        {
-            filenames.Add(Path.GetFileNameWithoutExtension(aFile));
-        }
-
-        dropdown = nameDropdown.GetComponent<TMP_Dropdown>();
-        dropdown.AddOptions(filenames);
     }
 
     /// <summary>
@@ -59,14 +39,6 @@ public class ConstructUI : UIManager
             menu.HideMenu(0);
             Selector.singleton.ActiveInput(true);
         }
-    }
-
-    /// <summary>
-    /// Display a question to make sure player wants to exit
-    /// </summary>
-    public override void ShowExitQuestion()
-    {
-        base.ShowExitQuestion();
     }
 
     /// <summary>
@@ -100,40 +72,37 @@ public class ConstructUI : UIManager
     /// </summary>
     public void SaveMap()
     {
-        TMP_InputField input = nameInput.gameObject.GetComponent<TMP_InputField>();
-
-        if (input.text == "") return;
-        GameManager.Instance.SaveMap(input.text);
-        Debug.Log(input.text);
+        PlayerPrefs.SetInt("CustomMap", 0);
+        GameManager.Instance.SaveMap("base");
+        LoadScene(0);
     }
 
-    /// <summary>
-    /// Load a saved map
-    /// </summary>
-    public void LoadMap()
-    {
-        string name = dropdown.options[dropdown.value].text;
-        GameManager.Instance.LoadMap(name);
+    public void ExitWithoutSave(){
+        PlayerPrefs.SetInt("CustomMap", 1);
+        LoadScene(0);
     }
 
     /// <summary>
     /// Generate map event
     /// </summary>
-    public void GenerateMap(){
+    public void GenerateMap()
+    {
         GameManager.Instance.mapBuilder.GenerateRandomMap();
     }
 
     /// <summary>
     /// Generate base map event
     /// </summary>
-    public void GenerateBaseMap(){
+    public void GenerateBaseMap()
+    {
         GameManager.Instance.mapBuilder.GenerateBaseMap();
     }
 
     /// <summary>
     /// Generate black map event
     /// </summary>
-    public void CreateBlankMap(){
+    public void CreateBlankMap()
+    {
         GameManager.Instance.mapBuilder.CreateBlankMap();
     }
 

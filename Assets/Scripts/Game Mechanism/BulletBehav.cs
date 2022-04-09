@@ -69,7 +69,7 @@ public class BulletBehav : MonoBehaviour
 
     private void CreatDamage(Collision2D other)
     {
-        other.transform.SendMessage("TakeDamage", message);
+        other.transform.SendMessage("TakeDamage", message, SendMessageOptions.DontRequireReceiver);
         ParticalController.Instance.GetClone(other.contacts[0].point, Partical.Collision);
     }
 
