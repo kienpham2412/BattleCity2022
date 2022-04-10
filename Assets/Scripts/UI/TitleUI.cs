@@ -10,6 +10,7 @@ public class TitleUI : UIManager
     {
         base.Start();
         menu.ShowMenu(0);
+        Time.timeScale = 1;
     }
 
     /// <summary>
