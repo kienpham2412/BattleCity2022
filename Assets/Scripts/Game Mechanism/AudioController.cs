@@ -29,6 +29,7 @@ public class AudioController : MonoBehaviour
         set
         {
             PlayerPrefs.SetFloat(musicKey, value);
+            audioSource.volume = value;
         }
         get
         {

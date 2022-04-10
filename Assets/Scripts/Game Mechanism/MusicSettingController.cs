@@ -9,8 +9,8 @@ public class MusicSettingController : MonoBehaviour
 
     private void OnEnable()
     {
-        backgroundMusicSlider.value = AudioController.Instance.musicVolume;
-        sfxSlider.value = AudioController.Instance.sfxVolume;
+        backgroundMusicSlider.SetValueWithoutNotify(AudioController.Instance.musicVolume);
+        sfxSlider.SetValueWithoutNotify(AudioController.Instance.sfxVolume);
     }
 
     public void ChangeMusicVolume()
