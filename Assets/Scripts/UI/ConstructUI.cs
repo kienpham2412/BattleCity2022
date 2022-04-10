@@ -73,7 +73,7 @@ public class ConstructUI : UIManager
     public void SaveMap()
     {
         PlayerPrefs.SetInt("CustomMap", 0);
-        GameManager.Instance.SaveMap("base");
+        MapSaverController.Instance.SaveMap("base");
         LoadScene(0);
     }
 
@@ -87,7 +87,7 @@ public class ConstructUI : UIManager
     /// </summary>
     public void GenerateMap()
     {
-        GameManager.Instance.mapBuilder.GenerateRandomMap();
+        MapSaverController.Instance.mapBuilder.GenerateRandomMap();
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ public class ConstructUI : UIManager
     /// </summary>
     public void GenerateBaseMap()
     {
-        GameManager.Instance.mapBuilder.GenerateBaseMap();
+        MapSaverController.Instance.mapBuilder.GenerateBaseMap();
     }
 
     /// <summary>
@@ -103,7 +103,7 @@ public class ConstructUI : UIManager
     /// </summary>
     public void CreateBlankMap()
     {
-        GameManager.Instance.mapBuilder.CreateBlankMap();
+        MapSaverController.Instance.mapBuilder.CreateBlankMap();
     }
 
     public void OnEnable()

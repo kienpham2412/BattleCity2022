@@ -9,7 +9,8 @@ public class Referee : MonoBehaviour, ISubscriber
     public AudioClip spawnSFX;
 
     public static Referee Instance;
-    private GameManager gameManager;
+    // private GameManager gameManager;
+    private MapSaverController mapSaverController;
     private MapBuilder mapBuilder;
     private Map map;
     private IEnumerator itemRoutine;
@@ -29,8 +30,8 @@ public class Referee : MonoBehaviour, ISubscriber
     void Start()
     {
         Instance = this;
-        gameManager = GetComponent<GameManager>();
-        mapNames = gameManager.GetAllMapNames();
+        mapSaverController = MapSaverController.Instance;
+        mapNames = mapSaverController.GetAllMapNames();
         currentMapIndex = PlayerPrefs.GetInt("CustomMap", 1);
         Debug.Log("Map index: " + currentMapIndex);
 
@@ -47,10 +48,10 @@ public class Referee : MonoBehaviour, ISubscriber
                 StartCoroutine(RespawnPlayer());
                 break;
             case MessageType.OnGameFinish:
-                StopAllCoroutines();
+                StopSpawningItem();
                 break;
             case MessageType.OnGameOver:
-                StopAllCoroutines();
+                StopSpawningItem();
                 break;
         }
 
@@ -58,9 +59,9 @@ public class Referee : MonoBehaviour, ISubscriber
 
     public void LoadPlayMap()
     {
-        gameManager.LoadMap(mapNames[currentMapIndex]);
+        mapSaverController.LoadMap(mapNames[currentMapIndex]);
         currentMapIndex++;
-        mapBuilder = gameManager.mapBuilder;
+        mapBuilder = mapSaverController.mapBuilder;
         map = mapBuilder.map;
         map.spaces.Shuffle();
         SpawnItem();
@@ -89,8 +90,8 @@ public class Referee : MonoBehaviour, ISubscriber
         if (itemRoutine != null)
         {
             StopCoroutine(itemRoutine);
+            Debug.Log("Stop spawning item");
         }
-        Debug.Log("Stop spawning item");
     }
 
     public void SpawnTanks()

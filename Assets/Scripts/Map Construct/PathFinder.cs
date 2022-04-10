@@ -40,7 +40,7 @@ public class PathFinder : MonoBehaviour, ISubscriber
 
     void Start()
     {
-        mapBuilder = GetComponent<GameManager>().mapBuilder;
+        mapBuilder = MapSaverController.Instance.mapBuilder;
         MessageManager.Instance.AddSubscriber(MessageType.OnGameRestart, this);
     }
 

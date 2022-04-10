@@ -4409,7 +4409,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2011169244}
-  - component: {fileID: 2011169245}
   - component: {fileID: 2011169246}
   - component: {fileID: 2011169247}
   - component: {fileID: 2011169248}
@@ -4438,19 +4437,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2011169245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011169243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be90f9a9d5ab30a4a813c31fac70f25c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapBuilder: {fileID: 659602982}
 --- !u!114 &2011169246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4535,6 +4521,7 @@ MonoBehaviour:
   samples:
   - {fileID: 7257364905459804251, guid: 4037ae35f617e884abf31d7fd2a7faab, type: 3}
   - {fileID: 8388407121396963240, guid: 24df03f3624598441852700c1883def1, type: 3}
+  - {fileID: 545621176589157031, guid: a34b1e0ddbfe8c44eaa103a00996221b, type: 3}
 --- !u!114 &2011169251
 MonoBehaviour:
   m_ObjectHideFlags: 0

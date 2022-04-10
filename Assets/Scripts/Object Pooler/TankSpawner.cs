@@ -114,7 +114,6 @@ public class TankSpawner : ObjectPooler, ISubscriber
     public void CountDestroyed()
     {
         destroyedTank++;
-        Debug.Log(destroyedTank);
         if (destroyedTank == 20)
         {
             MessageManager.Instance.SendMessage(new Message(MessageType.OnGameFinish));

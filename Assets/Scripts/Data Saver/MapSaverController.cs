@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class MapSaver
 {
@@ -15,11 +16,6 @@ public class MapSaver
         bf = new BinaryFormatter();
     }
 
-    /// <summary>
-    /// Save a map
-    /// </summary>
-    /// <param name="name">Map name</param>
-    /// <param name="map">The map</param>
     public void Save(string name, Map map)
     {
         CreateDir();
@@ -34,11 +30,6 @@ public class MapSaver
         Debug.Log("map saved !!!");
     }
 
-    /// <summary>
-    /// Load a map
-    /// </summary>
-    /// <param name="name">Map name</param>
-    /// <returns>The map</returns>
     public Map Load(string name)
     {
         file = File.Open(CreatePath(name), FileMode.Open);
@@ -49,9 +40,6 @@ public class MapSaver
         return map;
     }
 
-    /// <summary>
-    /// Create a save directory
-    /// </summary>
     private void CreateDir()
     {
         if (Directory.Exists(filePath)) return;
@@ -60,11 +48,6 @@ public class MapSaver
         Debug.Log("Create directory: Maps");
     }
 
-    /// <summary>
-    /// Create save path
-    /// </summary>
-    /// <param name="name">Map name</param>
-    /// <returns></returns>
     private string CreatePath(string name)
     {
         return filePath + "/" + name + ".map";
@@ -86,5 +69,53 @@ public class MapSaver
 
 public class MapSaverController : MonoBehaviour
 {
+    public static MapSaverController Instance;
+    private MapSaver mapSaver;
+    public MapBuilder mapBuilder;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else Destroy(gameObject);
+
+        mapSaver = new MapSaver();
+    }
+
+    public void SaveMap(string name)
+    {
+        mapBuilder.map.SaveSpaceCoor();
+        mapSaver.Save(name, mapBuilder.map);
+    }
+
+    public void LoadMap(string name)
+    {
+        mapBuilder.BuildSavedMap(mapSaver.Load(name));
+    }
+
+    public List<string> GetAllMapNames()
+    {
+        return mapSaver.GetFilesName();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("TitleScreen")) return;
+        
+        mapBuilder = FindObjectOfType<MapBuilder>();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 }
