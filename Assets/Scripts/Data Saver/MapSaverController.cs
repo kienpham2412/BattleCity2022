@@ -105,7 +105,7 @@ public class MapSaverController : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("TitleScreen")) return;
-        
+
         mapBuilder = FindObjectOfType<MapBuilder>();
     }
 

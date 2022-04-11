@@ -22,7 +22,7 @@ public class EnemyData
     public float speed;
 }
 
-public class EnemyAI : Tank, ISubscriber, IBlock
+public class EnemyAI : Tank, IBlock
 {
     EnemyData enemyData;
     private Marker marker;
@@ -31,28 +31,12 @@ public class EnemyAI : Tank, ISubscriber, IBlock
     private Coordinate previous;
     private PathFinder pathFinder;
     private IEnumerator attackRoutine;
+    private Referee referee;
     private const float TIME_SHOOTING_LIMIT = 2;
     private const float SHOOTING_RANGE = 4;
-    private float shootingSpeed = 1.5f;
+    public float shootingSpeed = 1.5f;
     private float startShooting = 0;
     public int health;
-
-    public void Handle(Message message)
-    {
-        switch (message.type)
-        {
-            case MessageType.OnGrenadeAcquired:
-                Destroy(gameObject);
-                break;
-            case MessageType.OnClockAcquired:
-                if (gameObject.activeInHierarchy)
-                    StartCoroutine(Freeze());
-                break;
-            case MessageType.OnGameRestart:
-                Init();
-                break;
-        }
-    }
 
     public void TakeDamage(DamageAttribute damageAttribute)
     {
@@ -62,6 +46,7 @@ public class EnemyAI : Tank, ISubscriber, IBlock
 
     private void Init()
     {
+        referee = Referee.Instance;
         pathFinder = FindObjectOfType<PathFinder>();
         previous = new Coordinate(gameObject.transform.position);
         rb = GetComponent<Rigidbody2D>();
@@ -73,17 +58,22 @@ public class EnemyAI : Tank, ISubscriber, IBlock
 
     private void FixedUpdate()
     {
-        RaycastHit2D hit = Physics2D.Raycast(shootingPos.transform.position, transform.up, SHOOTING_RANGE);
+        if (referee.isFreeze) return;
 
+        RaycastHit2D hit = Physics2D.Raycast(shootingPos.transform.position, transform.up, SHOOTING_RANGE);
         if (hit.collider != null)
-        {
             AutoShoot(shootingSpeed * Time.deltaTime);
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (referee.isFreeze)
+        {
+            Stop();
+            return;
+        }
+
         if (currentState != null)
             currentState = currentState.Process();
     }
@@ -98,20 +88,9 @@ public class EnemyAI : Tank, ISubscriber, IBlock
         }
     }
 
-    IEnumerator Freeze()
-    {
-        rb.constraints = RigidbodyConstraints2D.FreezePosition;
-        yield return new WaitForSeconds(10f);
-        rb.constraints = RigidbodyConstraints2D.None;
-    }
-
     protected override void OnDisable()
     {
-        MessageManager.Instance.RemoveSubscriber(MessageType.OnGrenadeAcquired, this);
-        MessageManager.Instance.RemoveSubscriber(MessageType.OnClockAcquired, this);
-        MessageManager.Instance.RemoveSubscriber(MessageType.OnGameRestart, this);
-
-        if (health == 0)
+        if (health <= 0)
         {
             ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
             MessageManager.Instance.SendMessage(new Message(MessageType.OnEnemyDestroyed, spawnPosition));
@@ -123,8 +102,5 @@ public class EnemyAI : Tank, ISubscriber, IBlock
     {
         spawnPosition = gameObject.transform.position;
         Init();
-        MessageManager.Instance.AddSubscriber(MessageType.OnGrenadeAcquired, this);
-        MessageManager.Instance.AddSubscriber(MessageType.OnClockAcquired, this);
-        MessageManager.Instance.AddSubscriber(MessageType.OnGameRestart, this);
     }
 }

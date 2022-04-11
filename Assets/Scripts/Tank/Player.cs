@@ -19,7 +19,7 @@ public class Player : Tank, ISubscriber, IBlock
     private InputAction movement;
     private InputAction shoot;
     private Vector2 direction;
-    private const float POWERUP_LENGTH = 15f;
+    private const float POWERUP_LENGTH = 13f;
     private float xDirection, yDirection;
     private bool immotal;
 
@@ -161,7 +161,7 @@ public class Player : Tank, ISubscriber, IBlock
         MessageManager.Instance.RemoveSubscriber(MessageType.OnGameRestart, this);
         MessageManager.Instance.RemoveSubscriber(MessageType.OnPlayerDestroyed, this);
 
-        if (health == 0) base.OnDisable();
+        if (health <= 0) base.OnDisable();
         ActiveInput(false);
         StopMovingSFX();
     }

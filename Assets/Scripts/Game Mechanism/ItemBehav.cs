@@ -12,7 +12,8 @@ public class ItemBehav : MonoBehaviour, ISubscriber
     [Space]
     [SerializeField]
     private Item itemType;
-    protected bool firstTime = true;
+    protected Animator animator;
+    private IEnumerator countDown;
 
     private void Start()
     {
@@ -27,13 +28,14 @@ public class ItemBehav : MonoBehaviour, ISubscriber
                 Player.Instance.TriggerPowerUp();
                 break;
             case Item.Clock:
-                MessageManager.Instance.SendMessage(new Message(MessageType.OnClockAcquired));
+                Referee.Instance.StartFreezing();
                 break;
             case Item.Shovel:
                 Debug.Log("Shovel");
                 break;
             case Item.Grenade:
-                MessageManager.Instance.SendMessage(new Message(MessageType.OnGrenadeAcquired));
+                foreach (EnemyAI enemy in FindObjectsOfType<EnemyAI>())
+                    enemy.TakeDamage(new DamageAttribute(100, false, true));
                 break;
             case Item.Tank:
                 Debug.Log("Tank");
@@ -51,21 +53,40 @@ public class ItemBehav : MonoBehaviour, ISubscriber
         gameObject.SetActive(false);
     }
 
-    private void OnDisable()
-    {
-        if (firstTime)
-        {
-            firstTime = false;
-            return;
-        }
-    }
-
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("PlayerTank"))
         {
             TriggerEvent();
+            Referee.Instance.SpawnItem();
             gameObject.SetActive(false);
         }
+    }
+
+    protected IEnumerator Deactive()
+    {
+        yield return new WaitForSeconds(10f);
+        animator.SetBool("isFading", true);
+        yield return new WaitForSeconds(5f);
+        Referee.Instance.SpawnItem();
+        gameObject.SetActive(false);
+    }
+
+    protected void OnEnable()
+    {
+        animator = GetComponent<Animator>();
+        animator.SetBool("isFading", false);
+
+        if (countDown != null)
+            StopCoroutine(countDown);
+
+        countDown = Deactive();
+        StartCoroutine(countDown);
+    }
+
+    protected void OnDisable()
+    {
+        if (countDown != null)
+            StopCoroutine(countDown);
     }
 }

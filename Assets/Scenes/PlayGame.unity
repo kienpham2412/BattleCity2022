@@ -4496,6 +4496,7 @@ MonoBehaviour:
   tankSpawner: {fileID: 2011169249}
   itemPooler: {fileID: 2011169250}
   playerLife: 3
+  isFreeze: 0
 --- !u!114 &2011169248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4531,6 +4532,7 @@ MonoBehaviour:
   enemyTanks:
   - {fileID: 3011441667899040737, guid: 6fe560dadeab68e4aa12f482e0cf5839, type: 3}
   - {fileID: 7552170883087944049, guid: 32b2cfb73f396524aa0a8965e019a344, type: 3}
+  - {fileID: 3514457631015303255, guid: 5c8ed48a7f0edf24b93f61114f10f374, type: 3}
 --- !u!114 &2011169250
 MonoBehaviour:
   m_ObjectHideFlags: 0

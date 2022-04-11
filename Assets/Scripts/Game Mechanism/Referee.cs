@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,7 @@ public class Referee : MonoBehaviour, ISubscriber
     private int spaceIndex = 0;
     private int currentMapIndex;
     public int playerLife = 3;
+    public bool isFreeze = false;
 
     // Start is called before the first frame update
     void Start()
@@ -86,6 +88,10 @@ public class Referee : MonoBehaviour, ISubscriber
         StartCoroutine(itemRoutine);
     }
 
+    public void StartFreezing(){
+        StartCoroutine(Freeze());
+    }
+
     public void StopSpawningItem()
     {
         if (itemRoutine != null)
@@ -112,15 +118,23 @@ public class Referee : MonoBehaviour, ISubscriber
     IEnumerator ItemCoroutine()
     {
         Debug.Log("Start item coroutine");
-        yield return new WaitForSeconds(30f);
+        yield return new WaitForSeconds(15f);
 
-        if (spaceIndex >= map.spaces.Count)
-        {
-            spaceIndex = 0;
-        }
+        if (spaceIndex >= map.spaces.Count) spaceIndex = 0;
 
         itemPooler.GetClone(Coordinate.ToVector2(map.spaces[spaceIndex]));
         AudioController.Instance.PlaySFX(source, spawnSFX);
         spaceIndex++;
+    }
+
+    IEnumerator Freeze(){
+        isFreeze = true;
+        yield return new WaitForSeconds(10f);
+        isFreeze = false;
+    }
+
+    private void OnDisable()
+    {
+        if (PlayerPrefs.HasKey("CustomMap")) PlayerPrefs.DeleteKey("CustomMap");
     }
 }

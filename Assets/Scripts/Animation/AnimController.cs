@@ -6,7 +6,6 @@ public class AnimController : MonoBehaviour
 {
     [SerializeField]
     protected Animator animator;
-    // protected Coroutine countDown;
     protected float length;
 
     // Start is called before the first frame update

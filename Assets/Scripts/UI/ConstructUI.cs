@@ -77,8 +77,8 @@ public class ConstructUI : UIManager
         LoadScene(0);
     }
 
-    public void ExitWithoutSave(){
-        PlayerPrefs.SetInt("CustomMap", 1);
+    public void ExitWithoutSave()
+    {
         LoadScene(0);
     }
 

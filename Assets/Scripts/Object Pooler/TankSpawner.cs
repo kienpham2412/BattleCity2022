@@ -58,7 +58,7 @@ public class TankSpawner : MonoBehaviour, ISubscriber
     {
         if (enemyIndex < SPAWN_LIMIT)
         {
-            int random = Random.Range(0, 2);
+            int random = Random.Range(0, enemyTanks.Length);
             GameObject gameObj = Instantiate(enemyTanks[random], position, Quaternion.identity);
             enemyIndex++;
         }
