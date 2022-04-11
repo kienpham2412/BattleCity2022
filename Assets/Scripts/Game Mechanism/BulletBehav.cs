@@ -17,12 +17,14 @@ public class DamageAttribute
 
 public class BulletBehav : MonoBehaviour
 {
+    [Header("Damage attribute")]
+    public int damage;
+    public bool powerUp;
+
     protected Rigidbody2D rb;
     private static float speed = 20f;
-    protected int damage;
-    protected bool powerUp;
-    public bool playerOrigin;
-    public int tankID;
+    [HideInInspector] public bool playerOrigin;
+    [HideInInspector] public int tankID;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -78,7 +80,7 @@ public class BulletBehav : MonoBehaviour
         ParticalController.Instance.GetClone(other.contacts[0].point, Partical.Collision);
     }
 
-    public void setOrigin(bool isPlayer, int tankID)
+    public void SetOrigin(bool isPlayer, int tankID)
     {
         playerOrigin = isPlayer;
         this.tankID = tankID;

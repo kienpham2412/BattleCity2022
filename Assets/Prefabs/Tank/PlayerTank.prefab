@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 1470149007737201016}
   - component: {fileID: 552876444}
   - component: {fileID: 9019677759601484914}
-  - component: {fileID: 5671249442156028312}
   - component: {fileID: -2064298829025659847}
   m_Layer: 0
   m_Name: PlayerTank
@@ -255,30 +254,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingSource: {fileID: 2652374802011285031}
   shootingSource: {fileID: 3620869447673142455}
-  destroyingSource: {fileID: 8713061110783773788}
   movingClip: {fileID: 8300000, guid: aeaa86448eaf4a74a805260fb0f6f8cc, type: 3}
   shootingClip: {fileID: 8300000, guid: 0c7bb040ffa45c244ad4683484fef27f, type: 3}
-  destroyingClip: {fileID: 8300000, guid: 4f6226246a3f5fe4e9a94b0ce1de8433, type: 3}
   shootingPos: {fileID: 1590997350}
   tankAnimator: {fileID: 552876444}
   speed: 1.25
   source: {fileID: -2064298829025659847}
   clip: {fileID: 8300000, guid: 79df4d4eff28a8b4bae31dddce764547, type: 3}
---- !u!114 &5671249442156028312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9019677759601484815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8df40aa90ccc6ea469752734cf4527ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   shieldFX: {fileID: 5057030377994773397}
-  playerHealth: 5
-  playerLife: 0
+  immotalTime: 3
+  health: 5
 --- !u!82 &-2064298829025659847
 AudioSource:
   m_ObjectHideFlags: 0
@@ -511,11 +496,6 @@ Transform:
 --- !u!82 &2652374802011285031 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 4758939427460682529, guid: a5106895788f7ee46b11664322d44c0e, type: 3}
-  m_PrefabInstance: {fileID: 7405051273767122182}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &8713061110783773788 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 2174961597900454234, guid: a5106895788f7ee46b11664322d44c0e, type: 3}
   m_PrefabInstance: {fileID: 7405051273767122182}
   m_PrefabAsset: {fileID: 0}
 --- !u!82 &3620869447673142455 stripped

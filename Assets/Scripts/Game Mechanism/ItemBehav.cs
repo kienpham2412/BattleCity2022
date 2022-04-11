@@ -39,7 +39,7 @@ public class ItemBehav : MonoBehaviour, ISubscriber
                 Debug.Log("Tank");
                 break;
             case Item.Helmet:
-                PlayerBlock.Instance.Immotal();
+                Player.Instance.Immotal();
                 break;
             default:
                 break;

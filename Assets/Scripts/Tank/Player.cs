@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerBlock))]
-public class Player : Tank, ISubscriber
+public class Player : Tank, ISubscriber, IBlock
 {
     [Header("Item SFX")]
     public AudioSource source;
     public AudioClip clip;
+
+    [Header("Player attribute")]
+    [SerializeField] private GameObject shieldFX;
+    public float immotalTime;
+    public int health;
 
     public static Player Instance;
     private PlayerControl playerControl;
@@ -17,6 +21,7 @@ public class Player : Tank, ISubscriber
     private Vector2 direction;
     private const float POWERUP_LENGTH = 15f;
     private float xDirection, yDirection;
+    private bool immotal;
 
     void Awake()
     {
@@ -41,8 +46,7 @@ public class Player : Tank, ISubscriber
         switch (message.type)
         {
             case MessageType.OnGameRestart:
-                gameObject.SetActive(false);
-                GetComponent<PlayerBlock>().ResetHealth();
+                Destroy(gameObject);
                 break;
             case MessageType.OnPlayerDestroyed:
                 ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
@@ -51,28 +55,56 @@ public class Player : Tank, ISubscriber
 
     }
 
+    private void SetImmmotal(bool isImmotal)
+    {
+        immotal = isImmotal;
+        shieldFX.SetActive(isImmotal);
+    }
+
+    IEnumerator ImmotalActive()
+    {
+        SetImmmotal(true);
+        yield return new WaitForSeconds(immotalTime);
+        SetImmmotal(false);
+    }
+
+    public void Immotal()
+    {
+        StartCoroutine(ImmotalActive());
+    }
+
+    public void TakeDamage(DamageAttribute damageAttribute)
+    {
+        if (immotal) return;
+
+        health -= damageAttribute.damage;
+
+        if (health <= 0)
+        {
+            Referee.Instance.playerLife--;
+            MessageManager.Instance.SendMessage(new Message(MessageType.OnPlayerDestroyed));
+
+            if (Referee.Instance.playerLife < 0)
+                MessageManager.Instance.SendMessage(new Message(MessageType.OnGameOver));
+
+            Destroy(gameObject);
+        }
+    }
+
     void Update()
     {
         if (xDirection != 0 || yDirection != 0)
-        {
             MoveForward();
-        }
         else
-        {
             Stop();
-        }
     }
 
     public void ActiveInput(bool isActive)
     {
         if (isActive)
-        {
             playerControl.Enable();
-        }
         else
-        {
             playerControl.Disable();
-        }
     }
 
     public Coordinate GetCoordinate()
@@ -117,6 +149,8 @@ public class Player : Tank, ISubscriber
 
     private void OnEnable()
     {
+        StartCoroutine(ImmotalActive());
+
         MessageManager.Instance.AddSubscriber(MessageType.OnGameRestart, this);
         MessageManager.Instance.AddSubscriber(MessageType.OnPlayerDestroyed, this);
         ActiveInput(true);
@@ -126,7 +160,8 @@ public class Player : Tank, ISubscriber
     {
         MessageManager.Instance.RemoveSubscriber(MessageType.OnGameRestart, this);
         MessageManager.Instance.RemoveSubscriber(MessageType.OnPlayerDestroyed, this);
-        base.OnDisable();
+
+        if (health == 0) base.OnDisable();
         ActiveInput(false);
         StopMovingSFX();
     }

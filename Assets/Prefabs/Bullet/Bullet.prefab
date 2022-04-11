@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2103816817847467462}
   - component: {fileID: 2103816817847467467}
   - component: {fileID: 1796351146853725058}
-  - component: {fileID: 1976353448545251571}
+  - component: {fileID: -5584752951361894266}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: RegularBullet
@@ -133,7 +133,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.13, y: 0.22}
   m_EdgeRadius: 0
---- !u!114 &1976353448545251571
+--- !u!114 &-5584752951361894266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +142,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2103816817847467463}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56ca746b084e3b845acb53f9260aa9bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 68db4e1b1c5d3ed4e8e3288d554f0acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
+  powerUp: 0
   playerOrigin: 0
+  tankID: 0

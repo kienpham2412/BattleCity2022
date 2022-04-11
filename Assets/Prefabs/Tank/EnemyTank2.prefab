@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 7552170883087944053}
   - component: {fileID: 7552170883087944052}
   - component: {fileID: 4799186683198130477}
-  - component: {fileID: 8686994587366902566}
   m_Layer: 0
   m_Name: EnemyTank2
   m_TagString: EnemyTank
@@ -253,26 +252,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingSource: {fileID: 2228630212424475859}
   shootingSource: {fileID: 584735808226369091}
-  destroyingSource: {fileID: 4812533120561467048}
   movingClip: {fileID: 8300000, guid: aeaa86448eaf4a74a805260fb0f6f8cc, type: 3}
   shootingClip: {fileID: 8300000, guid: 0c7bb040ffa45c244ad4683484fef27f, type: 3}
-  destroyingClip: {fileID: 8300000, guid: 4f6226246a3f5fe4e9a94b0ce1de8433, type: 3}
   shootingPos: {fileID: 1073130440669356083}
   tankAnimator: {fileID: 7552170883087944052}
   speed: 0.75
---- !u!114 &8686994587366902566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7552170883087944049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ead5bc0f6221bb43918cf04c5ae7d89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyHealth: 4
+  health: 4
 --- !u!1001 &6694188996608047090
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -338,11 +323,6 @@ Transform:
 --- !u!82 &2228630212424475859 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 4758939427460682529, guid: a5106895788f7ee46b11664322d44c0e, type: 3}
-  m_PrefabInstance: {fileID: 6694188996608047090}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &4812533120561467048 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 2174961597900454234, guid: a5106895788f7ee46b11664322d44c0e, type: 3}
   m_PrefabInstance: {fileID: 6694188996608047090}
   m_PrefabAsset: {fileID: 0}
 --- !u!82 &584735808226369091 stripped

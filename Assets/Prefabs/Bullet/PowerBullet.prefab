@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8499492520855965079}
   - component: {fileID: 8499492520855965082}
   - component: {fileID: 8499492520855965081}
-  - component: {fileID: 8499492520855965083}
+  - component: {fileID: -1348128704333412125}
   m_Layer: 0
   m_Name: PowerBullet
   m_TagString: RegularBullet
@@ -133,7 +133,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.13, y: 0.22}
   m_EdgeRadius: 0
---- !u!114 &8499492520855965083
+--- !u!114 &-1348128704333412125
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +142,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8499492520855965078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87510133388c9d8479864bf8c67dd708, type: 3}
+  m_Script: {fileID: 11500000, guid: 68db4e1b1c5d3ed4e8e3288d554f0acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 3
+  powerUp: 1
   playerOrigin: 0
+  tankID: 0

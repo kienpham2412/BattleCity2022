@@ -22,8 +22,7 @@ public class EnemyData
     public float speed;
 }
 
-[RequireComponent(typeof(EnemyBlock))]
-public class EnemyAI : Tank, ISubscriber
+public class EnemyAI : Tank, ISubscriber, IBlock
 {
     EnemyData enemyData;
     private Marker marker;
@@ -36,6 +35,7 @@ public class EnemyAI : Tank, ISubscriber
     private const float SHOOTING_RANGE = 4;
     private float shootingSpeed = 1.5f;
     private float startShooting = 0;
+    public int health;
 
     public void Handle(Message message)
     {
@@ -54,6 +54,12 @@ public class EnemyAI : Tank, ISubscriber
         }
     }
 
+    public void TakeDamage(DamageAttribute damageAttribute)
+    {
+        health -= damageAttribute.damage;
+        if (health <= 0) Destroy(gameObject);
+    }
+
     private void Init()
     {
         pathFinder = FindObjectOfType<PathFinder>();
@@ -63,8 +69,6 @@ public class EnemyAI : Tank, ISubscriber
         currentState = new Idle(enemyData, pathFinder);
         playerOrigin = false;
         powerUp = false;
-
-        GetComponent<EnemyBlock>().ResetHealth();
     }
 
     private void FixedUpdate()
@@ -107,9 +111,12 @@ public class EnemyAI : Tank, ISubscriber
         MessageManager.Instance.RemoveSubscriber(MessageType.OnClockAcquired, this);
         MessageManager.Instance.RemoveSubscriber(MessageType.OnGameRestart, this);
 
-        ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
-        MessageManager.Instance.SendMessage(new Message(MessageType.OnEnemyDestroyed, spawnPosition));
-        TankShowCase.Instance.Destroy();
+        if (health == 0)
+        {
+            ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
+            MessageManager.Instance.SendMessage(new Message(MessageType.OnEnemyDestroyed, spawnPosition));
+            TankShowCase.Instance.Destroy();
+        }
     }
 
     private void OnEnable()

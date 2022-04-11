@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6445734762323669696}
   - component: {fileID: 4920950391982771075}
   - component: {fileID: -1416147402720721234}
-  - component: {fileID: -7899318330339530395}
+  - component: {fileID: 5362008307696092664}
   m_Layer: 0
   m_Name: Brick
   m_TagString: Brick
@@ -133,7 +133,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-7899318330339530395
+--- !u!114 &5362008307696092664
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,6 +142,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6445734762323669697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1090ced868ea3ea44804305ebf079198, type: 3}
+  m_Script: {fileID: 11500000, guid: d4acba1d9cfde454dacb8a2276a09871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 3
+  immotal: 0

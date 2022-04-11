@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Block : MonoBehaviour, IBlock
+public class Block : MonoBehaviour, IBlock
 {
-    protected int health;
-    protected bool immotal = false;
+    public int health;
+    public bool immotal = false;
 
     /// <summary>
     /// This method is invoked when the block is hit by the bullet
