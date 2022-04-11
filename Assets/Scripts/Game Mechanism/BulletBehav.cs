@@ -2,13 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class DamageAttribute
+{
+    public DamageAttribute(int damage, bool powerUp, bool playerOrigin)
+    {
+        this.damage = damage;
+        this.powerUp = powerUp;
+        this.playerOrigin = playerOrigin;
+    }
+    public int damage;
+    public bool powerUp;
+    public bool playerOrigin;
+}
+
 public class BulletBehav : MonoBehaviour
 {
     protected Rigidbody2D rb;
     private static float speed = 20f;
     protected int damage;
     protected bool powerUp;
-    private object[] message;
     public bool playerOrigin;
     public int tankID;
 
@@ -16,11 +28,6 @@ public class BulletBehav : MonoBehaviour
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        message = new object[3];
-        message[0] = damage;
-        message[1] = powerUp;
-        message[2] = playerOrigin;
     }
 
     // Update is called once per frame
@@ -63,13 +70,11 @@ public class BulletBehav : MonoBehaviour
 
         CreatDamage(other);
         gameObject.SetActive(false);
-
-        // Debug.Log($"collide with: {otherTag}");
     }
 
     private void CreatDamage(Collision2D other)
     {
-        other.transform.SendMessage("TakeDamage", message, SendMessageOptions.DontRequireReceiver);
+        other.gameObject.GetComponent<IBlock>().TakeDamage(new DamageAttribute(damage, powerUp, playerOrigin));
         ParticalController.Instance.GetClone(other.contacts[0].point, Partical.Collision);
     }
 

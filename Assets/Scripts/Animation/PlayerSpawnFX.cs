@@ -6,12 +6,6 @@ public class PlayerSpawnFX : SpawnFX
 {
     protected override void OnDisable()
     {
-        if (firstTime)
-        {
-            firstTime = false;
-            return;
-        }
-
         TankSpawner.Instance.SpawnPlayer(gameObject.transform.position);
     }
 }

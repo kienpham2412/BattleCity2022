@@ -7,16 +7,7 @@ public class PlayerBlock : Block
     public static PlayerBlock Instance;
     [SerializeField] private GameObject shieldFX;
     public int playerHealth;
-    public int playerLife;
     private float immotalTime;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        Instance = this;
-        ResetHealth();
-        playerLife = 3;
-    }
 
     private void SetImmmotal(bool isImmotal)
     {
@@ -24,24 +15,24 @@ public class PlayerBlock : Block
         shieldFX.SetActive(isImmotal);
     }
 
-    protected override void TakeDamage(object[] message)
+    public override void TakeDamage(DamageAttribute damageAttribute)
     {
         if (immotal)
         {
             return;
         }
 
-        health -= (int)message[0];
+        health -= damageAttribute.damage;
+
         if (health <= 0)
         {
-            playerLife--;
-            gameObject.SetActive(false);
+            Referee.Instance.playerLife--;
             MessageManager.Instance.SendMessage(new Message(MessageType.OnPlayerDestroyed));
-        }
-        if (playerLife < 0)
-        {
-            Debug.Log("GameOver");
-            MessageManager.Instance.SendMessage(new Message(MessageType.OnGameOver));
+
+            if (Referee.Instance.playerLife < 0)
+                MessageManager.Instance.SendMessage(new Message(MessageType.OnGameOver));
+                
+            Destroy(gameObject);
         }
     }
 
@@ -52,22 +43,21 @@ public class PlayerBlock : Block
 
     IEnumerator ImmotalActive()
     {
+        immotalTime = 10f;
         SetImmmotal(true);
         yield return new WaitForSeconds(immotalTime);
         SetImmmotal(false);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void Immotal()
     {
-        if (other.gameObject.CompareTag("Helmet"))
-        {
-            immotalTime = 10f;
-            StartCoroutine(ImmotalActive());
-        }
+        StartCoroutine(ImmotalActive());
     }
 
     private void OnEnable()
     {
+        Instance = this;
+
         immotalTime = 5f;
         ResetHealth();
         StartCoroutine(ImmotalActive());

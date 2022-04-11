@@ -1778,7 +1778,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &721457040
 GameObject:
@@ -2233,7 +2233,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &951596769
 GameObject:
@@ -3313,36 +3313,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &1384716429
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1384716430}
-  m_Layer: 0
-  m_Name: EnemyPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1384716430
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1384716429}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1390175034
 GameObject:
   m_ObjectHideFlags: 0
@@ -3377,7 +3347,7 @@ Transform:
   - {fileID: 1894064383}
   - {fileID: 1346313386}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1390175036
 MonoBehaviour:
@@ -3540,7 +3510,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1422575836
 GameObject:
@@ -4525,6 +4495,7 @@ MonoBehaviour:
   spawnSFX: {fileID: 8300000, guid: fbe0a5cc456f2da41bad9735076fdd6a, type: 3}
   tankSpawner: {fileID: 2011169249}
   itemPooler: {fileID: 2011169250}
+  playerLife: 3
 --- !u!114 &2011169248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4554,11 +4525,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 250f3868cb2d0c3498e4b62baaa48551, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolObj: {fileID: 1384716429}
-  samples:
-  - {fileID: 741351254605018411, guid: 3c064338a25ec76449f7e2922cf39a86, type: 3}
-  - {fileID: 9019677759601484815, guid: 145a44011a1fb1542b65cc5300a0bd23, type: 3}
-  - {fileID: 814362906814996229, guid: 2fb88afe7a19a084c964c400001288d4, type: 3}
+  playerSpawnFX: {fileID: 741351254605018411, guid: 3c064338a25ec76449f7e2922cf39a86, type: 3}
+  enemySpawnFX: {fileID: 814362906814996229, guid: 2fb88afe7a19a084c964c400001288d4, type: 3}
+  playerTank: {fileID: 9019677759601484815, guid: 145a44011a1fb1542b65cc5300a0bd23, type: 3}
+  enemyTanks:
   - {fileID: 3011441667899040737, guid: 6fe560dadeab68e4aa12f482e0cf5839, type: 3}
   - {fileID: 7552170883087944049, guid: 32b2cfb73f396524aa0a8965e019a344, type: 3}
 --- !u!114 &2011169250

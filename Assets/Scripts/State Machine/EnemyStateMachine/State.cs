@@ -117,7 +117,9 @@ public class Idle : State
 
     public override void Enter()
     {
-        distanceToPlayer = Vector3.Distance(enemyData.enemyGO.transform.position, Player.Instance.transform.position);
+        if(Player.Instance == null) distanceToPlayer = 100;
+        else distanceToPlayer = Vector3.Distance(enemyData.enemyGO.transform.position, Player.Instance.transform.position);
+        
         distanceToTower = Vector3.Distance(enemyData.enemyGO.transform.position, Coordinate.ToVector3(Map.tower));
         base.Enter();
     }

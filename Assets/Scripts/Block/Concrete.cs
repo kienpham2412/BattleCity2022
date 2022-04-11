@@ -10,11 +10,10 @@ public class Concrete : Block
         health = 10;
     }
 
-    protected override void TakeDamage(object[] message)
-    {
-        if ((bool) message[1])
+    public override void TakeDamage(DamageAttribute damageAttribute){
+        if (damageAttribute.powerUp)
         {
-            base.TakeDamage(message);
+            base.TakeDamage(damageAttribute);
         }
     }
 }

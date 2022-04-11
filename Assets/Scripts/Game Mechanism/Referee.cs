@@ -25,6 +25,7 @@ public class Referee : MonoBehaviour, ISubscriber
     private List<string> mapNames;
     private int spaceIndex = 0;
     private int currentMapIndex;
+    public int playerLife = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -96,9 +97,9 @@ public class Referee : MonoBehaviour, ISubscriber
 
     public void SpawnTanks()
     {
-        tankSpawner.GetClone(Coordinate.ToVector2(Map.enemySpawnLeft), Quaternion.identity);
-        tankSpawner.GetClone(Coordinate.ToVector2(Map.enemySpawnMid), Quaternion.identity);
-        tankSpawner.GetClone(Coordinate.ToVector2(Map.enemySpawnRight), Quaternion.identity);
+        tankSpawner.GetEnemyFX(Coordinate.ToVector2(Map.enemySpawnLeft));
+        tankSpawner.GetEnemyFX(Coordinate.ToVector2(Map.enemySpawnMid));
+        tankSpawner.GetEnemyFX(Coordinate.ToVector2(Map.enemySpawnRight));
         tankSpawner.GetPlayerFX(Coordinate.ToVector2(Map.playerSpawnLeft));
     }
 

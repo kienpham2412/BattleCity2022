@@ -6,15 +6,16 @@ using UnityEngine.SceneManagement;
 public class Tower : Block
 {
     private bool isDisabledByDefeat;
-    protected override void TakeDamage(object[] message)
+
+    public override void TakeDamage(DamageAttribute damageAttribute)
     {
         // if the bullet is shoot by the enemy
-        if (!(bool)message[2])
+        if (!damageAttribute.playerOrigin)
         {
             // base.TakeDamage(message);
             if (immotal) return;
 
-            health -= (int)message[0];
+            health -= damageAttribute.damage;
             if (health <= 0)
             {
                 isDisabledByDefeat = true;
@@ -25,7 +26,7 @@ public class Tower : Block
 
     private void OnEnable()
     {
-        health = 5;
+        health = 10;
         isDisabledByDefeat = false;
     }
 

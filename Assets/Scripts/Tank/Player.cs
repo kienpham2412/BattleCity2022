@@ -18,7 +18,6 @@ public class Player : Tank, ISubscriber
     private const float POWERUP_LENGTH = 15f;
     private float xDirection, yDirection;
 
-
     void Awake()
     {
         Instance = this;
@@ -125,6 +124,9 @@ public class Player : Tank, ISubscriber
 
     protected override void OnDisable()
     {
+        MessageManager.Instance.RemoveSubscriber(MessageType.OnGameRestart, this);
+        MessageManager.Instance.RemoveSubscriber(MessageType.OnPlayerDestroyed, this);
+        base.OnDisable();
         ActiveInput(false);
         StopMovingSFX();
     }

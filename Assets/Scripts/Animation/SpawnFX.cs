@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class SpawnFX : AnimController
 {
-    protected bool firstTime = true;
     // Start is called before the first frame update
     protected override void Awake()
     {
         length = 1f;
     }
 
+    protected override IEnumerator Deactive()
+    {
+        yield return new WaitForSeconds(length);
+        Destroy(gameObject);
+    }
+
     protected virtual void OnDisable()
     {
-        if (firstTime)
-        {
-            firstTime = false;
-            return;
-        }
-
         TankSpawner.Instance.GetEnemyClone(gameObject.transform.position);
     }
 }

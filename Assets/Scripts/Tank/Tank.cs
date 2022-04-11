@@ -17,8 +17,6 @@ public abstract class Tank : MonoBehaviour
     protected Rigidbody2D rb;
     protected bool playerOrigin, powerUp;
     public float speed = 1f;
-    protected bool firstTime = true;
-    protected bool isMoving = false;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -107,10 +105,6 @@ public abstract class Tank : MonoBehaviour
         if (movingSource.isPlaying) movingSource.Stop();
     }
 
-    /// <summary>
-    /// Set the animation when the tank is moving
-    /// </summary>
-    /// <param name="isRunning"></param>
     private void SetAnimation(bool isRunning)
     {
         tankAnimator.SetBool("isRunning", isRunning);
@@ -118,11 +112,6 @@ public abstract class Tank : MonoBehaviour
 
     protected virtual void OnDisable()
     {
-        if (firstTime)
-        {
-            firstTime = false;
-            return;
-        }
         ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
         StopMovingSFX();
     }

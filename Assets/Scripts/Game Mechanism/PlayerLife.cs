@@ -9,7 +9,7 @@ public class PlayerLife : MonoBehaviour, ISubscriber
 
     public void Handle(Message message)
     {
-        lifeDisplay.text = PlayerBlock.Instance.playerLife.ToString();
+        lifeDisplay.text = Referee.Instance.playerLife.ToString();
     }
 
     void OnEnable()

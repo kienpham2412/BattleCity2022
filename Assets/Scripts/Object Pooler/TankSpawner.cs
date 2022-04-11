@@ -2,25 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankSpawner : ObjectPooler, ISubscriber
+public class TankSpawner : MonoBehaviour, ISubscriber
 {
+    [Header("Samples")]
+    public GameObject playerSpawnFX;
+    public GameObject enemySpawnFX;
+    public GameObject playerTank;
+    public GameObject[] enemyTanks;
+
     public static TankSpawner Instance;
-    private List<GameObject> enemyList, spawnFXList;
-    private GameObject playerSpawnFX, playerTank;
+    private const int SPAWN_LIMIT = 20;
     private int enemyIndex = 0;
     private int destroyedTank = 0;
 
     // Start is called before the first frame update
-    protected override void Start()
+    void Start()
     {
         Instance = this;
-        enemyList = new List<GameObject>();
-        spawnFXList = new List<GameObject>();
         MessageManager.Instance.AddSubscriber(MessageType.OnEnemyDestroyed, this);
         MessageManager.Instance.AddSubscriber(MessageType.OnGameRestart, this);
-
-        CreatePlayer();
-        CreatePool();
     }
 
     public void Handle(Message message)
@@ -29,7 +29,7 @@ public class TankSpawner : ObjectPooler, ISubscriber
         {
             case MessageType.OnEnemyDestroyed:
                 if (CheckRemainingEnemy())
-                    GetClone((Vector3)message.content, Quaternion.identity);
+                    GetEnemyFX((Vector3)message.content);
                 CountDestroyed();
                 break;
             case MessageType.OnGameRestart:
@@ -39,72 +39,34 @@ public class TankSpawner : ObjectPooler, ISubscriber
         }
     }
 
-    private void CreatePool()
-    {
-        for (int i = 0; i < 20; i++)
-        {
-            if (i <= 4)
-            {
-                Clone(samples[2], spawnFXList);
-            }
-
-            int randomIndex = Random.Range(3, 5);
-            Clone(samples[randomIndex], enemyList);
-        }
-    }
-
-    private void CreatePlayer()
-    {
-        playerSpawnFX = Instantiate(samples[0], new Vector2(0, 0), Quaternion.identity);
-        playerSpawnFX.SetActive(false);
-
-        playerTank = Instantiate(samples[1], new Vector2(0, 0), Quaternion.identity);
-        playerTank.SetActive(false);
-    }
-
     public void GetPlayerFX(Vector2 position)
     {
-        playerSpawnFX.transform.position = position;
-        playerSpawnFX.SetActive(true);
+        Instantiate(playerSpawnFX, position, Quaternion.identity);
     }
 
     public void SpawnPlayer(Vector2 position)
     {
-        playerTank.transform.position = position;
-        playerTank.SetActive(true);
+        Instantiate(playerTank, position, Quaternion.identity);
     }
 
-    public override GameObject GetClone(Vector2 position, Quaternion rotation)
+    public void GetEnemyFX(Vector2 position)
     {
-        foreach (GameObject gameObj in spawnFXList)
-        {
-            if (!gameObj.activeSelf)
-            {
-                gameObj.transform.position = position;
-                gameObj.transform.rotation = rotation;
-                gameObj.SetActive(true);
-
-                return gameObj;
-            }
-        }
-        return null;
+        Instantiate(enemySpawnFX, position, Quaternion.identity);
     }
 
     public void GetEnemyClone(Vector2 position)
     {
-        if (enemyIndex < enemyList.Count)
+        if (enemyIndex < SPAWN_LIMIT)
         {
-            GameObject gameObj = enemyList[enemyIndex];
-            gameObj.transform.position = position;
-            gameObj.SetActive(true);
-
+            int random = Random.Range(0, 2);
+            GameObject gameObj = Instantiate(enemyTanks[random], position, Quaternion.identity);
             enemyIndex++;
         }
     }
 
     public bool CheckRemainingEnemy()
     {
-        if (enemyIndex < 20)
+        if (enemyIndex < SPAWN_LIMIT)
         {
             return true;
         }
@@ -114,7 +76,7 @@ public class TankSpawner : ObjectPooler, ISubscriber
     public void CountDestroyed()
     {
         destroyedTank++;
-        if (destroyedTank == 20)
+        if (destroyedTank == SPAWN_LIMIT)
         {
             MessageManager.Instance.SendMessage(new Message(MessageType.OnGameFinish));
         }

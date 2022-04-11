@@ -62,9 +62,9 @@ public class MessageManager : MonoBehaviour
 
     public void SendMessage(Message message)
     {
-        foreach (ISubscriber subscriber in subscribers[message.type])
+        for (int i = 0; i < subscribers[message.type].Count; i++)
         {
-            subscriber.Handle(message);
+            subscribers[message.type][i].Handle(message);
         }
     }
 }

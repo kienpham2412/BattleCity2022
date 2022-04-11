@@ -42,24 +42,29 @@ public class EnemyAI : Tank, ISubscriber
         switch (message.type)
         {
             case MessageType.OnGrenadeAcquired:
-                gameObject.SetActive(false);
+                Destroy(gameObject);
                 break;
             case MessageType.OnClockAcquired:
                 if (gameObject.activeInHierarchy)
                     StartCoroutine(Freeze());
                 break;
             case MessageType.OnGameRestart:
-                pathFinder = FindObjectOfType<PathFinder>();
-                previous = new Coordinate(gameObject.transform.position);
-                rb = GetComponent<Rigidbody2D>();
-                enemyData = new EnemyData(gameObject, marker, rb, tankAnimator, previous, speed);
-                currentState = new Idle(enemyData, pathFinder);
-                playerOrigin = false;
-                powerUp = false;
-
-                GetComponent<EnemyBlock>().ResetHealth();
+                Init();
                 break;
         }
+    }
+
+    private void Init()
+    {
+        pathFinder = FindObjectOfType<PathFinder>();
+        previous = new Coordinate(gameObject.transform.position);
+        rb = GetComponent<Rigidbody2D>();
+        enemyData = new EnemyData(gameObject, marker, rb, tankAnimator, previous, speed);
+        currentState = new Idle(enemyData, pathFinder);
+        playerOrigin = false;
+        powerUp = false;
+
+        GetComponent<EnemyBlock>().ResetHealth();
     }
 
     private void FixedUpdate()
@@ -98,12 +103,10 @@ public class EnemyAI : Tank, ISubscriber
 
     protected override void OnDisable()
     {
-        if (firstTime)
-        {
-            firstTime = false;
-            return;
-        }
-        if (gameObject == null) return;
+        MessageManager.Instance.RemoveSubscriber(MessageType.OnGrenadeAcquired, this);
+        MessageManager.Instance.RemoveSubscriber(MessageType.OnClockAcquired, this);
+        MessageManager.Instance.RemoveSubscriber(MessageType.OnGameRestart, this);
+
         ParticalController.Instance.GetClone(gameObject.transform.position, Partical.Destroy);
         MessageManager.Instance.SendMessage(new Message(MessageType.OnEnemyDestroyed, spawnPosition));
         TankShowCase.Instance.Destroy();
@@ -112,6 +115,7 @@ public class EnemyAI : Tank, ISubscriber
     private void OnEnable()
     {
         spawnPosition = gameObject.transform.position;
+        Init();
         MessageManager.Instance.AddSubscriber(MessageType.OnGrenadeAcquired, this);
         MessageManager.Instance.AddSubscriber(MessageType.OnClockAcquired, this);
         MessageManager.Instance.AddSubscriber(MessageType.OnGameRestart, this);
