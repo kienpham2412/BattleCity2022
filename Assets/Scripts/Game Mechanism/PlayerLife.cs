@@ -5,6 +5,7 @@ using TMPro;
 
 public class PlayerLife : MonoBehaviour, ISubscriber
 {
+    public static PlayerLife Instance;
     public TMP_Text lifeDisplay;
 
     public void Handle(Message message)
@@ -14,6 +15,7 @@ public class PlayerLife : MonoBehaviour, ISubscriber
 
     void OnEnable()
     {
+        Instance = this;
         MessageManager.Instance.AddSubscriber(MessageType.OnPlayerDestroyed, this);
     }
 }

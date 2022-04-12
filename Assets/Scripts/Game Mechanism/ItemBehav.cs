@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Item
+{
+    Helmet = 0, Shovel = 1, Grenade = 2, Clock = 3, Star = 4, Tank = 5
+}
+
 public class ItemBehav : MonoBehaviour, ISubscriber
 {
-    private enum Item
-    {
-        Helmet = 0, Shovel = 1, Grenade = 2, Clock = 3, Star = 4, Tank = 5
-    }
-
-    [Space]
     [SerializeField]
-    private Item itemType;
+    public Item itemType;
     protected Animator animator;
     private IEnumerator countDown;
 
@@ -38,7 +37,8 @@ public class ItemBehav : MonoBehaviour, ISubscriber
                     enemy.TakeDamage(new DamageAttribute(100, false, true));
                 break;
             case Item.Tank:
-                Debug.Log("Tank");
+                Referee.Instance.playerLife++;
+                PlayerLife.Instance.lifeDisplay.text = Referee.Instance.playerLife.ToString();
                 break;
             case Item.Helmet:
                 Player.Instance.Immotal();

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class MapSaver
 {
-    static string filePath = Application.dataPath + "/Maps";
+    static string filePath = Application.streamingAssetsPath + "/Maps";
     BinaryFormatter bf;
     FileStream file;
     private Graph graph;

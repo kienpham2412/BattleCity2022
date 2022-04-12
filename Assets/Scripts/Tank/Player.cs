@@ -7,7 +7,8 @@ public class Player : Tank, ISubscriber, IBlock
 {
     [Header("Item SFX")]
     public AudioSource source;
-    public AudioClip clip;
+    public AudioClip itemClip;
+    public AudioClip itemClip2;
 
     [Header("Player attribute")]
     [SerializeField] private GameObject shieldFX;
@@ -144,7 +145,13 @@ public class Player : Tank, ISubscriber, IBlock
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Item"))
-            AudioController.Instance.PlaySFX(source, clip);
+        {
+            ItemBehav itemBehav = other.GetComponent<ItemBehav>();
+            if (itemBehav.itemType == Item.Tank || itemBehav.itemType == Item.Star || itemBehav.itemType == Item.Helmet)
+                AudioController.Instance.PlaySFX(source, itemClip2);
+            else
+                AudioController.Instance.PlaySFX(source, itemClip);
+        }
     }
 
     private void OnEnable()

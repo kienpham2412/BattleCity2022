@@ -260,7 +260,8 @@ MonoBehaviour:
   tankAnimator: {fileID: 552876444}
   speed: 1.25
   source: {fileID: -2064298829025659847}
-  clip: {fileID: 8300000, guid: 79df4d4eff28a8b4bae31dddce764547, type: 3}
+  itemClip: {fileID: 8300000, guid: 79df4d4eff28a8b4bae31dddce764547, type: 3}
+  itemClip2: {fileID: 8300000, guid: eb2db489e5305e34eaa9e2b26eea5aa4, type: 3}
   shieldFX: {fileID: 5057030377994773397}
   immotalTime: 10
   health: 5
