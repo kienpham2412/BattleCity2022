@@ -84,6 +84,8 @@ public class MapSaverController : MonoBehaviour
         else Destroy(gameObject);
 
         mapSaver = new MapSaver();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void SaveMap(string name)

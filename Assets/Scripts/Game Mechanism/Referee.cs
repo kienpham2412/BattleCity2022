@@ -136,5 +136,6 @@ public class Referee : MonoBehaviour, ISubscriber
     private void OnDisable()
     {
         if (PlayerPrefs.HasKey("CustomMap")) PlayerPrefs.DeleteKey("CustomMap");
+        StopAllCoroutines();
     }
 }
