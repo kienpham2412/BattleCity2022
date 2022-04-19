@@ -50,6 +50,11 @@ public class GameMenu : MonoBehaviour
         StartCoroutine(SetInteractable(index));
     }
 
+    /// <summary>
+    /// Set the first interactable UI element of a menu
+    /// </summary>
+    /// <param name="index">Index value of the menu</param>
+    /// <returns></returns>
     private IEnumerator SetInteractable(int index)
     {
         // refresh the selected interactable gameobject

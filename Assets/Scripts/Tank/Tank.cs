@@ -94,17 +94,27 @@ public abstract class Tank : MonoBehaviour
         BulletPooler.singleton.GetClone(shootingPos.transform.position, transform.rotation, powerUp, gameObject.GetInstanceID(), playerOrigin);
     }
 
+    /// <summary>
+    /// Play sound effect when moving
+    /// </summary>
     protected void PlayMovingSFX()
     {
         if (!movingSource.isPlaying)
             AudioController.Instance.PlaySFX(movingSource, movingClip);
     }
 
+    /// <summary>
+    /// Stop the moving sound effect
+    /// </summary>
     protected void StopMovingSFX()
     {
         if (movingSource.isPlaying) movingSource.Stop();
     }
 
+    /// <summary>
+    /// Switch the running animation of the tank
+    /// </summary>
+    /// <param name="isRunning">Switch on of off</param>
     private void SetAnimation(bool isRunning)
     {
         tankAnimator.SetBool("isRunning", isRunning);

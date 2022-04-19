@@ -13,6 +13,10 @@ public class GameOverState : GameState
         StartCoroutine(ReturnToTitle());
     }
 
+    /// <summary>
+    /// Return to title screen after seconds
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ReturnToTitle()
     {
         yield return new WaitForSecondsRealtime(AudioController.Instance.GetMusicLength(MusicType.lose) + 1);

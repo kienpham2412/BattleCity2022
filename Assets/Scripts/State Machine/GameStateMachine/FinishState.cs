@@ -20,6 +20,10 @@ public class FinishState : GameState
         Debug.Log("finish");
     }
 
+    /// <summary>
+    /// Delay to the next state
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Delay()
     {
         yield return new WaitForSeconds(3);

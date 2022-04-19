@@ -31,6 +31,10 @@ public class Message
 
 public interface ISubscriber
 {
+    /// <summary>
+    /// Handle the event when it is invoked
+    /// </summary>
+    /// <param name="message">The content of the event</param>
     public void Handle(Message message);
 }
 
@@ -45,6 +49,12 @@ public class MessageManager : MonoBehaviour
         Instance = this;
         subscribers = new Dictionary<MessageType, List<ISubscriber>>();
     }
+
+    /// <summary>
+    /// Register a listener of the message
+    /// </summary>
+    /// <param name="type">The type of a message</param>
+    /// <param name="subscriber">The instance of registered object</param>
     public void AddSubscriber(MessageType type, ISubscriber subscriber)
     {
         if (!subscribers.ContainsKey(type))
@@ -53,6 +63,11 @@ public class MessageManager : MonoBehaviour
             subscribers[type].Add(subscriber);
     }
 
+    /// <summary>
+    /// Remove the register of a message
+    /// </summary>
+    /// <param name="type">The type of a message</param>
+    /// <param name="subscriber">The instance of registered object</param>
     public void RemoveSubscriber(MessageType type, ISubscriber subscriber)
     {
         if (subscribers.ContainsKey(type))
@@ -60,6 +75,10 @@ public class MessageManager : MonoBehaviour
                 subscribers[type].Remove(subscriber);
     }
 
+    /// <summary>
+    /// Broadcast the message for all subscribers
+    /// </summary>
+    /// <param name="message">The message content</param>
     public void SendMessage(Message message)
     {
         for (int i = 0; i < subscribers[message.type].Count; i++)

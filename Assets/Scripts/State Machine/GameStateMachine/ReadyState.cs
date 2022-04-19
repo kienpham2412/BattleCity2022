@@ -22,12 +22,19 @@ public class ReadyState : GameState
         base.Next();
     }
 
+    /// <summary>
+    /// Display current stage on HUD
+    /// </summary>
     private void DisplayStage()
     {
         stageDisplay.text = $"Stage {stage}";
         stage++;
     }
 
+    /// <summary>
+    /// Delay to the next state
+    /// </summary>
+    /// <returns></returns>
     IEnumerator DelayToNext()
     {
         yield return new WaitForSeconds(2);

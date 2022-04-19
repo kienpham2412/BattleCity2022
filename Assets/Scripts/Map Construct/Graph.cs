@@ -37,6 +37,11 @@ public class Graph
         length = mapSize * mapSize;
     }
 
+    /// <summary>
+    /// Add an edge to the graph
+    /// </summary>
+    /// <param name="first">The first coordinate</param>
+    /// <param name="second">the second coordinate</param>
     private void AddEdge(Coordinate first, Coordinate second)
     {
         int firstAccessibility = GetAccessibility(first);
@@ -59,6 +64,10 @@ public class Graph
         adjacentList[secondNode.index].AddLast(firstNode);
     }
 
+    /// <summary>
+    /// Guild a graph from the map
+    /// </summary>
+    /// <returns>An adjacent list of the graph</returns>
     public LinkedList<Node>[] BuildGraph()
     {
         adjacentList = new LinkedList<Node>[length];
@@ -83,6 +92,10 @@ public class Graph
         return adjacentList;
     }
 
+    /// <summary>
+    /// Create an empty adjacent list from a node
+    /// </summary>
+    /// <param name="nodeIndex"></param>
     private void Creategraph(int nodeIndex)
     {
         if (adjacentList[nodeIndex] == null)
@@ -91,6 +104,10 @@ public class Graph
         }
     }
 
+    /// <summary>
+    /// Print the graph
+    /// </summary>
+    /// <param name="graph">The graph to be printed</param>
     public static void PrintGraph(LinkedList<Node>[] graph)
     {
         int length = graph.Length;
@@ -106,6 +123,11 @@ public class Graph
         }
     }
 
+    /// <summary>
+    /// Get accessibility of the coordinate
+    /// </summary>
+    /// <param name="coordinate">The coordinate</param>
+    /// <returns>The current accessible status of the coordinate</returns>
     private int GetAccessibility(Coordinate coordinate)
     {
         int block = baseMap[coordinate.x, coordinate.y];

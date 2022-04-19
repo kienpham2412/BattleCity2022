@@ -19,6 +19,12 @@ public class Marker
         this.parent = parent;
     }
 
+    /// <summary>
+    /// Calculate F value of heuristic equation
+    /// </summary>
+    /// <param name="thisMarker">The marker that is being calculated</param>
+    /// <param name="parent">The parent of this marker</param>
+    /// <param name="destination">The destination marker</param>
     public static void CalculateF(Marker thisMarker, Marker parent, Marker destination)
     {
         thisMarker.g = parent.g + 1;
@@ -49,6 +55,13 @@ public class PathFinder : MonoBehaviour, ISubscriber
         adjacentList = mapBuilder.map.adjacentList;
     }
 
+    /// <summary>
+    /// Find a path from start position to destination
+    /// </summary>
+    /// <param name="start">Start coordinate</param>
+    /// <param name="destination">Destination coordinate</param>
+    /// <param name="limitRange">The limit distance from the calculated coordinate to destination coordinate</param>
+    /// <returns>The begining marker of the path to the destination</returns>
     public Marker FindPath(Coordinate start, Coordinate destination, float limitRange)
     {
         int targetIndex = PathFinder.GetIndexByCoordinate(start);
@@ -106,6 +119,11 @@ public class PathFinder : MonoBehaviour, ISubscriber
         return null;
     }
 
+    /// <summary>
+    /// Is the marker calculated
+    /// </summary>
+    /// <param name="index">Index value of the node</param>
+    /// <returns>True if this node is calculated</returns>
     private bool IsClosedIndex(int index)
     {
         foreach (int i in closeIndex)
@@ -118,18 +136,34 @@ public class PathFinder : MonoBehaviour, ISubscriber
         return false;
     }
 
+    /// <summary>
+    /// Get the index of the node using coordinate
+    /// </summary>
+    /// <param name="coordinate">The coordinate of the node</param>
+    /// <returns>The index value of the node</returns>
     public static int GetIndexByCoordinate(Coordinate coordinate)
     {
         int targetIndex = Map.SIZE * coordinate.y + coordinate.x;
         return targetIndex;
     }
 
+    /// <summary>
+    /// Get true value by specific rate
+    /// </summary>
+    /// <param name="rate">The rate value</param>
+    /// <returns></returns>
     private bool GetTrueByRate(int rate)
     {
         int num = Random.Range(1, 101);
         return num < rate ? true : false;
     }
 
+    /// <summary>
+    /// Randomly choose the next coordinate from the specific coordinate
+    /// </summary>
+    /// <param name="current">The specific coordinate</param>
+    /// <param name="previous">The last coordinate to be ignored</param>
+    /// <returns></returns>
     public Coordinate GetNextCoordinate(Coordinate current, ref Coordinate previous)
     {
         int index = PathFinder.GetIndexByCoordinate(current);

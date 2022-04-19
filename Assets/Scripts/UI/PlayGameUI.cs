@@ -19,6 +19,9 @@ public class PlayGameUI : UIManager
         base.Start();
     }
 
+    /// <summary>
+    /// Display exit menu
+    /// </summary>
     public void ShowExitMenu()
     {
         if (!menu.GetMenu(1).activeInHierarchy)
@@ -35,6 +38,10 @@ public class PlayGameUI : UIManager
         }
     }
 
+    /// <summary>
+    /// Hide a menu
+    /// </summary>
+    /// <param name="index">Index value of the menu</param>
     public override void HideMenu(int index)
     {
         Player.Instance.ActiveInput(true);

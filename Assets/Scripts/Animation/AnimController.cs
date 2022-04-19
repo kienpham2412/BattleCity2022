@@ -14,6 +14,10 @@ public class AnimController : MonoBehaviour
         length = animator.GetCurrentAnimatorStateInfo(0).length;
     }
 
+    /// <summary>
+    /// Countdown to disable the attached gameobject
+    /// </summary>
+    /// <returns></returns>
     protected virtual IEnumerator Deactive()
     {
         yield return new WaitForSeconds(length);

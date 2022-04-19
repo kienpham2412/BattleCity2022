@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayState : GameState, ISubscriber
 {
-
-
     public void Handle(Message message)
     {
         switch (message.type)

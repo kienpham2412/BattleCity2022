@@ -16,6 +16,11 @@ public class MapSaver
         bf = new BinaryFormatter();
     }
 
+    /// <summary>
+    /// Save the map
+    /// </summary>
+    /// <param name="name">Map name</param>
+    /// <param name="map">Map data</param>
     public void Save(string name, Map map)
     {
         CreateDir();
@@ -30,6 +35,11 @@ public class MapSaver
         Debug.Log("map saved !!!");
     }
 
+    /// <summary>
+    /// Load map by name
+    /// </summary>
+    /// <param name="name">Map name</param>
+    /// <returns></returns>
     public Map Load(string name)
     {
         file = File.Open(CreatePath(name), FileMode.Open);
@@ -40,6 +50,9 @@ public class MapSaver
         return map;
     }
 
+    /// <summary>
+    /// Create folder for the maps
+    /// </summary>
     private void CreateDir()
     {
         if (Directory.Exists(filePath)) return;
@@ -48,11 +61,20 @@ public class MapSaver
         Debug.Log("Create directory: Maps");
     }
 
+    /// <summary>
+    /// Create a directory to the map folder
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     private string CreatePath(string name)
     {
         return filePath + "/" + name + ".map";
     }
 
+    /// <summary>
+    /// Get map name
+    /// </summary>
+    /// <returns></returns>
     public List<string> GetFilesName()
     {
         DirectoryInfo dirInfo = new DirectoryInfo(filePath);
@@ -88,22 +110,39 @@ public class MapSaverController : MonoBehaviour
         Cursor.visible = false;
     }
 
+    /// <summary>
+    /// Save map API
+    /// </summary>
+    /// <param name="name"></param>
     public void SaveMap(string name)
     {
         mapBuilder.map.SaveSpaceCoor();
         mapSaver.Save(name, mapBuilder.map);
     }
 
+    /// <summary>
+    /// Load map API
+    /// </summary>
+    /// <param name="name"></param>
     public void LoadMap(string name)
     {
         mapBuilder.BuildSavedMap(mapSaver.Load(name));
     }
 
+    /// <summary>
+    /// Get all map name 
+    /// </summary>
+    /// <returns></returns>
     public List<string> GetAllMapNames()
     {
         return mapSaver.GetFilesName();
     }
 
+    /// <summary>
+    /// Handle scene load event
+    /// </summary>
+    /// <param name="scene">The current scene</param>
+    /// <param name="mode">Load scene mode</param>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("TitleScreen")) return;

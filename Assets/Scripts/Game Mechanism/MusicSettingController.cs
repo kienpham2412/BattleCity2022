@@ -13,11 +13,17 @@ public class MusicSettingController : MonoBehaviour
         sfxSlider.SetValueWithoutNotify(AudioController.Instance.sfxVolume);
     }
 
+    /// <summary>
+    /// Change music volume
+    /// </summary>
     public void ChangeMusicVolume()
     {
         AudioController.Instance.musicVolume = backgroundMusicSlider.value;
     }
 
+    /// <summary>
+    /// Change sound effect volume
+    /// </summary>
     public void ChangeSFXVolume()
     {
         AudioController.Instance.sfxVolume = sfxSlider.value;

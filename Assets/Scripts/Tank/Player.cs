@@ -56,19 +56,30 @@ public class Player : Tank, ISubscriber, IBlock
 
     }
 
-    private void SetImmmotal(bool isImmotal)
+    /// <summary>
+    /// Make the player become immotal
+    /// </summary>
+    /// <param name="isImmotal"></param>
+    private void SetImmotal(bool isImmotal)
     {
         immotal = isImmotal;
         shieldFX.SetActive(isImmotal);
     }
 
+    /// <summary>
+    /// Turn on the immotal and turn it off after seconds
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ImmotalActive()
     {
-        SetImmmotal(true);
+        SetImmotal(true);
         yield return new WaitForSeconds(immotalTime);
-        SetImmmotal(false);
+        SetImmotal(false);
     }
 
+    /// <summary>
+    /// API to trigger the immotal
+    /// </summary>
     public void Immotal()
     {
         StartCoroutine(ImmotalActive());
@@ -100,6 +111,10 @@ public class Player : Tank, ISubscriber, IBlock
             Stop();
     }
 
+    /// <summary>
+    /// Turn player input on or off
+    /// </summary>
+    /// <param name="isActive"></param>
     public void ActiveInput(bool isActive)
     {
         if (isActive)
@@ -108,11 +123,18 @@ public class Player : Tank, ISubscriber, IBlock
             playerControl.Disable();
     }
 
+    /// <summary>
+    /// Get the current coordinate of the player
+    /// </summary>
+    /// <returns></returns>
     public Coordinate GetCoordinate()
     {
         return Coordinate.GetCurrentCoordinate(transform.position);
     }
 
+    /// <summary>
+    /// Move the player's tank
+    /// </summary>
     void Move()
     {
         direction = movement.ReadValue<Vector2>();
@@ -124,17 +146,27 @@ public class Player : Tank, ISubscriber, IBlock
         if (xDirection == 1) TurnRight();
     }
 
+    /// <summary>
+    /// Stop moving the tank
+    /// </summary>
     void StopMoving()
     {
         xDirection = yDirection = 0;
         StopMovingSFX();
     }
 
+    /// <summary>
+    /// Trigger power up coroutine
+    /// </summary>
     public void TriggerPowerUp()
     {
         StartCoroutine(PowerUp());
     }
 
+    /// <summary>
+    /// The powerup coroutine
+    /// </summary>
+    /// <returns></returns>
     IEnumerator PowerUp()
     {
         powerUp = true;

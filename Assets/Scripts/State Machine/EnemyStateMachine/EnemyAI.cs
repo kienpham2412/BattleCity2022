@@ -44,6 +44,9 @@ public class EnemyAI : Tank, IBlock
         if (health <= 0) Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Initalize the tank attribute
+    /// </summary>
     private void Init()
     {
         referee = Referee.Instance;
@@ -78,6 +81,10 @@ public class EnemyAI : Tank, IBlock
             currentState = currentState.Process();
     }
 
+    /// <summary>
+    /// Auto shoot in range
+    /// </summary>
+    /// <param name="speed">The shooting speed</param>
     private void AutoShoot(float speed)
     {
         startShooting += speed;

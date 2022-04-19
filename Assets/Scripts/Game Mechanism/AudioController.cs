@@ -62,6 +62,11 @@ public class AudioController : MonoBehaviour
         PlayMusic(MusicType.open);
     }
 
+    /// <summary>
+    /// Play sound effect
+    /// </summary>
+    /// <param name="source">The audio source to play sound effect</param>
+    /// <param name="audioClip">The audioclip to be played</param>
     public void PlaySFX(AudioSource source, AudioClip audioClip)
     {
         if (audioSource.isPlaying) return;
@@ -69,6 +74,10 @@ public class AudioController : MonoBehaviour
         source.PlayOneShot(audioClip, sfxVolume);
     }
 
+    /// <summary>
+    /// Play music
+    /// </summary>
+    /// <param name="type">The type of music to be played</param>
     public void PlayMusic(MusicType type)
     {
         if (audioSource.isPlaying) return;
@@ -87,6 +96,11 @@ public class AudioController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Get the length of the audio clip
+    /// </summary>
+    /// <param name="type">The type of the music</param>
+    /// <returns></returns>
     public float GetMusicLength(MusicType type)
     {
         float length = 0;
@@ -105,6 +119,9 @@ public class AudioController : MonoBehaviour
         return length;
     }
 
+    /// <summary>
+    /// Play sound effect when player interact with to UI
+    /// </summary>
     public void PlaySelectEventSFX()
     {
         if (audioSource.isPlaying) return;
@@ -112,6 +129,10 @@ public class AudioController : MonoBehaviour
         sfxSource.PlayOneShot(sfxClip, sfxVolume);
     }
 
+    /// <summary>
+    /// Play sound or music using available audio source
+    /// </summary>
+    /// <param name="audioClip"></param>
     public void PlayUsingReserveSource(AudioClip audioClip)
     {
         if (audioSource.isPlaying) return;

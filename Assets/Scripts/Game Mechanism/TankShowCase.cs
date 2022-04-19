@@ -18,6 +18,9 @@ public class TankShowCase : MonoBehaviour, ISubscriber
         ResetEnemyShowCase();
     }
 
+    /// <summary>
+    /// Fully reset all the tanks icon on the HUD
+    /// </summary>
     private void ResetEnemyShowCase()
     {
         currentTankIndex = 0;

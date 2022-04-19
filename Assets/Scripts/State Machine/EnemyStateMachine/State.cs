@@ -28,21 +28,34 @@ public class State
         this.stateEvent = EVENT.ENTER;
     }
 
+    /// <summary>
+    /// Handle the begining of a state
+    /// </summary>
     public virtual void Enter()
     {
         stateEvent = EVENT.UPDATE;
     }
 
+    /// <summary>
+    /// Handle the operation of a state
+    /// </summary>
     public virtual void Update()
     {
         stateEvent = EVENT.UPDATE;
     }
 
+    /// <summary>
+    /// Handle the ending of a state
+    /// </summary>
     public virtual void Exit()
     {
         stateEvent = EVENT.EXIT;
     }
 
+    /// <summary>
+    /// Operate the state
+    /// </summary>
+    /// <returns></returns>
     public State Process()
     {
         if (stateEvent == EVENT.ENTER)
@@ -61,12 +74,18 @@ public class State
         return this;
     }
 
+    /// <summary>
+    /// Move the tank forward
+    /// </summary>
     public void MoveForward()
     {
         moveForward = enemyData.enemyGO.transform.up * enemyData.speed;
         enemyData.enemyRB.velocity = moveForward;
     }
 
+    /// <summary>
+    /// Move the tank to the destination
+    /// </summary>
     protected void MoveToDestination()
     {
         float distance = Vector3.Distance(enemyData.enemyGO.transform.position, markerPosition);
@@ -93,12 +112,19 @@ public class State
         }
     }
 
+    /// <summary>
+    /// Stop the tank
+    /// </summary>
     protected void Stop()
     {
         enemyData.enemyRB.velocity = new Vector2(0, 0);
         SetAnimation(false);
     }
 
+    /// <summary>
+    /// Turn the running animation on or off
+    /// </summary>
+    /// <param name="isRunning"></param>
     protected void SetAnimation(bool isRunning)
     {
         enemyData.enemyAnimator.SetBool("isRunning", isRunning);

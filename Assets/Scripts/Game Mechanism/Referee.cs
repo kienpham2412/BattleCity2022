@@ -60,6 +60,9 @@ public class Referee : MonoBehaviour, ISubscriber
 
     }
 
+    /// <summary>
+    /// Load a map to play
+    /// </summary>
     public void LoadPlayMap()
     {
         mapSaverController.LoadMap(mapNames[currentMapIndex]);
@@ -76,22 +79,35 @@ public class Referee : MonoBehaviour, ISubscriber
         currentMapIndex++;
     }
 
+    /// <summary>
+    /// Check if there are still maps to play or not
+    /// </summary>
+    /// <returns>True if there are still maps to play</returns>
     public bool CheckIfTheGameEnd()
     {
         if (currentMapIndex == mapNames.Count - 1) return true;
         else return false;
     }
 
+    /// <summary>
+    /// Start spawn item coroutine
+    /// </summary>
     public void SpawnItem()
     {
         itemRoutine = ItemCoroutine();
         StartCoroutine(itemRoutine);
     }
 
+    /// <summary>
+    /// Start the freezing effect
+    /// </summary>
     public void StartFreezing(){
         StartCoroutine(Freeze());
     }
 
+    /// <summary>
+    /// Stop spawning item
+    /// </summary>
     public void StopSpawningItem()
     {
         if (itemRoutine != null)
@@ -101,6 +117,9 @@ public class Referee : MonoBehaviour, ISubscriber
         }
     }
 
+    /// <summary>
+    /// Spawn enemy and player tank when the game start
+    /// </summary>
     public void SpawnTanks()
     {
         tankSpawner.GetEnemyFX(Coordinate.ToVector2(Map.enemySpawnLeft));
@@ -109,12 +128,20 @@ public class Referee : MonoBehaviour, ISubscriber
         tankSpawner.GetPlayerFX(Coordinate.ToVector2(Map.playerSpawnLeft));
     }
 
+    /// <summary>
+    /// Respawn the player after die
+    /// </summary>
+    /// <returns></returns>
     IEnumerator RespawnPlayer()
     {
         yield return new WaitForSeconds(2);
         tankSpawner.GetPlayerFX(Coordinate.ToVector2(Map.playerSpawnLeft));
     }
 
+    /// <summary>
+    /// Item spawning coroutine
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ItemCoroutine()
     {
         Debug.Log("Start item coroutine");
@@ -127,6 +154,10 @@ public class Referee : MonoBehaviour, ISubscriber
         spaceIndex++;
     }
 
+    /// <summary>
+    /// The freeze coroutine
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Freeze(){
         isFreeze = true;
         yield return new WaitForSeconds(10f);

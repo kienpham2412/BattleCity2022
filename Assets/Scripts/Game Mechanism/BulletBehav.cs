@@ -74,12 +74,21 @@ public class BulletBehav : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Create a damage to the collided block
+    /// </summary>
+    /// <param name="other">The object that can receive damage</param>
     private void CreatDamage(Collision2D other)
     {
         other.gameObject.GetComponent<IBlock>().TakeDamage(new DamageAttribute(damage, powerUp, playerOrigin));
         ParticalController.Instance.GetClone(other.contacts[0].point, Partical.Collision);
     }
 
+    /// <summary>
+    /// Set the tank origin that shoot this bullet
+    /// </summary>
+    /// <param name="isPlayer">True if the bullet is shoot by the player</param>
+    /// <param name="tankID">the instance ID of the game object</param>
     public void SetOrigin(bool isPlayer, int tankID)
     {
         playerOrigin = isPlayer;

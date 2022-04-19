@@ -15,6 +15,9 @@ public class GameStateController : MonoBehaviour
         Active();
     }
 
+    /// <summary>
+    /// Start the game state machine
+    /// </summary>
     public void Active()
     {
         foreach (Transform child in transform)
@@ -26,6 +29,9 @@ public class GameStateController : MonoBehaviour
         firstState.Perform();
     }
 
+    /// <summary>
+    /// Trigger the game over state
+    /// </summary>
     public void TriggerGameOverState(){
         gameOverState.Perform();
     }

@@ -12,6 +12,9 @@ public class VideoSettingController : MonoBehaviour
     public TMP_Dropdown resolutionDropdown;
     private WindowModeController windowModeController;
 
+    /// <summary>
+    /// Toogle fullscreen
+    /// </summary>
     public void ToggleFullScreen()
     {
         windowModeController.isFullScreen = !windowModeController.isFullScreen;
@@ -21,6 +24,9 @@ public class VideoSettingController : MonoBehaviour
             Screen.fullScreenMode = FullScreenMode.Windowed;
     }
 
+    /// <summary>
+    /// Change window resolution
+    /// </summary>
     public void ChangeResolution()
     {
         windowModeController.resolutionIndex = Convert.ToInt32(resolutionDropdown.value);

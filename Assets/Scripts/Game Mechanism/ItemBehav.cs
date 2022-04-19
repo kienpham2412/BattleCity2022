@@ -19,6 +19,9 @@ public class ItemBehav : MonoBehaviour, ISubscriber
         MessageManager.Instance.AddSubscriber(MessageType.OnGameFinish, this);
     }
 
+    /// <summary>
+    /// Trigger event when item collide with player
+    /// </summary>
     private void TriggerEvent()
     {
         switch (itemType)
@@ -53,6 +56,10 @@ public class ItemBehav : MonoBehaviour, ISubscriber
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// The collide handler of the item
+    /// </summary>
+    /// <param name="other"></param>
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("PlayerTank"))
@@ -63,6 +70,10 @@ public class ItemBehav : MonoBehaviour, ISubscriber
         }
     }
 
+    /// <summary>
+    /// Count down to disable the item
+    /// </summary>
+    /// <returns></returns>
     protected IEnumerator Deactive()
     {
         yield return new WaitForSeconds(10f);

@@ -39,21 +39,37 @@ public class TankSpawner : MonoBehaviour, ISubscriber
         }
     }
 
+    /// <summary>
+    /// Get player spawn effect
+    /// </summary>
+    /// <param name="position">Position to spawn effect</param>
     public void GetPlayerFX(Vector2 position)
     {
         Instantiate(playerSpawnFX, position, Quaternion.identity);
     }
 
+    /// <summary>
+    /// Spawn player
+    /// </summary>
+    /// <param name="position">Position to spawn player</param>
     public void SpawnPlayer(Vector2 position)
     {
         Instantiate(playerTank, position, Quaternion.identity);
     }
 
+    /// <summary>
+    /// Get Enemy spawn effect
+    /// </summary>
+    /// <param name="position">Position to spawn effect</param>
     public void GetEnemyFX(Vector2 position)
     {
         Instantiate(enemySpawnFX, position, Quaternion.identity);
     }
 
+    /// <summary>
+    /// Spawn enemy
+    /// </summary>
+    /// <param name="position">Position to spawn enemy</param>
     public void GetEnemyClone(Vector2 position)
     {
         if (enemyIndex < SPAWN_LIMIT)
@@ -64,6 +80,10 @@ public class TankSpawner : MonoBehaviour, ISubscriber
         }
     }
 
+    /// <summary>
+    /// Check remaining enemy on the stage
+    /// </summary>
+    /// <returns>True if there are still enemies on the stage</returns>
     public bool CheckRemainingEnemy()
     {
         if (enemyIndex < SPAWN_LIMIT)
@@ -73,6 +93,9 @@ public class TankSpawner : MonoBehaviour, ISubscriber
         return false;
     }
 
+    /// <summary>
+    /// Calculate the amount of destroyed enemies
+    /// </summary>
     public void CountDestroyed()
     {
         destroyedTank++;
