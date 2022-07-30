@@ -173,7 +173,7 @@ MonoBehaviour:
   shootingClip: {fileID: 8300000, guid: 0c7bb040ffa45c244ad4683484fef27f, type: 3}
   shootingPos: {fileID: 6264482397867462933}
   tankAnimator: {fileID: 3514457631015303254}
-  speed: 2
+  speed: 1.5
   shootingSpeed: 3
   health: 2
 --- !u!1 &6264482397867462933

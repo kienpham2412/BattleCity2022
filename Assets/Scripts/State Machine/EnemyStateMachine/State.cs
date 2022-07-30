@@ -90,7 +90,7 @@ public class State
     {
         float distance = Vector3.Distance(enemyData.enemyGO.transform.position, markerPosition);
 
-        if (distance > 0.01f)
+        if (distance > 0.03f)
         {
             MoveForward();
             return;
