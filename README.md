@@ -1,6 +1,6 @@
 # BattleCity2022 🚙
 A personal project of remaking Battle City.
-Development enviroment: Unity.
+/nDevelopment enviroment: Unity.
 # Rules 📏
 1. Player control a tank and protect the base from enemy's invasion.
 2. Victory: Successfully protect the base from attacking and destroy all enemy's tanks.
